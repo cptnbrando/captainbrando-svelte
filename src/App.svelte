@@ -1,47 +1,113 @@
 <script lang="ts">
-  import svelteLogo from './assets/svelte.svg'
-  import viteLogo from '/vite.svg'
-  import Counter from './lib/Counter.svelte'
+  import { onMount } from "svelte";
+  import Navbar from "./lib/nav/Navbar.svelte";
+  import Banner from "./lib/Banner.svelte";
+
 </script>
 
+<svelte:window />
 <main>
-  <div>
-    <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-      <img src={viteLogo} class="logo" alt="Vite Logo" />
-    </a>
-    <a href="https://svelte.dev" target="_blank" rel="noreferrer">
-      <img src={svelteLogo} class="logo svelte" alt="Svelte Logo" />
-    </a>
-  </div>
-  <h1>Vite + Svelte</h1>
+  <Navbar />
+  <article>
+    <Banner />
+  </article>
+  <article>
+    <Banner />
+  </article>
+  <article>
+    <Banner />
+  </article>
 
-  <div class="card">
-    <Counter />
-  </div>
 
-  <p>
-    Check out <a href="https://github.com/sveltejs/kit#readme" target="_blank" rel="noreferrer">SvelteKit</a>, the official Svelte app framework powered by Vite!
-  </p>
-
-  <p class="read-the-docs">
-    Click on the Vite and Svelte logos to learn more
-  </p>
+  <!-- <article id="projects" style="height: {articleHeight}px;">
+    <Projects />
+  </article>
+  <article id="music" style="height: {articleHeight}px;">
+    <Music {scrollEvent} {isMobile} />
+  </article>
+  <article id="contact" style="height: {articleHeight}px;">
+    <Contact {isMobile} />
+  </article> -->
 </main>
 
-<style>
-  .logo {
-    height: 6em;
-    padding: 1.5em;
-    will-change: filter;
-    transition: filter 300ms;
+<style lang="scss">
+  :root {
+    font-family: "Open Sans", sans-serif;
+    overflow-y: hidden;
   }
-  .logo:hover {
-    filter: drop-shadow(0 0 2em #646cffaa);
+
+  :global(body) {
+    margin: 0;
+    padding: 0;
+    width: auto;
+    height: auto;
   }
-  .logo.svelte:hover {
-    filter: drop-shadow(0 0 2em #ff3e00aa);
+
+  article {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    height: 92vh;
+    padding-top: 10px;
   }
-  .read-the-docs {
-    color: #888;
+
+  main {
+    padding: 0;
+    margin: 0;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+    max-height: 100vh;
+    scroll-padding-top: 8vh;
+    overflow-x: hidden;
+  }
+
+  #music {
+    position: relative;
+  }
+
+  #projects {
+    overflow: hidden;
+  }
+
+  // Chrome + IE + Opera
+  @supports (overflow-y: overlay) {
+    main {
+      overflow-y: overlay;
+    }
+
+    main::-webkit-scrollbar {
+      width: 15px;
+      height: 10px;
+    }
+
+    main::-webkit-scrollbar-thumb {
+      background-image: linear-gradient(
+        180deg,
+        #d03643 0%,
+        rgb(35, 41, 59) 99%
+      );
+      border-radius: 100px;
+      border: 2px solid transparent;
+      background-clip: content-box;
+    }
+
+    main::-webkit-scrollbar-track {
+      border-radius: 100px;
+    }
+  }
+
+  // Firefox
+  @supports not (overflow-y: overlay) {
+    main {
+      overflow-y: scroll;
+      scrollbar-color: black rgba(255, 255, 255, 0);
+      scrollbar-gutter: stable;
+      scrollbar-width: thin;
+    }
+  }
+
+  #banner {
+    display: flex;
+    flex-direction: column;
+    padding-top: 0;
   }
 </style>
