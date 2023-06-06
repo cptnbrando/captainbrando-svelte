@@ -2,6 +2,7 @@
   import { onMount } from "svelte";
   import Navbar from "./lib/nav/Navbar.svelte";
   import Banner from "./lib/Banner.svelte";
+    import Games from "./lib/Games.svelte";
 
 </script>
 
@@ -9,7 +10,7 @@
 <main>
   <Navbar />
   <article>
-    <Banner />
+    <Games />
   </article>
   <article>
     <Banner />

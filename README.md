@@ -1,5 +1,9 @@
 # Website for Captain Brando!
 
+# Dependencies
+
+- (NeptunJS)[https://github.com/MoritzWillig/neptunjs/tree/master] / (Lyarinet Fork)[https://github.com/lyarinet/NeptunJS]
+
 # Svelte + TS + Vite
 
 This template should help get you started developing with Svelte and TypeScript in Vite.

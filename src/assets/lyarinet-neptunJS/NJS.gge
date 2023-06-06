@@ -1,0 +1,15 @@
+var block = 0;
+function createScript() {
+  block++;
+  if(block == 9) return;
+  var script = document.createElement("script");
+  script.type = "text/javascript";
+  script.onload = createScript;
+  script.src = "src/assets/lyarinet-neptunJS/blocks/block-"+block+".js";
+  document.head.appendChild(script);
+}
+
+//Load all 8 blocks as seperate .js files
+(function(){
+  createScript();
+})();
