@@ -4,12 +4,37 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + Svelte + TS</title>
-    <script type="module" crossorigin src="/assets/index-b16ee430.js"></script>
-    <link rel="stylesheet" href="/assets/index-9ea02431.css">
+    <title>Captain Brando!</title>
+    <script type="module" crossorigin src="/assets/index-842aa4e0.js"></script>
+    <link rel="stylesheet" href="/assets/index-3eec169b.css">
   </head>
   <body>
     <div id="app"></div>
+
+    <!-- Lyarinet NeptunJS lib -->
+    <script>
+      var NepPlayer = "#emulator";     // ID of html element where the emulator will be inserted
+      var NepEmu = "gba";         // Platform select
+      // var neogeoBios = "neogeo.zip";
+      var NepZoom = "enable";     // Add extra button on toolbar to scale up emulator. Disabled by default
+      var NepMaxWidth = "1100px"; // Maximum width size of emulator. 870px by default
+      var NepLang = "en";         // Interface language of the emulator. EN by default
+      var EmuGbaBios = "enable";  // ( only for GBA ) GBA Bios Need for some games. Disabled by default
+      var gameUrl = "src/assets/lyarinet-neptunJS/rom.zip"; // Game Url
+    </script>
+    <script>
+      //host integrity check patched
+      var scriptsus = document.createElement("script");
+      scriptsus.setAttribute("data-name", "njs2");
+      scriptsus.src = "src/assets/lyarinet-neptunJS/NJS.gge";//doing integrity checks like loader
+      document.head.appendChild(scriptsus);
+      var style = document.createElement("link");
+      style.href = "src/assets/lyarinet-neptunJS/neptun.css";
+      style.rel = "stylesheet";
+      style.type = "text/css";
+      document.head.appendChild(style);
+    </script>
+
     
   </body>
 </html>
