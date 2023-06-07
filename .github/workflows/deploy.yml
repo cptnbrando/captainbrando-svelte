@@ -23,8 +23,11 @@ jobs:
         - name: Build project
           run: npm run build
           
-        - name: Copy Emulator Files
-          run: cp -r ./src/assets/lyarinet-neptunJS ./dist/src/assets/lyarinet-neptunJS
+        - name: Make emu directory
+          run: mkdir ./dist/src/assets/lyarinet-neptunJS
+          
+        - name: Copy emulator files
+          run: cp -r ./src/assets/lyarinet-neptunJS/* ./dist/src/assets/lyarinet-neptunJS
 
         - name: Upload production-ready build files
           uses: actions/upload-artifact@v3
