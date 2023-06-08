@@ -6,7 +6,7 @@
 This is a Deobfuscated version of NeptunJS/NeptuneJS/NJS - Specifically v2.5.5 as of 5th of August 2018
 
 # Try it out!
-[src/assets/lyarinet-neptunJS](src/assets/lyarinet-neptunJS)
+[/lyarinet-neptunJS](/lyarinet-neptunJS)
 
 ### Important
 This repo contains "rom.zip" and its a GBA rom copyright of Nintendo.

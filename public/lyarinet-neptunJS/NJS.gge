@@ -5,7 +5,7 @@ function createScript() {
   var script = document.createElement("script");
   script.type = "text/javascript";
   script.onload = createScript;
-  script.src = "src/assets/lyarinet-neptunJS/blocks/block-"+block+".js";
+  script.src = "/lyarinet-neptunJS/blocks/block-"+block+".js";
   document.head.appendChild(script);
 }
 

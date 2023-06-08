@@ -483,12 +483,12 @@ var meter, popset, Neptune, asm, infoInner, shader1, emulatorRun, _$synhc112, _$
                             } else {
                                 if (load_wasm === true) {
                                     //https://mem.neptunjs.com/njs/ggw/{neptunePlatform}{N64Acurate}.gge
-                                    load_proteus = "src/assets/lyarinet-neptunJS/cores/" + neptunPlatform + N64Acurate + ".gge"
+                                    load_proteus = "/lyarinet-neptunJS/cores/" + neptunPlatform + N64Acurate + ".gge"
                                 }
                             };
                             var _script = document.createElement("script");
                             _script.setAttribute("data-name", llms + "data_njs2");
-                            _script.src = "src/assets/lyarinet-neptunJS/cores/dataload.gge";
+                            _script.src = "/lyarinet-neptunJS/cores/dataload.gge";
                             document.body.appendChild(_script);
                             _script.onload = function() {
                                 var _0x13E1B = setTimeout(function() {
