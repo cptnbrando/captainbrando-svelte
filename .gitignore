@@ -23,7 +23,7 @@ dist-ssr
 *.sln
 *.sw?
 
-public/lyarinet-neptunJS/rom.zip
+# public/lyarinet-neptunJS/rom.zip
 
 .env
 rom-ls.zip
