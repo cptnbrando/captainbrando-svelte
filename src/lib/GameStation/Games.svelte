@@ -12,7 +12,8 @@
         <Emu />
     </div>
     <div class='over' id='emuOver'>
-        <span>
+        <span>reload to play game</span>
+        <!-- <span>
             <label for='select-emus'>Emulator</label>
             <select value={selectedEmu} name="select-emus" id="select-emus">
                 {#each emulators as emu}
@@ -25,13 +26,13 @@
         <span class='reverse'>
             <label for='select-games'>Game</label>
             <select value={selectedGame} name="select-games" id="select-games">
-                <!-- {#each emulators as emu} -->
+                {#each emulators as emu}
                     <option value='none'>
                         None yet...
                     </option>
-                <!-- {/each} -->
+                {/each}
             </select>
-        </span>
+        </span> -->
     </div>
 </div>
 
