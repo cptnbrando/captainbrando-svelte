@@ -3,7 +3,6 @@ function createScript() {
   block++;
   if(block == 9) return;
   var script = document.createElement("script");
-  script.type = "text/javascript";
   script.onload = createScript;
   script.src = "/lyarinet-neptunJS/blocks/block-"+block+".js";
   document.head.appendChild(script);
