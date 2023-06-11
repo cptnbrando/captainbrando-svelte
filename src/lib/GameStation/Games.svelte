@@ -14,6 +14,11 @@
     <div class='over' id='emuOver'>
         <h2>refresh the page</h2>
         <span>then press the pause symbol</span>
+        <span></span>
+        <span>WASD to move</span>
+        <span>Enter to click!</span>
+        <span>J to do something</span>
+        <span>K to do something else</span>
         <!-- <span>
             <label for='select-emus'>Emulator</label>
             <select value={selectedEmu} name="select-emus" id="select-emus">
