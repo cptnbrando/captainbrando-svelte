@@ -12,7 +12,8 @@
         <Emu />
     </div>
     <div class='over' id='emuOver'>
-        <span>reload to play game</span>
+        <h2>refresh the page</h2>
+        <span>then press the pause symbol</span>
         <!-- <span>
             <label for='select-emus'>Emulator</label>
             <select value={selectedEmu} name="select-emus" id="select-emus">
@@ -61,8 +62,8 @@
         align-items: center;
     }
 
-    .reverse {
-        
+    h2 {
+        margin-left: 6px;
     }
 
 </style>
