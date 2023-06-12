@@ -2,7 +2,7 @@
 	import { heads } from "./heads";
 	import { onMount } from "svelte";
 
-	let text: string = "brandon dcruz is ";
+	let text: string = "Captain Brando is ";
 	let array: string[] = heads;
 
 	// values to keep track of the number of letters typed, which quote to use. etc. Don't change these values.

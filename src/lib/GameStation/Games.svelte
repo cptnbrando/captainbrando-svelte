@@ -5,6 +5,10 @@
     let selectedEmu = 'N64';
     let selectedGame = 'none';
 
+    function refresh() {
+        window.location.reload();
+    }
+
 </script>
 
 <div class="container">
@@ -12,11 +16,13 @@
         <Emu />
     </div>
     <div class='over' id='emuOver'>
-        <h2>refresh the page</h2>
-        <span>then press the pause symbol</span>
-        <span></span>
+        <span>
+            <button on:click={() => {window.location.reload()}}>Click to play game</button>
+        </span>
+        <br>
         <span>WASD to move</span>
         <span>Enter to click!</span>
+        <br>
         <span>J to do something</span>
         <span>K to do something else</span>
         <!-- <span>
@@ -67,7 +73,7 @@
         align-items: center;
     }
 
-    h2 {
+    button {
         margin-left: 6px;
     }
 

@@ -3,6 +3,26 @@
   import Navbar from "./lib/nav/Navbar.svelte";
   import Banner from "./lib/Banner.svelte";
   import Games from "./lib/GameStation/Games.svelte";
+  import Music from "./lib/music/Music.svelte";
+    import Contact from "./lib/contact/Contact.svelte";
+
+  let scrollEvent: any = null;
+  let isMobile: boolean = false;
+
+  function onScroll(event) {
+		scrollEvent = event;
+	}
+
+  function onResize() {
+		isMobile = (window.innerWidth < 800);
+		// navHeight = window.innerHeight * 0.08;
+		// navHeight = (navHeight < 50) ? 50 : navHeight; 
+		// articleHeight = window.innerHeight - navHeight;
+	}
+
+  onMount(async () => {
+		onResize();
+	});
 
 </script>
 
@@ -12,11 +32,11 @@
   <article>
     <Games />
   </article>
-  <article>
-    <Banner />
+  <article id="music">
+    <Music {scrollEvent} {isMobile} />
   </article>
   <article>
-    <Banner />
+    <Contact {isMobile} />
   </article>
 
 
@@ -51,13 +71,17 @@
     padding-top: 10px;
   }
 
+  #music {
+		position: relative;
+	}
+
   main {
     padding: 0;
     margin: 0;
     scroll-snap-type: y mandatory;
     scroll-behavior: smooth;
     max-height: 100vh;
-    scroll-padding-top: 8vh;
+    scroll-padding-top: 7.5vh;
     overflow-x: hidden;
   }
 
