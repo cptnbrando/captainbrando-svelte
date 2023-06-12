@@ -20,6 +20,9 @@
             <button on:click={() => {window.location.reload()}}>Click to play game</button>
         </span>
         <br>
+        <span>Click Start Game</span>
+        <span>then click the pause button</span>
+        <br>
         <span>WASD to move</span>
         <span>Enter to click!</span>
         <br>
