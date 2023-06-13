@@ -211,7 +211,7 @@ var bar, slider, ats, nepVolume, NJSVolume, volumeContr, startSlide, moveSlide, 
             bar = Neptq("#" + NCSS + "bar");
             slider = Neptq("#" + NCSS + "slider");
             sliderIcon = Neptq("#volumeicon");
-            document.addEventListener("mousedown", _0x13E47);
+            bar[0].addEventListener("mousedown", _0x13E47);
             document.addEventListener("mouseup", _0x13E9F);
             NJSVolume = JSON.parse(localStorage.getItem("NJSVolume"));
             if (NJSVolume === null) {
