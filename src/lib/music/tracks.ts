@@ -1,3 +1,5 @@
+export const defaultTracks: number[] = [0, 5, 6, 7, 8, 13, 15, 19, 20, 21, 22, 25, 27, 28, 29, 30, 31, 35];
+
 export class Track {
 	src: string;
 	artist: string;

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Typed from './Typed.svelte';
-	import { HomeIcon, PackageIcon, MusicIcon, EditIcon, MailIcon, MenuIcon, DribbbleIcon } from 'svelte-feather-icons';
+	import { MusicIcon, MailIcon, MenuIcon, DribbbleIcon } from 'svelte-feather-icons';
 	import { fly, fade } from 'svelte/transition';
 
 	export let isMobile: boolean = false;

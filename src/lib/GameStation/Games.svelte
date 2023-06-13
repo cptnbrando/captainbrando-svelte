@@ -1,68 +1,66 @@
 <script lang="ts">
     import Emu from "./Emu.svelte";
-    import { emulators } from "./games-info";
-
-    let selectedEmu = 'N64';
-    let selectedGame = 'none';
 
     function refresh() {
         window.location.reload();
     }
-
 </script>
 
-<div class="container">
-    <div id="emuMain">
+<div class="container" id="emuPanel">
+    <div class="emu-flex over" id="emuOver">
+        <span>
+            <button
+                on:click={() => {
+                    window.location.reload();
+                }}>Click to play game</button
+            >
+        </span>
+        <br />
+        <span>...then click Start Game</span>
+        <span>...then click the pause button</span>
+    </div>
+    <div class="emu-flex" id="emuMain">
         <Emu />
     </div>
-    <div class='over' id='emuOver'>
-        <span>
-            <button on:click={() => {window.location.reload()}}>Click to play game</button>
-        </span>
-        <br>
-        <span>Click Start Game</span>
-        <span>then click the pause button</span>
-        <br>
+    <div class="emu-flex over" id="emuControls">
         <span>WASD to move</span>
         <span>Enter to click!</span>
-        <br>
+        <br />
         <span>J to do something</span>
         <span>K to do something else</span>
-        <!-- <span>
-            <label for='select-emus'>Emulator</label>
-            <select value={selectedEmu} name="select-emus" id="select-emus">
-                {#each emulators as emu}
-                    <option value={emu.name_sub}>
-                        {emu.name}
-                    </option>
-                {/each}
-            </select>
-        </span>
-        <span class='reverse'>
-            <label for='select-games'>Game</label>
-            <select value={selectedGame} name="select-games" id="select-games">
-                {#each emulators as emu}
-                    <option value='none'>
-                        None yet...
-                    </option>
-                {/each}
-            </select>
-        </span> -->
     </div>
 </div>
 
 <style lang="scss">
-    #emuMain,
-    #emuOver {
+    .emuFlex {
         width: 100%;
         height: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
+        flex: 2;
+    }
+
+    #emuMain {
+        flex: 9;
     }
 
     .over {
         z-index: 10;
+        justify-content: center;
+        align-items: center;
+        padding-top: 1%;
+    }
+
+    #emuPanel {
+        display: flex;
+        width: 100%;
+        height: 100%;
+    }
+
+    #emuOver {
+        padding-left: 2%;
+    }
+
+    #emuControls {
+        padding-right: 2%;
     }
 
     .container {
@@ -72,12 +70,12 @@
     span {
         display: flex;
         flex-direction: column;
-        width: 15%;
+        width: 100%;
         align-items: center;
+        justify-content: center;
     }
 
     button {
         margin-left: 6px;
     }
-
 </style>

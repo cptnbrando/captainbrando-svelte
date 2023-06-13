@@ -1,10 +1,9 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import Navbar from "./lib/nav/Navbar.svelte";
-  import Banner from "./lib/Banner.svelte";
   import Games from "./lib/GameStation/Games.svelte";
   import Music from "./lib/music/Music.svelte";
-    import Contact from "./lib/contact/Contact.svelte";
+  import Contact from "./lib/contact/Contact.svelte";
 
   let scrollEvent: any = null;
   let isMobile: boolean = false;
@@ -38,17 +37,6 @@
   <article id="Contact">
     <Contact {isMobile} />
   </article>
-
-
-  <!-- <article id="projects" style="height: {articleHeight}px;">
-    <Projects />
-  </article>
-  <article id="music" style="height: {articleHeight}px;">
-    <Music {scrollEvent} {isMobile} />
-  </article>
-  <article id="contact" style="height: {articleHeight}px;">
-    <Contact {isMobile} />
-  </article> -->
 </main>
 
 <style lang="scss">
@@ -68,7 +56,6 @@
     scroll-snap-align: start;
     scroll-snap-stop: always;
     height: 92vh;
-    padding-top: 10px;
   }
 
   #music {

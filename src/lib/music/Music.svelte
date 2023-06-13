@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import Controls from './Controls.svelte';
-	import { Track, tracks } from './tracks';
+	import { Track, defaultTracks, tracks } from './tracks';
 	import Visualizer from './Visualizer.svelte';
 
 	const songs: Track[] = tracks;
@@ -27,7 +27,8 @@
 	 * Random track on launch
 	 */
 	onMount(async () => {
-		trackNum = Math.floor(Math.random() * songs.length);
+		trackNum = defaultTracks[Math.floor(Math.random() * defaultTracks.length)];
+		// trackNum = Math.floor(Math.random() * songs.length);
 		track = songs[trackNum];
 		audioPlayer.load();
 	});

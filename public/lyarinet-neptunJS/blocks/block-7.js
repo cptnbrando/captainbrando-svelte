@@ -772,6 +772,7 @@ var meter, popset, Neptune, asm, infoInner, shader1, emulatorRun, _$synhc112, _$
                         });
                         if (Neptq("" + NepPlayer + "").length) {
                             canvasGame = document.getElementById(NCSS + "display");
+                            if(!canvasGame) return;
                             if (Neptq("#checkbox_smooth").is(":checked")) {
                                 fblur = 0.9;
                                 fsaturate = slider1.value;

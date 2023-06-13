@@ -70,7 +70,6 @@
 			{/if}
 			<div id="vid">
 				<iframe
-					_ngcontent-gfx-c87=""
 					src="https://www.youtube.com/embed/XcForynThz0"
 					title="Captain Brando! - Better Better Etc."
 					allow="clipboard-write; encrypted-media;"
