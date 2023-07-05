@@ -130,13 +130,9 @@ export const heads: string[] = [
     "scared",
     "bouta cry ngl",
     "stupid",
-    "not a good fit for this company",
-    "making us look bad",
     "making us look stupid",
-    "thinking of destroying things",
-    "costing us pennies, giving us gold",
+    "thinking of carnage...",
+    "a gold digger",
     "wise",
-    "going to take your job one day",
-    "getting fired for working hard",
     "not gonna play your games"
 ];
