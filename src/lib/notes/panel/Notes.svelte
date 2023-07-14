@@ -15,6 +15,8 @@
 
     let videoSource = 'vid/vid1.webm';
 
+    let need2 = 'music/etc/need2.mp3'
+
 	onMount(async () => {
 		stories.forEach((el, i) => {
             reports.set(`story${i}`, el)
@@ -46,6 +48,7 @@
         <button on:click={() => showNotes = true}>cool, thanks</button>
         <div class='fakenews'>
             <video src={videoSource} controls />
+            <audio src={need2} controls />
             <p>{@html selectedNote}</p>
         </div>
     {/if}

@@ -1,6 +1,3 @@
-const myNotes: Map<string, string> = new Map();
-
-const vid1: string = `vid/vid1.webm`
 const story1: string = `Tomorrowland<br />
 <br />
 I saw this very inspirational message and wanted to tell y'all about how life's been lately. please let $&@# read this message, and show her the video after too.<br />
