@@ -360,8 +360,23 @@ export const tracks: Track[] = [
 		'2024',
 	),
 	new Track(
-		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2022/life.mp3',
-		'life.mp3',
-		'2022',
+		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/4/slowdown.mp3',
+		'slowdown.mp3',
+		'2024',
+	),
+	new Track(
+		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/4/gotfiredneedajob.mp3',
+		'gotfiredneedajob.mp3',
+		'2024',
+	),
+	new Track(
+		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/4/harv-ard.mp3',
+		'harv-ard.mp3',
+		'2024',
+	),
+	new Track(
+		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/4/shoulda%2C%20my%20addition%20to%20brandos%20ideamp3.mp3',
+		'shoulda (...stats...)',
+		'2024',
 	)
 ];

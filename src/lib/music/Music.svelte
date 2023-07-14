@@ -121,8 +121,16 @@
 		if (!isPlaying) playPause();
 	}
 
+	function gimme(): void {
+		window.open(track.src, '_blank');
+	}
+
 	/**
+	 * 
+	 * ---- START HERE IF YOU WANNA ADD NEW SHIT -----
+	 * 
 	 * Callback for all Controls functions
+	 * Name it, make it do a function, keep it snappy!
 	 * @param event the message
 	 */
 	function handleCmd(event): void {
@@ -145,6 +153,9 @@
 				break;
 			case 'loop':
 				loop = !loop;
+				break;
+			case 'download':
+				gimme();
 				break;
 			default:
 				seek(event.detail.cmd);

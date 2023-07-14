@@ -186,7 +186,7 @@ PlayIcon
 					<span on:click={() => command('loop')} class={loop ? 'active button' : 'button'}>
 						<RepeatIcon size="40" />
 					</span>
-					<span on:click={() => command('download')} class='button'>
+					<span on:click={() => window.open(track.src, '_blank')} class='button'>
 						<ChevronDownIcon size="40" />
 					</span>
 				</span>
