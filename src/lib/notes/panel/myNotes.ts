@@ -38,9 +38,13 @@ Then they fired me. Let me go. Replaced me with a ginger.<br />
 <br />
 I cried about this for a while, but I worked (fun to go to a meeting labeled as "one-on-one catchup" while coding on a quick change code fix, only to get blindsided with a ban hammer). The last meeting I was at, I heard everybody use a term I made up a year ago. They called certain code "flows". Honestly, I don't think anybody ever does that with code, I just said at the time for bullshit's sake, to dumb down this chaotic Denny's GrandSlam of a financial fuckup. But the term works for them, and it's fast, and it gets people to where they need to be, understanding.<br />
 <br />
-I got an offer at another company for double what I was making at voya today. With a 10 thousand dollar signing bonus to boot, in cold hard cash. I proposed to the love of my life in december, her birthday, across the world in australia, with some of my pennies (still paying off that rock baby). I think time's are changing, and there have been so many people who've been in situations like me, that they've made some good companies out there now! I'm now surfing through Job offers, potential money more than I ever dreamed.<br />
+I got an offer at another company for double what I was making at &$%# / cognizant today. With a 10 thousand dollar signing bonus to boot, in cold hard cash (at least, thats the offer. gonna keep prepping for interviews after i finish typing this sentence. promise.).<br />
 <br />
-Did you know a software architect makes 800 thousand dollars a year? Neither did i. I'm gonna try to be one of those by the time I turn 28. Then I'll come give y'all a big party.<br />
+I proposed to the love of my life in december, her birthday, across the world in australia, with some of my pennies (still paying off that rock baby). I think time's are changing, and there have been so many people who've been in situations like me, that they've made some good companies out there now! I'm now surfing through Job offers, potential money more than I ever dreamed.<br />
+<br />
+Did you know a software architect makes 800 thousand dollars a year? Neither did i. Damn... they coulda fired one of those monkeys instead of firing 16 of me...<br />
+<br />
+I'm gonna try to be one of those by the time I turn 28, a rich code monkey, or something like that. Then I'll come give y'all a big party.<br />
 <br />
 Much love, talk soon ❤️`
 
