@@ -1,5 +1,5 @@
 <div id="scroll-container">
-    <a href="mailto:captainbrandooo@gmail.com?Subject=Hello!" target="_blank">
+    <a href="mailto:bdcruz64@gmail.com?Subject=Hello!" target="_blank">
         <div id="scroll-text">
             ⛵ Captain Brando! ⛵ captainbrandooo@gmail.com ⛵ Message Me Sometime ⛵ brando was here ⛵ 
             captainbrandooo@gmail.com ⛵ Captain Brando! ⛵ Call Me Sometime ⛵ @captainbrandooo ⛵
