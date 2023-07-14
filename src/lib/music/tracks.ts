@@ -383,5 +383,10 @@ export const tracks: Track[] = [
 		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2023/problems.mp3',
 		'PROBLEMS',
 		'2024',
+	),
+	new Track(
+		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2023/drive.mp3',
+		'brightside',
+		'2024',
 	)
 ];

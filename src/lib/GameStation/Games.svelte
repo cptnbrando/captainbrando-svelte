@@ -9,15 +9,15 @@
             <button
                 on:click={() => {
                     window.location.reload();
-                }}>Click here to play!</button
+                }}>sorry, game no work rn. legacy code stuff. comeback later. scroll for music.</button
             >
         </span>
-        <br />
+        <!-- <br />
         <span>...then click Start Game</span>
         <span>...then click the pause button</span>
         <br />
         <span>if it aint workin...</span>
-        <span>refresh the page</span>
+        <span>refresh the page</span> -->
     </div>
     <div class="emu-flex" id="emuMain">
         <Emu />
