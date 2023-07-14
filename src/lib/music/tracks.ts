@@ -51,11 +51,11 @@ export let albums: Album[] = [
 		'paint',
 		'Captain Brando!'
 	),
-	new Album(
-		'ily',
-    	'ily',
-		'Captain Brando!'
-	),
+	// new Album(
+	// 	'ily',
+    // 	'ily',
+	// 	'Captain Brando!'
+	// ),
 	new Album(
 		'RIP',
     	'rip',
@@ -129,31 +129,31 @@ export const tracks: Track[] = [
 		'Velvet',
 		'2023',
 	),
-	new Track(
-		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/IDKOK.mp3',
-		'IDKOK',
-		'ily'
-	),
-	new Track(
-		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/Instagram.mp3',
-		'Instagram',
-		'ily',
-	),
-	new Track(
-		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/him.mp3',
-		'him',
-		'ily',
-	),
-	new Track(
-		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/october13.mp3',
-		'October 13th',
-		'ily',
-	),
-	new Track(
-		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/him(demo).mp3',
-		'him (demo)',
-		'ily',
-	),
+	// new Track(
+	// 	'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/IDKOK.mp3',
+	// 	'IDKOK',
+	// 	'ily'
+	// ),
+	// new Track(
+	// 	'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/Instagram.mp3',
+	// 	'Instagram',
+	// 	'ily',
+	// ),
+	// new Track(
+	// 	'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/him.mp3',
+	// 	'him',
+	// 	'ily',
+	// ),
+	// new Track(
+	// 	'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/october13.mp3',
+	// 	'October 13th',
+	// 	'ily',
+	// ),
+	// new Track(
+	// 	'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/him(demo).mp3',
+	// 	'him (demo)',
+	// 	'ily',
+	// ),
 	new Track(
 		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/down3-2.mp3',
 		'down3-2',
