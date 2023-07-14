@@ -13,7 +13,10 @@
 
     let selectedNote: string | null = null;
 
-    let videoSource = 'vid/vid1.webm';
+    let noteOpened: boolean = false;
+
+    const video1Src = 'vid/vid1.webm';
+    const video2Src = 'vid/terry.webm';
 
     let need2 = 'music/etc/need2.mp3'
 
@@ -45,14 +48,17 @@
     {#if showNotes === true}
         <div class='note' id={`story${index}`} on:click={() => start(key)} on:keydown={down}></div>
     {:else}
-        <button on:click={() => showNotes = true}>cool, thanks</button>
+        <button on:click={() => {showNotes = true; noteOpened = true;}}>cool, thanks</button>
         <div class='fakenews'>
-            <video src={videoSource} controls />
+            <video src={video1Src} controls />
             <audio src={need2} controls />
             <p>{@html selectedNote}</p>
         </div>
     {/if}
 {/each}
+{#if noteOpened === true}
+<video src={video2Src} controls />
+{/if}
 {#if privy === true}
     <Privacy {privy} />
     <br />
@@ -72,6 +78,7 @@
         position: relative;
         top: 5%;
         left: 5%;
+        margin: 15px;
         
         &:hover {
             cursor: pointer;
