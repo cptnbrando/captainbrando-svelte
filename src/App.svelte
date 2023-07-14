@@ -122,4 +122,10 @@
     flex-direction: column;
     padding-top: 0;
   }
+
+  @media only screen and (max-width: 600px) {
+  main {
+    scroll-padding-top: 3.5vh;
+  }
+}
 </style>
