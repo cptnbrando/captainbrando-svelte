@@ -68,7 +68,7 @@
     scroll-snap-type: y mandatory;
     scroll-behavior: smooth;
     max-height: 100vh;
-    scroll-padding-top: 4vh;
+    scroll-padding-top: 5vh;
     overflow-x: hidden;
   }
 
