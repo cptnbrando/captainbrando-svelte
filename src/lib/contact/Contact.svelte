@@ -12,9 +12,9 @@
 
 	export let isMobile: boolean;
 
-	let src: string = 'img/bio1.png';
+	let numBio: number = 3;
+	let src: string = `img/bio${3}.png`;
 	let totalBio: number = 4;
-	let numBio: number = 1;
 
 	$: logoSize = (isMobile) ? "30" : "60";
 
@@ -31,8 +31,6 @@
 		numBio = dif;
 		src = `/img/bio${dif}.png`;
 	}
-
-    randBio();
 </script>
 
 <div id="contactPanel">
