@@ -13,6 +13,8 @@
 
     let selectedNote: string | null = null;
 
+    let videoSource = 'vid/vid1.webm';
+
 	onMount(async () => {
 		stories.forEach((el, i) => {
             reports.set(`story${i}`, el)
@@ -42,7 +44,10 @@
         <div class='note' id={`story${index}`} on:click={() => start(key)} on:keydown={down}></div>
     {:else}
         <button on:click={() => showNotes = true}>cool, thanks</button>
-        <div class='fakenews'><p>{selectedNote}</p></div>
+        <div class='fakenews'>
+            <video src={videoSource} controls />
+            <p>{selectedNote}</p>
+        </div>
     {/if}
 {/each}
 {#if privy === true}
@@ -76,6 +81,11 @@
         height: 80%;
         width: 80%;
         max-width: 80%;
+    }
+
+    video {
+        width: 30%;
+        height: 30%;
     }
 
 
