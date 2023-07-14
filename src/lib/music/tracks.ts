@@ -37,6 +37,11 @@ export class Album {
 
 export let albums: Album[] = [
 	new Album(
+		'2024',
+		'fuck',
+		'Captain Brando! d'
+	),
+	new Album(
 		'2023',
 		'chase',
 		'The Cut Ties'
@@ -332,6 +337,26 @@ export const tracks: Track[] = [
 	new Track(
 		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2022/ILLFINDHER.mp3',
 		"I'LL FIND HER",
+		'2022',
+	),
+	new Track(
+		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2022/life.mp3',
+		'life.mp3',
+		'2022',
+	),
+	new Track(
+		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2022/life.mp3',
+		'life.mp3',
+		'2022',
+	),
+	new Track(
+		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/newAYUP.mp3'
+		'ayup.mp3',
+		'2024',
+	),
+	new Track(
+		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2022/life.mp3',
+		'life.mp3',
 		'2022',
 	),
 	new Track(
