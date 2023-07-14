@@ -1,5 +1,25 @@
 export const defaultTracks: number[] = [0, 5, 6, 7, 8, 13, 15, 19, 20, 21, 22, 25, 27, 28, 29, 30, 31, 35];
 
+// To add tracks, first create a new Album in the array at line 40
+// Then, copy and paste a track in the array on line 94
+// Upload the file to here https://github.com/Dcruzships/dcruz-assets/tree/master/music
+// NOTE: folders can't be added directly on the github site
+// ...so go to github desktop, then sign into the old account, then upload the files to the dcruz-assets repo
+// AND remember that the audio filenames are best to a single word, short long ikbefhqrwla i dont care anymore. legacy code shit.
+// like afghjnor.mp3
+
+// After you get them in a new folder on that link
+// Copy the url and format it into like this https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2023/BEGIN.mp3
+// It starts with https://raw.githubusercontent.com/ because github aint a cdn lol
+// Then add the gh user
+// Then the repo
+// Then the branch
+// Then the music
+// Then the album
+// Then the abfhijur.mp3
+
+// Then, thats it, push that shit, its live on the site
+
 export class Track {
 	src: string;
 	artist: string;
@@ -71,6 +91,12 @@ export let albums: Album[] = [
 		'cigs',
 		'Cigs Inside'
 	),
+	// Copy this one if needed
+	// new Album(
+	// 	'for yall',
+	// 	'friends',
+	// 	'😁'
+	// ),
 	new Album(
 		'Criss Cross Apple Sauwce',
 		'dead',
@@ -84,6 +110,12 @@ export let albums: Album[] = [
 ];
 
 export const tracks: Track[] = [
+	// Like copy this one, then its good
+	// new Track(
+	// 	'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2023/2bedroomtoyota.mp3',
+	// 	'2 Bedroom Toyota',
+	// 	'2023',
+	// ),
 	new Track(
 		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2023/2bedroomtoyota.mp3',
 		'2 Bedroom Toyota',

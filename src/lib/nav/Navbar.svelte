@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Typed from './Typed.svelte';
-	import { MusicIcon, MailIcon, MenuIcon, DribbbleIcon } from 'svelte-feather-icons';
+	import { MusicIcon, MailIcon, MenuIcon, DribbbleIcon, BookIcon } from 'svelte-feather-icons';
 	import { fly, fade } from 'svelte/transition';
 
 	export let isMobile: boolean = false;
@@ -34,6 +34,14 @@
 					<MailIcon {size} />
 					{#if !isMobile}
 					<h4>Contact</h4>
+					{/if}
+				</a>
+			</li>
+			<li>
+				<a href="#Notes">
+					<BookIcon {size} />
+					{#if !isMobile}
+					<h4>Notes</h4>
 					{/if}
 				</a>
 			</li>

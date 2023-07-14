@@ -4,6 +4,7 @@
   import Games from "./lib/GameStation/Games.svelte";
   import Music from "./lib/music/Music.svelte";
   import Contact from "./lib/contact/Contact.svelte";
+    import Notes from "./lib/notes/panel/Notes.svelte";
 
   let scrollEvent: any = null;
   let isMobile: boolean = false;
@@ -36,6 +37,9 @@
   </article>
   <article id="Contact">
     <Contact {isMobile} />
+  </article>
+  <article id="books">
+    <Notes />
   </article>
 </main>
 
