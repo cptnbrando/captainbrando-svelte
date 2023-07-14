@@ -158,9 +158,9 @@ DownloadIcon
 		<div id="img" on:click={toggleList} class="clickable redHover">
 			<img src={track.img} alt="" />
 			{#if !list}
-			<h3>openthegates</h3>
+			<h3 class="gold">openthegates</h3>
 			{:else}
-			<h3>ah close em!</h3>
+			<h3 class="purp">ah close em!</h3>
 			{/if}
 			<span class={list ? 'red' : ''}>
 				{#if !list}
@@ -228,6 +228,15 @@ DownloadIcon
 <style lang="scss">
 
 	$red: #E62020;
+
+	.gold {
+		color: blue;
+
+	}
+
+	.purp {
+		color: red;
+	}
 
 	#albums {
 		ul {
