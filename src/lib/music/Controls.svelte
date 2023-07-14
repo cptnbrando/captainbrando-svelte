@@ -10,7 +10,8 @@
 		ChevronUpIcon,
 		ChevronDownIcon,
 PauseIcon,
-PlayIcon
+PlayIcon,
+DownloadIcon
 	} from 'svelte-feather-icons';
 	import { fade, fly } from 'svelte/transition';
 	import { type Track, type Album, tracks } from './tracks';
@@ -156,6 +157,11 @@ PlayIcon
 	<div id="seeker">
 		<div id="img" on:click={toggleList} class="clickable redHover">
 			<img src={track.img} alt="" />
+			{#if !list}
+			<h3>openthegates</h3>
+			{:else}
+			<h3>ah close em!</h3>
+			{/if}
 			<span class={list ? 'red' : ''}>
 				{#if !list}
 				<ChevronUpIcon size="40" />
@@ -187,7 +193,7 @@ PlayIcon
 						<RepeatIcon size="40" />
 					</span>
 					<span on:click={() => window.open(track.src, '_blank')} class='button'>
-						<ChevronDownIcon size="40" />
+						<DownloadIcon size="40" />
 					</span>
 				</span>
 			</div>
