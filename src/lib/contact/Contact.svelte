@@ -69,7 +69,7 @@
 			</div>
 			{/if}
 			<div id="vid">
-				<iframe
+				<!-- <iframe
 					src="https://www.youtube.com/embed/XcForynThz0"
 					title="Captain Brando! - Better Better Etc."
 					allow="clipboard-write; encrypted-media;"
@@ -77,7 +77,7 @@
 					width="100%"
 					height="100%"
 					frameborder="0"
-				/>
+				/> -->
 			</div>
 		</div>
 		<div class="bars">
