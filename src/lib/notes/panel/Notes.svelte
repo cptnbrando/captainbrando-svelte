@@ -46,7 +46,7 @@
         <button on:click={() => showNotes = true}>cool, thanks</button>
         <div class='fakenews'>
             <video src={videoSource} controls />
-            <p>{selectedNote}</p>
+            <p>{@html selectedNote}</p>
         </div>
     {/if}
 {/each}
