@@ -134,6 +134,7 @@ PlayIcon
 						<p>Now I make music at my apt in plano, but I don't think my neighbors like my music so I stay quiet most days, meditation and video games</p>
 						<p>Feel free to download and use anything you like, post it wherever too just please credit me</p>
 						<p>imma set up a message box here soon just gimme a minute...</p>
+						<a href="https://github.com/Dcruzships/dcruz-assets/tree/master/music/4"><p>took too long again, failure inevitable, falling, but learing more and more.. come have soemne coffee</p></a>
 					{:else}
 						<!-- <span class="redHover">{goBack}</span> -->
 						<span>

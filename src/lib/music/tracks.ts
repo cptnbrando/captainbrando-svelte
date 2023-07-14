@@ -357,7 +357,7 @@ export const tracks: Track[] = [
 	new Track(
 		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2022/life.mp3',
 		'life.mp3',
-		'2022',
+		'2024',
 	),
 	new Track(
 		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2022/life.mp3',
