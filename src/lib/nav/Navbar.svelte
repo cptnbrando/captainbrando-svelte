@@ -38,10 +38,10 @@
 				</a>
 			</li>
 			<li>
-				<a href="#Notes">
+				<a href="#books">
 					<BookIcon {size} />
 					{#if !isMobile}
-					<h4>Notes</h4>
+					<h4>Books</h4>
 					{/if}
 				</a>
 			</li>
