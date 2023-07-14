@@ -24,7 +24,7 @@
 	});
     
     const start = (key: string) => {
-        if(privy === null) {
+        if(privy === null || privy === true) {
             privy = true;
             return;
         }
