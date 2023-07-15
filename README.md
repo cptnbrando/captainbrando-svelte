@@ -4,32 +4,19 @@
 
 - (NeptunJS)[https://github.com/MoritzWillig/neptunjs/tree/master] / (Lyarinet Fork)[https://github.com/lyarinet/NeptunJS]
 
-# Svelte + TS + Vite
+## Svelte + TS + Vite
 
-This template should help get you started developing with Svelte and TypeScript in Vite.
-
-## Recommended IDE Setup
-
-[VS Code](https://code.visualstudio.com/) + [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode).
-
-## Need an official Svelte framework?
-
-Check out [SvelteKit](https://github.com/sveltejs/kit#readme), which is also powered by Vite. Deploy anywhere with its serverless-first approach and adapt to various platforms, with out of the box support for TypeScript, SCSS, and Less, and easily-added support for mdsvex, GraphQL, PostCSS, Tailwind CSS, and more.
+Check out [SvelteKit](https://github.com/sveltejs/kit#readme), which is also powered by Vite... ah i am unable to make the sveltekit run fast for whatever reason, so using this 
 
 ## Technical considerations
 
-**Why use this over SvelteKit?**
+**Why use this sveltekit over this?**
 
-- It brings its own routing solution which might not be preferable for some users.
-- It is first and foremost a framework that just happens to use Vite under the hood, not a Vite app.
-
-This template contains as little as possible to get started with Vite + TypeScript + Svelte, while taking into account the developer experience with regards to HMR and intellisense. It demonstrates capabilities on par with the other `create-vite` templates and is a good starting point for beginners dipping their toes into a Vite + Svelte project.
-
-Should you later need the extended capabilities and extensibility provided by SvelteKit, the template has been structured similarly to SvelteKit so that it is easy to migrate.
+- The routing in sveltekit is nicer kinda, sometimes
 
 **Why `global.d.ts` instead of `compilerOptions.types` inside `jsconfig.json` or `tsconfig.json`?**
 
-Setting `compilerOptions.types` shuts out all other types not explicitly listed in the configuration. Using triple-slash references keeps the default TypeScript setting of accepting type information from the entire workspace, while also adding `svelte` and `vite/client` type information.
+
 
 **Why include `.vscode/extensions.json`?**
 
