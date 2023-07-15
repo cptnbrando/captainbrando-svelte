@@ -51,7 +51,7 @@
         <button on:click={() => {showNotes = true; noteOpened = true;}}>cool, thanks</button>
         <div class='fakenews'>
             <video src={video1Src} controls />
-            <audio src={need2} controls />
+            <audio src={need2} controls controlsList="nodownload" />
             <p>{@html selectedNote}</p>
         </div>
     {/if}
