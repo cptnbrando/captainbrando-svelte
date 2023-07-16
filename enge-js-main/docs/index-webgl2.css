@@ -1,0 +1,82 @@
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+  user-select: none;
+}
+
+:root {
+  --screen-top: 2vh;
+  --screen-height: 96vh;
+  --screen-width: calc((var(--screen-height) / 9 * 12));
+  --screen-left: calc((100vw - var(--screen-width)) / 2);
+}
+
+@media screen and (max-width: 133.33vh) {
+  :root {
+    --screen-left: 2vw;
+    --screen-width: 96vw;
+    --screen-height: calc((var(--screen-width) / 12 * 9));
+    --screen-top: calc((100vh - var(--screen-height)) / 2);
+  }
+}
+
+html {
+  box-sizing: border-box;
+}
+
+body {
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  top: 0px;
+  bottom: 0px;
+  margin: 0px;
+  overflow: hidden;
+  background-color: #222;
+  background-size: cover;
+}
+
+#background {
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  top: 0px;
+  bottom: 0px;
+  margin: 0px;
+  background-image: linear-gradient(-35deg, #18182060, #202028e0, #18182080, #181820e0);
+}
+
+#display {
+  position: absolute;
+  top: var(--screen-top);
+  left: var(--screen-left);
+  width: var(--screen-width);
+  height: var(--screen-height);
+  background-color: black;
+  border: solid 1px #202028;
+  padding: 0.75vh;
+  border-radius: 0.75vh;
+}
+
+#menu {
+  position: absolute;
+  left: calc(var(--screen-left) + 1px);
+  width: calc(var(--screen-width) - 2px);
+  top: calc(var(--screen-top) + var(--screen-height) - 2vh - 1px);
+  height: 2vh;
+  background-color: #181820;
+}
+
+#ambilight {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  filter: blur(12.5px);
+
+}
