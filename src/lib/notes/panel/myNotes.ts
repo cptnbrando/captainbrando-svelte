@@ -50,4 +50,11 @@ I'm gonna try to be one of those by the time I turn 28, a rich code monkey, or s
 <br />
 Much love, talk soon ❤️`
 
-export const stories: string[] = [story1];
+const story2: string = `There's so much to life, to live for today. I've never had so much to lose, and it makes me afraid every day.<br />
+<br />
+But when I dream of the future, I dream of more. More to lose. So we need security. Encryption, everywhere, all of the time. Do we have that already or nah?<br /><br />
+I always get encryption and compression mixed up, they seem so similar, but yet so far away?<br />
+<br />
+We should connect the dots.`
+
+export const stories: string[] = [story2];

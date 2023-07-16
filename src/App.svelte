@@ -4,7 +4,7 @@
   import Games from "./lib/GameStation/Games.svelte";
   import Music from "./lib/music/Music.svelte";
   import Contact from "./lib/contact/Contact.svelte";
-    import Notes from "./lib/notes/panel/Notes.svelte";
+  import Notes from "./lib/notes/panel/Notes.svelte";
 
   let scrollEvent: any = null;
   let isMobile: boolean = false;

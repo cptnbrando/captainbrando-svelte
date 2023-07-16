@@ -50,14 +50,14 @@
     {:else}
         <button on:click={() => {showNotes = true; noteOpened = true;}}>cool, thanks</button>
         <div class='fakenews'>
-            <video src={video1Src} controls />
+            <!-- <video src={video1Src} controls /> -->
             <audio src={need2} controls controlsList="nodownload" />
             <p>{@html selectedNote}</p>
         </div>
     {/if}
 {/each}
 {#if noteOpened === true}
-<video src={video2Src} controls />
+<!-- <video src={video2Src} controls /> -->
 {/if}
 {#if privy === true}
     <Privacy {privy} />
@@ -69,15 +69,15 @@
     <button on:click={() => {privy = false}}>Click here to agree</button>
 {/if}
 
-<audio controls src="music\etc\isthereanybodyoutthere.mp3"></audio>
-<h5>isthereanybodyoutthere.mp3</h5>
+<!-- <audio controls src="music\etc\isthereanybodyoutthere.mp3"></audio> -->
+<!-- <h5>isthereanybodyoutthere.mp3</h5> -->
 
 <style lang="scss">
     .note {
         height: 80px;
         width: 80px;
         border: solid;
-        background-color: black;
+        background-color: crimson;
         position: relative;
         top: 5%;
         left: 5%;
