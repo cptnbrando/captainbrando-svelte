@@ -5,34 +5,20 @@
     <link rel="icon" type="image/x-icon" href="/boat2.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Captain Brando!</title>
-    <script type="module" crossorigin src="/assets/index-90adcad2.js"></script>
+    <script type="module" crossorigin src="/assets/index-30d6a57f.js"></script>
     <link rel="stylesheet" href="/assets/index-ecd294b2.css">
   </head>
   <body>
     <div id="app"></div>
 
+    <script defer src="https://www.emulatorjs.com/loader.js"></script>
+
     <!-- Lyarinet NeptunJS lib -->
     <script>
-      const NepPlayer = "#emulator";     // ID of html element where the emulator will be inserted
-      let NepEmu = "n64";         // Platform select
-      let neogeoBios = "neogeo.zip";
-      let NepZoom = "enable";     // Add extra button on toolbar to scale up emulator. Disabled by default
-      let NepMaxWidth = "1100px"; // Maximum width size of emulator. 870px by default
-      let NepLang = "en";         // Interface language of the emulator. EN by default
-      let EmuGbaBios = "enable";  // ( only for GBA ) GBA Bios Need for some games. Disabled by default
-      let gameUrl = "/lyarinet-neptunJS/rom.zip"; // Game Url
-
-      //host integrity check patched
-      let scriptsus = document.createElement("script");
-      scriptsus.setAttribute("data-name", "njs2");
-      scriptsus.src = "/lyarinet-neptunJS/NJS.gge";//doing integrity checks like loader
-      document.head.appendChild(scriptsus);
-      let style = document.createElement("link");
-      style.href = "/lyarinet-neptunJS/neptun.css";
-      style.rel = "stylesheet";
-      style.type = "text/css";
-      document.head.appendChild(style);
-      // location.reload();
+      EJS_player = '#game';
+      EJS_biosUrl = '/scph1001.bin'; // Url to Bios file
+      EJS_gameUrl = 'https://dl11.cdromance.com/download.php?file=LSD%20-%20Dream%20Emulator%20%28Japan%29.7z&id=169075&platform=psx-iso&key=85304480345'; // Url to Game rom
+      EJS_core = 'psx';
     </script>
 
     
