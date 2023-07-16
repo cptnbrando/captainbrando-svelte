@@ -57,4 +57,4 @@ I always get encryption and compression mixed up, they seem so similar, but yet 
 <br />
 We should connect the dots.`
 
-export const stories: string[] = [story2];
+export const stories: string[] = [story1, story2];

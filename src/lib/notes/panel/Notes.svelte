@@ -49,11 +49,13 @@
         <div class='note' id={`story${index}`} on:click={() => start(key)} on:keydown={down}></div>
     {:else}
         <button on:click={() => {showNotes = true; noteOpened = true;}}>cool, thanks</button>
+        {#if selectedNote === key}
         <div class='fakenews'>
             <!-- <video src={video1Src} controls /> -->
             <audio src={need2} controls controlsList="nodownload" />
             <p>{@html selectedNote}</p>
         </div>
+        {/if}
     {/if}
 {/each}
 {#if noteOpened === true}
