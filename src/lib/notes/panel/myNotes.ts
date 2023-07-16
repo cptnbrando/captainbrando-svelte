@@ -55,6 +55,10 @@ const story2: string = `There's so much to life, to live for today. I've never h
 But when I dream of the future, I dream of more. More to lose. So we need security. Encryption, everywhere, all of the time. Do we have that already or nah?<br /><br />
 I always get encryption and compression mixed up, they seem so similar, but yet so far away?<br />
 <br />
-We should connect the dots.`
+We should connect the dots.<br />
+<br />
+<br />
+<br />
+or i will because the game i wanna play is 600mb and thats too big for the world rn....`
 
 export const stories: string[] = [story1, story2];

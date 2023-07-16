@@ -1,5 +1,10 @@
-<script lang="ts">
+<script>
     import Emu from "./Emu.svelte";
+
+    EJS_player = '#game';
+    EJS_biosUrl = ''; // Url to Bios file
+    EJS_gameUrl = ''; // Url to Game rom
+    EJS_core = 'psx';
 </script>
 
 <div class="container" id="emuPanel">
@@ -9,15 +14,19 @@
             <button
                 on:click={() => {
                     window.location.reload();
-                }}>sorry, game no work rn. legacy code stuff. comeback later. scroll for music.</button
+                }}>wannaplay?</button
             >
         </span>
-        <!-- <br />
+        <div style="width:640px;height:480px;max-width:100%">
+            <div id="game"></div>
+        </div>
+        <script src="https://www.emulatorjs.com/loader.js"></script>
+        <br />
         <span>...then click Start Game</span>
         <span>...then click the pause button</span>
         <br />
         <span>if it aint workin...</span>
-        <span>refresh the page</span> -->
+        <span>refresh the page</span>
     </div>
     <div class="emu-flex" id="emuMain">
         <Emu />
