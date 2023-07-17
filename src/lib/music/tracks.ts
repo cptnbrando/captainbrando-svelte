@@ -57,8 +57,8 @@ export class Album {
 
 export let albums: Album[] = [
 	new Album(
-		'2025',
-		'friends',
+		'covers, etc. (saul)',
+		'saul',
 		'brandon dcruz'
 	),
 	new Album(
@@ -124,7 +124,7 @@ export const tracks: Track[] = [
 	new Track(
 		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/isthereanybodyoutthere.mp3',
 		'isthereanybodyoutthere? (i swear i heard somethin...)',
-		'2025',
+		'covers, etc. (saul)',
 	),
 	new Track(
 		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2023/2bedroomtoyota.mp3',
@@ -156,31 +156,31 @@ export const tracks: Track[] = [
 		'Velvet',
 		'2023',
 	),
-	// new Track(
-	// 	'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/IDKOK.mp3',
-	// 	'IDKOK',
-	// 	'ily'
-	// ),
-	// new Track(
-	// 	'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/Instagram.mp3',
-	// 	'Instagram',
-	// 	'ily',
-	// ),
-	// new Track(
-	// 	'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/him.mp3',
-	// 	'him',
-	// 	'ily',
-	// ),
-	// new Track(
-	// 	'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/october13.mp3',
-	// 	'October 13th',
-	// 	'ily',
-	// ),
-	// new Track(
-	// 	'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/him(demo).mp3',
-	// 	'him (demo)',
-	// 	'ily',
-	// ),
+	new Track(
+		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/IDKOK.mp3',
+		'IDKOK',
+		'ily'
+	),
+	new Track(
+		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/Instagram.mp3',
+		'Instagram',
+		'ily',
+	),
+	new Track(
+		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/him.mp3',
+		'him',
+		'ily',
+	),
+	new Track(
+		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/october13.mp3',
+		'October 13th',
+		'ily',
+	),
+	new Track(
+		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/him(demo).mp3',
+		'him (demo)',
+		'ily',
+	),
 	new Track(
 		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/down3-2.mp3',
 		'down3-2',
