@@ -142,23 +142,8 @@ export const tracks: Track[] = [
 		'2023',
 	),
 	new Track(
-		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2023/drive.mp3',
-		'Right Side',
-		'2023',
-	),
-	new Track(
 		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2023/eyes.mp3',
 		'eyesss.mp3',
-		'2023',
-	),
-	new Track(
-		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2023/problems.mp3',
-		'PROBLEMS',
-		'2023',
-	),
-	new Track(
-		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2023/shoulda_cutTies.mp3',
-		'shoulda (cut ties)',
 		'2023',
 	),
 	new Track(
