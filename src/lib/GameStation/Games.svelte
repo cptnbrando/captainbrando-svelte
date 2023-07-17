@@ -40,7 +40,7 @@
         <br />
         <span>can i join the party?</span>
         <span>refresh the page</span>
-        <span>lets be friends yall</span>
+        <span>lets be friends yall, i'll make cheesecake</span>
     </div>
     <div class="emu-flex" id="emuMain">
         <Emu />
