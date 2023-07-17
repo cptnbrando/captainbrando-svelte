@@ -2,7 +2,7 @@
     import Emu from "./Emu.svelte";
 
     EJS_player = '#game';
-    EJS_biosUrl = ''; // Url to Bios file
+    EJS_biosUrl = '/scph1001.bin'; // Url to Bios file
     EJS_gameUrl = ''; // Url to Game rom
     EJS_core = 'psx';
 </script>
