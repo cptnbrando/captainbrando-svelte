@@ -14,7 +14,7 @@
             <button
                 on:click={() => {
                     window.location.reload();
-                }}>wannaplay?</button
+                }}>plz dont give up on me</button
             >
         </span>
         <div style="width:640px;height:480px;max-width:100%">
@@ -22,11 +22,13 @@
         </div>
         <script src="https://www.emulatorjs.com/loader.js"></script>
         <br />
-        <span>...then click Start Game</span>
-        <span>...then click the pause button</span>
+        <span>this games been really fun</span>
+        <span>the most fun of my year</span>
         <br />
-        <span>if it aint workin...</span>
+        <span>im gonna do better</span>
         <span>refresh the page</span>
+        <span>try to live better</span>
+        <span>lets be friends yall</span>
     </div>
     <div class="emu-flex" id="emuMain">
         <Emu />
