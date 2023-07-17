@@ -129,7 +129,7 @@
 
   @media only screen and (max-width: 600px) {
   main {
-    scroll-padding-top: 50px;
+    scroll-padding-top: 42px;
   }
 }
 </style>
