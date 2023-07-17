@@ -27,3 +27,4 @@ dist-ssr
 
 .env
 rom-ls.zip
+public/lsd.bin

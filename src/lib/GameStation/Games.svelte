@@ -5,7 +5,7 @@
 
     // Url to Bios file
     EJS_biosUrl = '/scph1001.bin';
-    EJS_gameUrl = ``;
+    EJS_gameUrl = `/lsd.bin`;
     EJS_core = 'psx';
 
     // quota hit on gh pages, gg gamers
