@@ -38,15 +38,14 @@
         <span>this games been really fun</span>
         <span>the most fun of my year</span>
         <br />
-        <span>im gonna do better</span>
+        <span>can i join the party?</span>
         <span>refresh the page</span>
-        <span>try to live better</span>
         <span>lets be friends yall</span>
     </div>
     <div class="emu-flex" id="emuMain">
         <Emu />
     </div>
-    <div class="emu-flex over" id="emuControls">
+    <!-- <div class="emu-flex over" id="emuControls">
         <h3>Controls</h3>
         <span>WASD to move</span>
         <span>Enter to click!</span>
@@ -54,18 +53,18 @@
         <span>J to do something</span>
         <span>K to do something else</span>
         <span>SPACE to crouch</span>
-    </div>
+    </div> -->
 </div>
 
 <style lang="scss">
-    .emu-flex {
-        width: 100%;
-        height: 100%;
-    }
+    // .emu-flex {
+    //     width: 100%;
+    //     height: 100%;
+    // }
 
-    #emuMain {
-        flex: 9;
-    }
+    // #emuMain {
+    //     flex: 9;
+    // }
 
     .over {
         z-index: 10;
@@ -73,18 +72,20 @@
         align-items: center;
         padding: 1%;
         text-align: center;
-        flex: 2;
+        // flex: 2;
     }
 
     #emuPanel {
         display: flex;
         width: 100%;
         height: 100%;
+        align-items: center;
+        justify-content: center;
     }
 
-    .container {
-        position: relative;
-    }
+    // .container {
+    //     position: relative;
+    // }
 
     span {
         display: flex;
