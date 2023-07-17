@@ -131,11 +131,14 @@ DownloadIcon
 						<p>Most songs written and performed by me except for the ones with friends 
 							<a href="https://www.instagram.com/honeydutheband/" target="_blank">(Cigs Inside is now 𝘩𝘰𝘯𝘦𝘺𝘥ü, check them out here)</a>
 						</p>
-						<p>All tracks recorded and produced by me in dorm rooms, cars, bars, airplanes, or Starbucks bathrooms</p>
-						<p>Now I make music at my apt in plano, but I don't think my neighbors like my music so I stay quiet most days, meditation and video games</p>
+						<p>
+							<a href="https://www.youtube.com/watch?v=uzTMHcWtP2Q">(Check out The Cut Ties here! Greg and I jammin again, mostly just greg tho that dude's a g)</a>
+						</p>
+						<p>All tracks recorded and produced by me in dorm rooms, cars, bars, airplanes, or bathrooms (always with dogs/cats)</p>
+						<p>Now I make music at my apt in tulsa OK. I stay quiet most days, meditation and video games</p>
 						<p>Feel free to download and use anything you like, post it wherever too just please credit me</p>
 						<p>imma set up a message box here soon just gimme a minute...</p>
-						<a href="https://github.com/Dcruzships/dcruz-assets/tree/master/music/4"><p>took too long again, failure inevitable, falling, but learing more and more.. come have soemne coffee</p></a>
+						<a href="https://www.youtube.com/watch?v=LG4Oi9cnUvw"><p>come dance with me if you can find me, and plz say hi instead of shittalkin me</p></a>
 					{:else}
 						<!-- <span class="redHover">{goBack}</span> -->
 						<span>
@@ -144,6 +147,7 @@ DownloadIcon
 						</span>
 						<ol>
 							{#each selectedTracks as listTrack}
+							<!-- svelte-ignore a11y-click-events-have-key-events -->
 							<li on:click={() => {chooseTrack(listTrack.name)}} class="{track.name === listTrack.name ? 'active' : ''}">
 								{listTrack.name}
 							</li>
@@ -155,6 +159,7 @@ DownloadIcon
 		{/if}
 	</div>
 	<div id="seeker">
+		<!-- svelte-ignore a11y-click-events-have-key-events -->
 		<div id="img" on:click={toggleList} class="clickable redHover">
 			<img src={track.img} alt="" />
 			{#if !list}
@@ -173,12 +178,15 @@ DownloadIcon
 		<div id="controller">
 			<div class="wide">
 				<span id="mobileControls" class="icons">
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
 					<span on:click={() => command('shuffle')} class={shuffle ? 'active button' : 'button'}>
 						<ShuffleIcon size="40" />
 					</span>
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
 					<span class="button" on:click={() => command('prev')}>
 						<SkipBackIcon size="40" />
 					</span>
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
 					<span class="button" on:click={() => command('playPause')}>
 						{#if isPlaying}
 							<PauseIcon size="40" />
@@ -186,9 +194,11 @@ DownloadIcon
 							<PlayIcon size="40" />
 						{/if}
 					</span>
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
 					<span class="button" on:click={() => command('next')}>
 						<SkipForwardIcon size="40" />
 					</span>
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
 					<span on:click={() => command('loop')} class={loop ? 'active button' : 'button'}>
 						<RepeatIcon size="40" />
 					</span>
@@ -197,6 +207,7 @@ DownloadIcon
 					</span> -->
 				</span>
 			</div>
+			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			<div ref="box" class="clickable redHover" id="track" on:click={toggleList}>
 				{#if !isMobile}
 				{track.artist} - 

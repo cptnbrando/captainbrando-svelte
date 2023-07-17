@@ -72,7 +72,7 @@
     scroll-snap-type: y mandatory;
     scroll-behavior: smooth;
     max-height: 100vh;
-    scroll-padding-top: 5vh;
+    scroll-padding-top: 50px;
     overflow-x: hidden;
   }
 
@@ -129,7 +129,7 @@
 
   @media only screen and (max-width: 600px) {
   main {
-    scroll-padding-top: 3.5vh;
+    scroll-padding-top: 50px;
   }
 }
 </style>
