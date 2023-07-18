@@ -1,6 +1,24 @@
 const story1: string = `Tomorrowland<br />
 <br />
-I saw this very inspirational message and wanted to tell y'all about how life's been lately. please let $&$v@# read this message, and show her the video after too.<br />
+7/17/2023
+<br />
+<br />
+i'll just buy my own trashcan then`;
+
+const story2: string = `7/16/23 <br />
+<br />
+There's so much to life, to live for today. I've never had so much to lose, and it makes me afraid every day.<br />
+<br />
+But when I dream of the future, I dream of more. More to lose. So we need security. Encryption, everywhere, all of the time. Do we have that already or nah?<br /><br />
+I always get encryption and compression mixed up, they seem so similar, but yet so far away?<br />
+<br />
+We should connect the dots.<br />
+<br />
+<br />
+<br />
+or i will because the game i wanna play is 600mb and thats too big for the world rn....`;
+
+const neverland: string = `I saw this very inspirational message and wanted to tell y'all about how life's been lately. please let $&$v@# read this message, and show her the video after too.<br />
 <br />
 Since getting back to America, my company was on fire. They signed deals with Toyota, StubHub, the NBA, and so many other big companies. They specialized in 401ks, death certificates, loan repayments. Lots of fucking bullshit (data analytical perspective). And I was partnered with the guy in charge of a highway of data, a microservice architecture, Angular (js framework that specializes in generating massive amounts of fucking files for basic tasks to ensure that when 74 monkeys work on an Angular project, 1 monkey can't fuck it all up by themselves, usually).<br />
 <br />
@@ -48,17 +66,6 @@ Did you know a software architect makes 800 thousand dollars a year? Neither did
 <br />
 I'm gonna try to be one of those by the time I turn 28, a rich code monkey, or something like that. Then I'll come give y'all a big party.<br />
 <br />
-Much love, talk soon ❤️`
+Much love, talk soon ❤️`;
 
-const story2: string = `There's so much to life, to live for today. I've never had so much to lose, and it makes me afraid every day.<br />
-<br />
-But when I dream of the future, I dream of more. More to lose. So we need security. Encryption, everywhere, all of the time. Do we have that already or nah?<br /><br />
-I always get encryption and compression mixed up, they seem so similar, but yet so far away?<br />
-<br />
-We should connect the dots.<br />
-<br />
-<br />
-<br />
-or i will because the game i wanna play is 600mb and thats too big for the world rn....`
-
-export const stories: string[] = [story1, story2];
+export const stories: string[] = [story1, story2, neverland];

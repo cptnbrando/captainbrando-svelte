@@ -122,6 +122,11 @@ export const tracks: Track[] = [
 	// 	'2023',
 	// ),
 	new Track(
+		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/badsong2.mp3',
+		'trash-song2',
+		'covers, etc. (saul)',
+	),
+	new Track(
 		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/isthereanybodyoutthere.mp3',
 		'isthereanybodyoutthere? (i swear i heard somethin...)',
 		'covers, etc. (saul)',
