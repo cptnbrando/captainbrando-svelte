@@ -1,13 +1,13 @@
 <script>
     import Emu from "./Emu.svelte";
 
-    EJS_player = '#game';
+    // EJS_player = '#game';
 
-    // Url to Bios file
-    EJS_biosUrl = '/scph1001.bin';
-    EJS_core = 'psx';
+    // // Url to Bios file
+    // EJS_biosUrl = '/scph1001.bin';
+    // EJS_core = 'psx';
 
-    EJS_gameUrl = `https://storage.bunnycdn.com/captaingames//lsd.bin`;
+    // EJS_gameUrl = `https://storage.bunnycdn.com/captaingames//lsd.bin`;
 
     // EJS_gameUrl = `/lsd.bin`;
     
@@ -27,16 +27,16 @@
             <button
                 on:click={() => {
                     window.location.reload();
-                }}>reload</button
+                }}>no games rn, scroll down for music</button
             >
         </span>
         <div style="width:640px;height:480px;max-width:100%">
             <div id="game"></div>
         </div>
-        <script src="https://www.emulatorjs.com/loader.js"></script>
+        <!-- <script src="https://www.emulatorjs.com/loader.js"></script> -->
         <br />
-        <span>refresh the page</span>
-        <span>make something new</span>
+        <!-- <span>refresh the page</span> -->
+        <span>gotta make something new...</span>
     </div>
     <div class="emu-flex" id="emuMain">
         <Emu />
