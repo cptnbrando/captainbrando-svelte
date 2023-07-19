@@ -18,7 +18,7 @@ We should connect the dots.<br />
 <br />
 or i will because the game i wanna play is 600mb and thats too big for the world rn....`;
 
-const neverland: string = `I saw this very inspirational message and wanted to tell y'all about how life's been lately. please let $&$&*@# read this message, and show her the video after too.<br />
+const neverland: string = `I saw this very inspirational message and wanted to tell y'all about how life's been lately. please let nani read this message, and show her the video after too.<br />
 <br />
 Since getting back to America, my company was on fire. They signed deals with [car company], [ticket company], [sports company], and so many other big companies. They specialized in 401ks, death certificates, loan repayments. Lots of fucking bullshit (data analytical perspective). And I was partnered with the guy in charge of a highway of data, a microservice architecture, Angular (js framework that specializes in generating massive amounts of fucking files for basic tasks to ensure that when 74 monkeys work on an Angular project, 1 monkey can't fuck it all up by themselves, usually).<br />
 <br />
@@ -51,6 +51,9 @@ I kept getting things right. Since the fire had relaxed with business now knowin
 But that meant that they had all been wrong, for 4 years. Not just the 2 I had been there for. That means for 4 years, they lost millions, maybe billions, not including the salaries for 500 developers who couldnt solve it. And I told them how to stop doing that. Gave them a design doc for a new app to fix their shitshow.<br />
 <br />
 A new guy showed up to work the next day. His name is Patrick. His hair is red. The only thing I heard him say was "uhhhh... Ummm.. I don't know".<br />
+<br />
+Edit 7/19 - Patrick's actually mad chill and it was a pleasure to assist him to set up his dev environments. He seemed so lost, mentioning old co-worker names whom always kept me lost too. He's got a lot to learn, more than me, but I'm glad I could set him up while I could. Maybe he'll figure out a faster way to create reliable code changes than me. I didn't bullshit him, I told him the truths I have learned about this position, and I hope he finds a way to enjoy it. I never did...
+<br />
 <br />
 Then they fired me. Let me go. Replaced me with a ginger.<br />
 <br />
