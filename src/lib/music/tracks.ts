@@ -26,14 +26,15 @@ export class Track {
 	name: string;
 	album: string;
 	img: string;
-  	arrAlbum: Album;
+	arrAlbum: Album;
+	download: boolean;
 
 	constructor(src: string, name: string, album: string) {
-    this.arrAlbum = albums.find(el => el.name === album);
-    if(!this.arrAlbum) {
-      this.arrAlbum = new Album(album, 'sailboat', 'Captain Brando!');
-      albums.push(this.arrAlbum);
-    }
+		this.arrAlbum = albums.find(el => el.name === album);
+		if (!this.arrAlbum) {
+			this.arrAlbum = new Album(album, 'sailboat', 'Captain Brando!');
+			albums.push(this.arrAlbum);
+		}
 		this.src = (src.length > 65) ? src : 'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/' + src + '.mp3';
 		this.artist = this.arrAlbum.artist;
 		this.name = name;
@@ -46,7 +47,7 @@ export class Album {
 	name: string;
 	src: string;
 	artist: string;
-  	tracks: Track[];
+	tracks: Track[];
 
 	constructor(name: string, src: string, artist?: string, tracks?: string[]) {
 		this.name = name;
@@ -78,12 +79,12 @@ export let albums: Album[] = [
 	),
 	new Album(
 		'ily',
-    	'ily',
+		'ily',
 		'Captain Brando!'
 	),
 	new Album(
 		'RIP',
-    	'rip',
+		'rip',
 		'Captain Brando!'
 	),
 	new Album(
