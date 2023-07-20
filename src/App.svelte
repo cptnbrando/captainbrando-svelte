@@ -29,17 +29,8 @@
 <svelte:window />
 <main>
   <Navbar />
-  <article id="Games">
-    <Games />
-  </article>
   <article id="music">
     <Music {scrollEvent} {isMobile} />
-  </article>
-  <article id="Contact">
-    <Contact {isMobile} />
-  </article>
-  <article id="books">
-    <Notes />
   </article>
 </main>
 
