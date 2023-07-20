@@ -18,7 +18,7 @@
     const video1Src = 'vid/vid1.webm';
     const video2Src = 'vid/terry.webm';
 
-    let need2 = 'music/etc/need2.mp3'
+    let need2 = 'music/etc/onGP.mp3'
 
 	onMount(async () => {
 		stories.forEach((el, i) => {
@@ -79,7 +79,7 @@
         height: 80px;
         width: 80px;
         border: solid;
-        background-color: crimson;
+        background-color: rgb(90, 0, 0);
         position: relative;
         top: 5%;
         left: 5%;
