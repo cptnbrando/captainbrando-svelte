@@ -68,8 +68,6 @@ I cried about this for a while, but I worked (fun to go to a meeting labeled as 
 <br />
 I got an offer at another company for double what I was making at Shabadoya Gargantual / Cogs Slow Ass Website ToiletEnthusiasts today. With a 10 thousand dollar signing bonus to boot, in cold hard cash (at least, thats the offer. gonna keep prepping for interviews after i finish typing this sentence. promise.).<br />
 <br />
-One company even offered me stock options! They really tried to sell it to. Ahhh, the corporate world. Stocks are still based primarily off how company's are percieved, and how shit goes down between the 10,000 monkeys involved, right? So these companies are offering me a lifetime guarantee of my finances being permanently tied to 10,000 monkeys, doing as they please in an ever changing world? Very cool! Hard pass for now. Too much fucking data and too much fucking bullshit, don't even get me started...<br />
-<br />
 I proposed to the love of my life in december, her birthday, across the world in australia, with some of my pennies (still paying off that rock baby). I think time's are changing, and there have been so many people who've been in situations like me, that they've made some good companies out there now! I'm now surfing through Job offers, potential money more than I ever dreamed.<br />
 <br />
 Did you know a software architect makes 800 thousand dollars a year? Neither did i. Damn... they coulda fired one of those monkeys instead of firing 16 of me...<br />
