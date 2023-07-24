@@ -64,7 +64,7 @@ export let albums: Album[] = [
 	),
 	new Album(
 		'2024',
-		'fuck',
+		'yuh',
 		'Captain Brando! d'
 	),
 	new Album(
