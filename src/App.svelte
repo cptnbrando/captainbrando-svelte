@@ -32,6 +32,9 @@
   <article id="music">
     <Music {scrollEvent} {isMobile} />
   </article>
+  <article id="contact">
+    <Contact {isMobile} />
+  </article>
   <article id="books">
     <Notes />
   </article>

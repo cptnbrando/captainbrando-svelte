@@ -1,10 +1,7 @@
 <script lang="ts">
 	import {
-		FacebookIcon,
 		GithubIcon,
-		InstagramIcon,
 		LinkedinIcon,
-		TwitchIcon,
 		TwitterIcon,
 		YoutubeIcon
 	} from 'svelte-feather-icons';
@@ -12,8 +9,10 @@
 
 	export let isMobile: boolean;
 
+	const github: string = `https://raw.githubusercontent.com/dcruzships/dcruz-assets/master`;
+
 	let numBio: number = 3;
-	let src: string = `img/bio${3}.png`;
+	let src: string = `${github}/images/bio3.png`;
 	let totalBio: number = 4;
 
 	$: logoSize = (isMobile) ? "30" : "60";
@@ -29,7 +28,7 @@
 		}
 
 		numBio = dif;
-		src = `/img/bio${dif}.png`;
+		src = `${github}/images/bio${dif}.png`;
 	}
 </script>
 
@@ -44,8 +43,8 @@
                     <li>Brandon Dcruz aka Captain Brando!</li>
                     <li>Age: 24</li>
                     <li>Origin: Altona Meadows, Australia </li>
-                    <li>Occupation: Software Engineer at Cognizant</li>
-                    <li>Education: B.A.S.c in Creative Digital Media from the Rochester Institute of Technology 2020</li>
+                    <li>Occupation: Software Engineer</li>
+                    <li>Education: B.A.S.c from RIT 2020</li>
                     <li>Musical Instruments: Drums, Guitar, Piano, Ableton</li>
                     <li>Current Mood: Feelin good</li>
                     <br />
@@ -66,8 +65,8 @@
                 </ul>
 			</div>
 			{/if}
-			<div id="vid">
-				<!-- <iframe
+			<!-- <div id="vid">
+				<iframe
 					src="https://www.youtube.com/embed/XcForynThz0"
 					title="Captain Brando! - Better Better Etc."
 					allow="clipboard-write; encrypted-media;"
@@ -75,17 +74,11 @@
 					width="100%"
 					height="100%"
 					frameborder="0"
-				/> -->
-			</div>
+				/>
+			</div> -->
 		</div>
 		<div class="bars">
-			<a href="https://www.facebook.com/cptnbrando" target="_blank">
-				<FacebookIcon size={logoSize} />
-			</a>
-			<a href="https://www.instagram.com/captainbrandooo/" target="_blank">
-				<InstagramIcon size={logoSize} />
-			</a>
-			<a href="https://twitter.com/captainbrandooo" target="_blank">
+			<a href="https://twitter.com/captainbrandoo" target="_blank">
 				<TwitterIcon size={logoSize} />
 			</a>
 			<a href="https://github.com/cptnbrando" target="_blank">
@@ -96,9 +89,6 @@
 			</a>
 			<a href="https://www.youtube.com/c/captainbrando" target="_blank">
 				<YoutubeIcon size={logoSize} />
-			</a>
-			<a href="https://www.twitch.tv/captainbrandooo" target="_blank">
-				<TwitchIcon size={logoSize} />
 			</a>
 		</div>
 	</div>

@@ -15,10 +15,13 @@
 
     let noteOpened: boolean = false;
 
-    const video1Src = 'vid/vid1.webm';
-    const video2Src = 'vid/terry.webm';
+    const github: string = `https://raw.githubusercontent.com/dcruzships/dcruz-assets/master`;
 
-    let need2 = 'music/etc/onGP.mp3'
+    const video1Src = `${github}/vid/vid1.webm`;
+    const video2Src = `${github}/vid/terry.webm`;
+
+    const need2 = `${github}/music/notMine/need2.mp3`;
+    const onGP = `${github}/music/notMine/onGP.mp3`;
 
 	onMount(async () => {
 		stories.forEach((el, i) => {
@@ -52,7 +55,7 @@
         {#if selectedNote === key}
         <div class='fakenews'>
             <!-- <video src={video1Src} controls /> -->
-            <audio src={need2} controls controlsList="nodownload" />
+            <audio src={onGP} controls controlsList="nodownload" />
             <p>{@html selectedNote}</p>
         </div>
         {/if}

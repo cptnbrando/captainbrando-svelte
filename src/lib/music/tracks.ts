@@ -123,13 +123,23 @@ export const tracks: Track[] = [
 	// 	'2023',
 	// ),
 	new Track(
-		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/badsong2.mp3',
-		'trash-song2',
+		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/isthereanybodyoutthere.mp3',
+		'need2/creep (Pinegrove/Radiohead)',
 		'covers, etc. (saul)',
 	),
 	new Track(
-		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/isthereanybodyoutthere.mp3',
-		'isthereanybodyoutthere? (i swear i heard somethin...)',
+		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/rust/245AM.mp3',
+		'2:45 AM (Elliott Smith) (w/ theo)',
+		'covers, etc. (saul)',
+	),
+	new Track(
+		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/rust/bottleUPandEXPLODE.mp3',
+		'Bottle Up and Explode! (Elliott Smith) (w/ theo)',
+		'covers, etc. (saul)',
+	),
+	new Track(
+		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/rust/CHRISTIANBROTHERS.mp3',
+		'Christian Brothers (Elliott Smith) (w/ theo)',
 		'covers, etc. (saul)',
 	),
 	new Track(
@@ -375,36 +385,6 @@ export const tracks: Track[] = [
 	new Track(
 		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2022/life.mp3',
 		'life.mp3',
-		'2022',
-	),
-	new Track(
-		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2022/life.mp3',
-		'life.mp3',
-		'2022',
-	),
-	new Track(
-		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/newAYUP.mp3',
-		'ayup.mp3',
-		'2024',
-	),
-	new Track(
-		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2022/life.mp3',
-		'life.mp3',
-		'2024',
-	),
-	new Track(
-		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/4/slowdown.mp3',
-		'slowdown.mp3',
-		'2024',
-	),
-	new Track(
-		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/4/gotfiredneedajob.mp3',
-		'gotfiredneedajob.mp3',
-		'2024',
-	),
-	new Track(
-		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/4/harv-ard.mp3',
-		'harv-ard.mp3',
 		'2024',
 	),
 	new Track(
@@ -420,6 +400,11 @@ export const tracks: Track[] = [
 	new Track(
 		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2023/drive.mp3',
 		'brightside',
+		'2024',
+	),
+	new Track(
+		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/newAYUP.mp3',
+		'ayup.mp3',
 		'2024',
 	)
 ];

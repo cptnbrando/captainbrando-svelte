@@ -13,14 +13,14 @@
 	<span>
 		{#if show}
 		<ul in:fly="{{ x: -600, duration: 400, delay: 200 }}" out:fly="{{ x: -600, duration: 400 }}" class="buttons">
-			<li>
+			<!-- <li>
 				<a href="#Games">
 					<DribbbleIcon {size} />
 					{#if !isMobile}
 					<h4>Games</h4>
 					{/if}
 				</a>
-			</li>
+			</li> -->
 			<li>
 				<a href="#music">
 					<MusicIcon {size} />
@@ -30,7 +30,7 @@
 				</a>
 			</li>
 			<li>
-				<a href="#Contact">
+				<a href="#contact">
 					<MailIcon {size} />
 					{#if !isMobile}
 					<h4>Contact</h4>
