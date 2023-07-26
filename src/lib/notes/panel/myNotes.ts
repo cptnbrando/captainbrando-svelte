@@ -70,6 +70,7 @@ I got an offer at another company for double what I was making at Shabadoya Garg
 <br />
 I proposed to the love of my life in december, her birthday, across the world in australia, with some of my pennies (still paying off that rock baby). I think time's are changing, and there have been so many people who've been in situations like me, that they've made some good companies out there now! I'm now surfing through Job offers, potential money more than I ever dreamed.<br />
 <br />
+EDIT 7/26: nvm they bailed on me, no feedback, just another "pass". junk email. so now, to pay my bills and feed the ones i love, i must either stay with the worst company ive ever done slave labor for, or pray that any of my applications anywhere else yield liveable fruit. so far, nada. just rejection, silence, and bad advice from people with houses, hypocrites telling me to do things theyve never done themselves. This game sucks, and before i die, i vow to destroy it. no more contracts, no more unpaid overtime, no more micromanagers, no more recruiters, no more suffering, no more slavery. Im going to create that world, a fair one, one day at a time.<br /><br />
 Did you know a software architect makes 800 thousand dollars a year? Neither did i. Damn... they coulda fired one of those monkeys instead of firing 16 of me...<br />
 <br />
 I'm gonna try to be one of those by the time I turn 28, a rich code monkey, or something like that. Then I'll come give y'all a big party.<br />
