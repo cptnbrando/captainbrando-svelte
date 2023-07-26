@@ -1,7 +1,6 @@
 <script lang="ts">
+    import { ArrowLeftIcon } from 'svelte-feather-icons';
     let pp: boolean = false;
-    let bigPenis: boolean = false;
-    export let privy: boolean;
 </script>
 <div class='PRIVATE'>
     <h2>WARNING</h2>
@@ -24,32 +23,39 @@
                        || ||
                       ooO Ooo
        </pre>
-       <button on:click={() => {pp = false}}>aight, you cool?</button>
+       <button on:click={() => {pp = false}} class='butt'><ArrowLeftIcon size='25' />aight, you cool?</button>
        <p>snitches get stitches</p>
        <p>...</p>
-       <p>i will assault you physically, and verbally, should you feel the need to interpret these notes negatively.</p>
-       <p>shut down your machine if your emotions overwhlem you, or compel you to be a little bitch about expression, or idk man shut down if you not feelin it</p>
-       <p>nobody gives a fuck either way. about you, about me, certainly not about these notes</p>
-       <p>unless you do give a fuck about these notes</p>
-       <p>in which case, like if these past few sentences have already made you feel uneasy, please go away. there's nothing further down here for you.</p>
-       <p>regardless, no. I don't give anybody, or anything, permission to view, read, download, extract, plagiarize, eat, consume, imagine, look at, breath at, listen to, preach, abstract, contemplate, annunciate, or believe anything written on this page, especially anything in my books. Which, of course, are most definately purely fictional I pinkie swear. Do not make this news. Do not make this a social media thing. Don't share it, speak it, think it, and definately do not do anything you read about here. Or else.</p>
-       <p>That goes for anything you've already seen, and anything you see next. This is mine, not yours, leave it for me.</p>
+       <p>privacy policies, regardless of visual styling or word choice, are very lame. But needed, because privacy on the internet has never existed.</p>
+       <p>to read my books, you must refrain from judgement, immitation, and subsequent thoughts or actions.</p>
+       <p>by clicking agree on the previous page, you vow to forget about everything you read on captainbrando.com as you read it.</p>
+       <p>thank you</p>
     </div>
     {:else}
-        <button on:click={() => {pp = true}}>Click here to read the Privacy Policy</button>
+        <button on:click={() => {pp = true}}>Click here to view Privacy Policy</button>
     {/if}
 </div>
 
 <style>
     .PRIVATE {
-        position: relative;
+        position: sticky;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        max-height: 65%;
+        overflow-y: auto;
+        padding-top: 14vh;
+        /* scroll-margin: 20vh; */
     }
 
     .fuckyou {
         display: block;
+    }
+
+    .butt {
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 </style>

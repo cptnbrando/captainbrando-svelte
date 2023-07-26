@@ -49,14 +49,20 @@ export class Album {
 	artist: string;
 	tracks: Track[];
 
-	constructor(name: string, src: string, artist?: string, tracks?: string[]) {
+	constructor(name: string, src: string, artist?: string) {
 		this.name = name;
-		this.src = 'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/images/' + src + '.png';
+		this.src = 'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/images/webp/' + src + '.webp';
 		this.artist = artist ? artist : name;
 	}
 }
 
 export let albums: Album[] = [
+	// Duplicate this to add new album
+	// new Album(
+	// 	'for yall',
+	// 	'friends',
+	// 	'😁'
+	// ),
 	new Album(
 		'covers, etc. (saul)',
 		'saul',
@@ -97,12 +103,6 @@ export let albums: Album[] = [
 		'cigs',
 		'Cigs Inside'
 	),
-	// Copy this one if needed
-	// new Album(
-	// 	'for yall',
-	// 	'friends',
-	// 	'😁'
-	// ),
 	new Album(
 		'Criss Cross Apple Sauwce',
 		'dead',

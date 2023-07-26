@@ -69,17 +69,18 @@
     scroll-snap-type: y mandatory;
     scroll-behavior: smooth;
     max-height: 100vh;
-    scroll-padding-top: 50px;
+    scroll-padding-top: 7.5vh;
     overflow-x: hidden;
+    padding-top: 5px;
   }
 
   #music {
     position: relative;
   }
 
-  #projects {
-    overflow: hidden;
-  }
+  // #projects {
+  //   overflow: hidden;
+  // }
 
   // Chrome + IE + Opera
   @supports (overflow-y: overlay) {
@@ -118,15 +119,15 @@
     }
   }
 
-  #banner {
-    display: flex;
-    flex-direction: column;
-    padding-top: 0;
-  }
+  // #banner {
+  //   display: flex;
+  //   flex-direction: column;
+  //   padding-top: 0;
+  // }
 
   @media only screen and (max-width: 600px) {
   main {
-    scroll-padding-top: 36px;
+    scroll-padding-top: 7.5vh;
   }
 }
 </style>

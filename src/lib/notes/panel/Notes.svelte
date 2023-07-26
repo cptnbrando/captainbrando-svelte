@@ -20,7 +20,7 @@
     const video1Src = `${github}/vid/vid1.webm`;
     const video2Src = `${github}/vid/terry.webm`;
 
-    const need2 = `${github}/music/notMine/need2.mp3`;
+    // const need2 = `${github}/music/notMine/need2.mp3`;
     const onGP = `${github}/music/notMine/onGP.mp3`;
 
 	onMount(async () => {
@@ -54,18 +54,22 @@
         <button on:click={() => {showNotes = true; noteOpened = true;}}>cool, thanks</button>
         {#if selectedNote === key}
         <div class='fakenews'>
-            <!-- <video src={video1Src} controls /> -->
+            <video src={video1Src} controls>
+                <track kind="captions" />
+            </video>
             <audio src={onGP} controls controlsList="nodownload" />
             <p>{@html selectedNote}</p>
         </div>
         {/if}
     {/if}
 {/each}
-{#if noteOpened === true}
-<!-- <video src={video2Src} controls /> -->
+{#if noteOpened === true && showNotes === true}
+<video src={video2Src} controls>
+    <track kind="captions" />
+</video>
 {/if}
 {#if privy === true}
-    <Privacy {privy} />
+    <Privacy />
     <br />
     <br />
     <br />
@@ -87,6 +91,7 @@
         top: 5%;
         left: 5%;
         margin: 15px;
+        overflow-x: hidden;
         
         &:hover {
             cursor: pointer;
@@ -104,8 +109,12 @@
     video {
         width: 30%;
         height: 30%;
+        margin-left: 20vw;
+
+        &:nth-of-type(1) {
+            width: 60%;
+            height: 60%;
+        }
     }
-
-
 </style>
 

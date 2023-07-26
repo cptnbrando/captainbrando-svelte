@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Typed from './Typed.svelte';
-	import { MusicIcon, MailIcon, MenuIcon, DribbbleIcon, BookIcon } from 'svelte-feather-icons';
+	import { MusicIcon, MailIcon, MenuIcon, BookIcon } from 'svelte-feather-icons';
 	import { fly, fade } from 'svelte/transition';
 
 	export let isMobile: boolean = false;
@@ -53,6 +53,7 @@
 			</div>
 		</span>
 		{/if}
+		<!-- svelte-ignore a11y-click-events-have-key-events -->
 		<div on:click={() => show = !show} id="menuButt">
 			<MenuIcon size="2x" />
 		</div>

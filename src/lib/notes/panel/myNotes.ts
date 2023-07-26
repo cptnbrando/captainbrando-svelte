@@ -87,4 +87,4 @@ We are living in an untrustworthy world. Even 2 factor authentication can be eas
 I created that untraceable spam machine at 19, just imagine what people at age 35 can do, with just this knowledge. With npm packages, with websockets, with microservice architectures, with a world of monkeys trying their best to please bosses who aren't aware of the state of the world, because they like the world they built. I like the world they built too, but I now see that there's a lot of bugs in it.<br /><br />
 We need to do something better. Something better than email, than texts, than 2fa, than data... yall got any ideas? I aint met a soul who does yet...`;
 
-export const stories: string[] = [neverland, story3, spam];
+export const stories: string[] = [spam];
