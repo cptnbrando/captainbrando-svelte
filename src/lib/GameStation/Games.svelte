@@ -15,9 +15,18 @@
             <button
                 on:click={() => {
                     window.location.reload();
-                }}>reload if buggin</button
+                }}>click to reload</button
             >
         </span>
+        <br>
+        <br>
+        <span>Click this button ☝️ if you don't see anything</span>
+        <br>
+        <span>Then click the [Start Game] button at the top</span>
+        <br>
+        <span>After it loads, click the blinking pause symbol at the top ⏸️</span>
+        <br>
+        <span>bada bing bada boom!</span>
     </div>
     <div class="emu-flex" id="emuMain">
         <Emu />
