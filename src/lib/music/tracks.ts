@@ -66,17 +66,17 @@ export let albums: Album[] = [
 	new Album(
 		'covers, etc. (saul)',
 		'saul',
-		'brandon dcruz'
+		'brandon & theo'
 	),
 	new Album(
 		'2024',
 		'yuh',
-		'Captain Brando! d'
+		'The Cut Ties'
 	),
 	new Album(
 		'2023',
 		'chase',
-		'The Cut Ties'
+		'Captain Brando!'
 	),
 	new Album(
 		'2022',
