@@ -5,6 +5,7 @@
   import Music from "./lib/music/Music.svelte";
   import Contact from "./lib/contact/Contact.svelte";
   import Notes from "./lib/notes/panel/Notes.svelte";
+  import Radio from "./lib/radio/Radio.svelte"
 
   let scrollEvent: any = null;
   let isMobile: boolean = false;
@@ -29,8 +30,14 @@
 <svelte:window />
 <main>
   <Navbar />
+  <article id="games">
+    <Games />
+  </article>
   <article id="music">
     <Music {scrollEvent} {isMobile} />
+  </article>
+  <article id="radio">
+    <Radio />
   </article>
   <article id="contact">
     <Contact {isMobile} />

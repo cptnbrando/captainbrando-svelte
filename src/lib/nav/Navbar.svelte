@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Typed from './Typed.svelte';
-	import { MusicIcon, MailIcon, MenuIcon, BookIcon } from 'svelte-feather-icons';
+	import { MusicIcon, MailIcon, MenuIcon, DribbbleIcon, RadioIcon, BookIcon } from 'svelte-feather-icons';
 	import { fly, fade } from 'svelte/transition';
 
 	export let isMobile: boolean = false;
@@ -13,19 +13,27 @@
 	<span>
 		{#if show}
 		<ul in:fly="{{ x: -600, duration: 400, delay: 200 }}" out:fly="{{ x: -600, duration: 400 }}" class="buttons">
-			<!-- <li>
-				<a href="#Games">
+			<li>
+				<a href="#games">
 					<DribbbleIcon {size} />
 					{#if !isMobile}
 					<h4>Games</h4>
 					{/if}
 				</a>
-			</li> -->
+			</li>
 			<li>
 				<a href="#music">
 					<MusicIcon {size} />
 					{#if !isMobile}
 					<h4>Music</h4>
+					{/if}
+				</a>
+			</li>
+			<li>
+				<a href="#radio">
+					<RadioIcon {size} />
+					{#if !isMobile}
+					<h4>Radio</h4>
 					{/if}
 				</a>
 			</li>
