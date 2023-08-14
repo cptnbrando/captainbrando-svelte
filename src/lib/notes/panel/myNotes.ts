@@ -1,14 +1,14 @@
 const short: string = `8/14/23
 <br />
 <br />
-Today, Michael Burry has shorted the housing market yet again.
+Today, Michael Burry has shorted the US economy yet again, this time betting against the Stock Market itself.
 Please watch The Big Short for context, as things are going to get really weird and really sad really fast now.
 <br />
 <br />
 Back in 2005, Michael, a man in charge of a hedgd fund's millions of dollars, looked at all the data regarding house mortgages and loans, and decided that so many people were about to default on their house loans that many giant corporations would have to file for bankruptcy, because the people with these mortgages were all getting fired, and they would be unable to pay for their houses, crashing the economy brick by brick by brick until it folds.
 <br />
 <br />
-Today, after profiting from his predictions in 2005, he has now shorted the market again. He's now got 1.8 billion, and 90% of this, 1.6 billion dollars he has placed as PUTs on $SPY and $QQQ. So, we should all be very scared about the reality the world is in.
+Today, after profiting from his predictions in 2005, he has now shorted the stock market. He's now got 1.8 billion, and 90% of this, 1.6 billion dollars he has placed as PUTs on $SPY, the Standard & Poor's 500 Index and $QQQ, a group of NASDAQ 100 companies. So, we should all be very scared about the reality the world is in.
 <br />
 <br />
 According to my research, AI General Automation will be complete by 2027. 4 years. This means that soon, the AI robots we have built will be capable of doing most jobs on the planet. Truck drivers, cashiers, secretaries, recruiters, software coders, even more complex jobs like Data Analysts, Sound Engineers, TV/Film Writers, I mean think of it this way; Does your job require any critical thinking, or does it just require a set of instructions that you repeat for every customer/ticket/client/caller/person ? Now, AI is even capable of very good critical thinking too, even creating very entertaining fiction/music/art. And they're free to operate. If i was a business manager, Id replace everybody in my organization with these robots immediately, because labor costs, supporting human beans, it costs so much. By cutting this out, I can double, or even triple my profit. Plus, I dont have to argue with anybody anymore. Thats very, very appealing, to anybody in charge of anything.
