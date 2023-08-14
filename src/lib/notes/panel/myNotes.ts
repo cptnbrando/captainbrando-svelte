@@ -1,3 +1,40 @@
+const short: string = `8/14/23
+<br />
+<br />
+Today, Michael Burry has shorted the housing market yet again.
+Please watch The Big Short for context, as things are going to get really weird and really sad really fast now.
+<br />
+<br />
+Back in 2005, Michael, a man in charge of a hedgd fund's millions of dollars, looked at all the data regarding house mortgages and loans, and decided that so many people were about to default on their house loans that many giant corporations would have to file for bankruptcy, because the people with these mortgages were all getting fired, and they would be unable to pay for their houses, crashing the economy brick by brick by brick until it folds.
+<br />
+<br />
+Today, after profiting from his predictions in 2005, he has now shorted the market again. He's now got 1.8 billion, and 90% of this, 1.6 billion dollars he has placed as PUTs on $SPY and $QQQ. So, we should all be very scared about the reality the world is in.
+<br />
+<br />
+According to my research, AI General Automation will be complete by 2027. 4 years. This means that soon, the AI robots we have built will be capable of doing most jobs on the planet. Truck drivers, cashiers, secretaries, recruiters, software coders, even more complex jobs like Data Analysts, Sound Engineers, TV/Film Writers, I mean think of it this way; Does your job require any critical thinking, or does it just require a set of instructions that you repeat for every customer/ticket/client/caller/person ? Now, AI is even capable of very good critical thinking too, even creating very entertaining fiction/music/art. And they're free to operate. If i was a business manager, Id replace everybody in my organization with these robots immediately, because labor costs, supporting human beans, it costs so much. By cutting this out, I can double, or even triple my profit. Plus, I dont have to argue with anybody anymore. Thats very, very appealing, to anybody in charge of anything.
+<br />
+<br />
+Very soon, hiring kids out of college, even MIT or Harvard grads, will be more risky than using a robot. Hiring experienced workers, who require 6 figure salaries to afford their houses, this will be too unnecessarily unaffordable. On top of this, their houses require multiple incomes. If a husband and wife have fulltime jobs, and suddenly one gets fired, and there's literally nothing for them to do that a robot cant do faster and more reliably, what choice will that family have except to default on their mortgage? What can a human do to make money if their competition is a free worker that does their job faster, and better? Answer: there is nothing they can do. So they cant make money, and the world will expect them to rot away.
+<br />
+<br />
+"Theyre all getting screwed you know. You know what they care about? They care about the ball game" - The Big Short, 2015
+<br />
+<br />
+Nobody can do anything anyways now. Because our congress and house of reps and everybody at the top of the government, they're too old to comprehend what an AI is. They don't know this stuff is even possible, all the while their jobs are secure, whether they let the people down or not they'll still get paid until they die. Thats America. Thats why we're all very, very screwed.
+<br />
+<br />
+Today, I am staying in bed, watching The Big Short. They all laughed at Michael Burry when he went in and requested PUTs on the housing market, something advertised and taught in all schools/news media as rock solid. These corporations with millions of employees, they all laughed for years, and then even when they were losing profits and money, they didn't report it, so to the media and the American people, everything was fine and gas was 7 dollars a gallon because the president is just a looney tune. Lies. It was old people, cheating, so they wouldnt lose their game. Gas stayed at 7 dollars a gallon nationwide for years, because old people fired so many employees that the nation's economy shit the bed. It's happening again, right now (over the course of the next 4 years). Its been that way in California since 2020, gas is outrageous over there and nothings changing that.
+<br />
+<br />
+If youve got a house, and its paid off, youre good. If its not yours yet, and you have a mortgage or a loan with a small local bank, be very afraid. They will be the first to declare bankruptcy, and when you try to withdraw your money from a company that has declared bankruptcy, they will laugh at you. That money is gone. Ah, good thing you got insurance on the money! Oh wait, the insurance companies have all declared bankruptcy too... Shit. Now, if everybody pulls out their money from the bank right now, this collapse will happen today itself. So you shouldnt do that. Nobody should withdraw all their money from all their assets immediately and store the cold hard cash under their mattresses. Nobody should panic. At the end of the big short, the government bailed out all these bankrupt corporations. Then, instead of fixing this shit system, they added more risky housing assets to their collection. More stuff that will fall like dominos, very soon.
+<br />
+<br />
+Anyways, good luck, god bless us all. Have we learned nothing? Are we still living in a terribly corrupt unreliable system? Do you need multiple incomes to pay for a loan or a rent? Remember these questions, and when the walls collapse, remember this book. Dont start anarchy. Dont do anything rash. Everything is fine. We're all fine and everything is fine.
+<br />
+<br />
+Jobs AI will replace by 2030: Medical workers that aren't surgery operators or physical doctors, Lawyer workers that aren't in court speaking their truth, entire fast food restaurant personnel, mechanical engineers, designers, developers, everybody. By 2040, everybody else. By 2050, god, there'll be nothing to do.
+`
+
 const story1: string = `7/17/2023
 <br />
 <br />
@@ -87,4 +124,4 @@ We are living in an untrustworthy world. Even 2 factor authentication can be eas
 I created that untraceable spam machine at 19, just imagine what people at age 35 can do, with just this knowledge. With npm packages, with websockets, with microservice architectures, with a world of monkeys trying their best to please bosses who aren't aware of the state of the world, because they like the world they built. I like the world they built too, but I now see that there's a lot of bugs in it.<br /><br />
 We need to do something better. Something better than email, than texts, than 2fa, than data... yall got any ideas? I aint met a soul who does yet...`;
 
-export const stories: string[] = [spam];
+export const stories: string[] = [spam, short];
