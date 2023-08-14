@@ -87,7 +87,7 @@
         height: 80px;
         width: 80px;
         border: solid;
-        background-color: rgb(90, 0, 0);
+        background-color: rgb(0, 20, 90);
         position: relative;
         top: 5%;
         left: 5%;
