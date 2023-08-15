@@ -152,12 +152,8 @@ export const heads: string[] = [
     "a provider",
     "puts his family first",
     "tired of games",
-    "not suicidal, ew.",
-    "not sad, just disappointed",
     "a bonehead",
-    "happy, i guess",
-    "sacrificing himself",
-    "a good scapegoat",
+    "happy!",
     "a good item to have",
     "gonna be a star ⭐",
     "praying for you",
@@ -168,5 +164,6 @@ export const heads: string[] = [
     "an open source joke",
     "plagiarizing ur thoughts",
     "scared of big bugs",
-    "scared of little bugs"
+    "scared of little bugs",
+    "da king udda castle"
 ];
