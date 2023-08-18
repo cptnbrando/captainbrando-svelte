@@ -1,10 +1,14 @@
 <script lang="ts">
     import Privacy from "../popup/Privacy.svelte";
-    import { onMount } from "svelte";
     import { stories } from "./myNotes";
 
-    // Everything goes here, because maps are fast.
-    let reports = new Map();
+    const bgColors = [
+        '75d89a',
+        'a3ceef',
+        'ed7a79'
+    ];
+
+    let backColor = `white`;
 
     // Popuptime, true if active
     let privy: boolean | null = null;
@@ -13,21 +17,15 @@
 
     let selectedNote: string | null = null;
 
-    let noteOpened: boolean = false;
+    let notesOpenedCount = 0;
 
     const github: string = `https://raw.githubusercontent.com/dcruzships/dcruz-assets/master`;
 
     const video1Src = `${github}/vid/vid1.webm`;
     const video2Src = `${github}/vid/terry.webm`;
 
-    // const need2 = `${github}/music/notMine/need2.mp3`;
+    const need2 = `${github}/music/notMine/need2.mp3`;
     const onGP = `${github}/music/notMine/onGP.mp3`;
-
-	onMount(async () => {
-		stories.forEach((el, i) => {
-            reports.set(`story${i}`, el)
-        });
-	});
     
     const start = (key: string) => {
         if(privy === null || privy === true) {
@@ -37,10 +35,18 @@
 
         showNotes = false;
         selectedNote = key;
+        // TODO: make colors pop more...
+        backColor = getColor();
     }
 
-    const down = () => {
+    const backOut = () => {
+        showNotes = true;
+        notesOpenedCount++;
+        backColor = `white`;
+    }
 
+    function getColor(): string {
+        return bgColors[Math.floor(Math.random()*bgColors.length)];
     }
 
 </script>
@@ -49,24 +55,25 @@
 
 {#each stories as key, index}
     {#if showNotes === true}
-        <div class='note' id={`story${index}`} on:click={() => start(key)} on:keydown={down}></div>
+        <div class='note' id={`story${index}`} on:click={() => start(key)} on:keydown={() => {}}></div>
     {:else}
-        <button on:click={() => {showNotes = true; noteOpened = true;}}>cool, thanks</button>
+        <button class="marg" on:click={backOut}>cool, thanks</button>
         {#if selectedNote === key}
-        <div class='fakenews'>
+        <div class='fakenews marg'>
             <video src={video1Src} controls>
                 <track kind="captions" />
             </video>
-            <audio src={onGP} controls controlsList="nodownload" />
+            <audio src={need2} controls controlsList="nodownload" />
             <p>{@html selectedNote}</p>
         </div>
         {/if}
     {/if}
 {/each}
-{#if noteOpened === true && showNotes === true}
-<video src={video2Src} controls>
-    <track kind="captions" />
-</video>
+{#if notesOpenedCount > 1 && showNotes === true}
+    <!-- <a href="https://www.youtube.com/@videogamedunkey/?sub_confirmation=1">Subscribe to VideoGameDunky Here!</a> -->
+    <video src={video2Src} controls>
+        <track kind="captions" />
+    </video>
 {/if}
 {#if privy === true}
     <Privacy />
@@ -87,7 +94,7 @@
         height: 80px;
         width: 80px;
         border: solid;
-        background-color: rgb(0, 20, 90);
+        background-color: #FF8303;
         position: relative;
         top: 5%;
         left: 5%;
@@ -100,11 +107,16 @@
     }
 
     .fakenews {
-        overflow: scroll;
+        overflow-y: scroll;
+        overflow-x: hidden;
         max-height: 80%;
         height: 80%;
         width: 80%;
         max-width: 80%;
+    }
+    
+    .marg {
+        margin-left: 20px;
     }
 
     video {
@@ -113,8 +125,8 @@
         margin-left: 20vw;
 
         &:nth-of-type(1) {
-            width: 60%;
-            height: 60%;
+            width: 55%;
+            height: 55%;
         }
     }
 </style>

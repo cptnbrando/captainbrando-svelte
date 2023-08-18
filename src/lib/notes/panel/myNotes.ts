@@ -124,4 +124,169 @@ We are living in an untrustworthy world. Even 2 factor authentication can be eas
 I created that untraceable spam machine at 19, just imagine what people at age 35 can do, with just this knowledge. With npm packages, with websockets, with microservice architectures, with a world of monkeys trying their best to please bosses who aren't aware of the state of the world, because they like the world they built. I like the world they built too, but I now see that there's a lot of bugs in it.<br /><br />
 We need to do something better. Something better than email, than texts, than 2fa, than data... yall got any ideas? I aint met a soul who does yet...`;
 
-export const stories: string[] = [story2];
+const web3: string = `8/18/2023
+<br />
+<br />
+Have you ever forgotten your password, and had to reset it, only to forget it again the next day? Have you ever clicked 'Allow All Cookies' on a site, without reading the gigantic Privacy Policy? Have you ever created a new account, because for whatever reason, you cannot use the old account anymore? Do you like solving Captchas?
+
+<br />
+<br />
+
+Facebook, Amazon, Apple, Netflix, Google, have you ever looked at your database (SQL, NoSQL, AWS S3 / RDS, Hadoop Clusters, etc.), and thought "I wish this could be simpler." ? Does it cost 200 million+ to store your data on a Cloud Infrastructure? Will your database / server prices increase next year, perhaps even double or triple?
+
+<br />
+<br />
+
+The reality is that people are plentiful now, and each of us has a lot to say/quote/record. The idea of "Scalability" is good as money can keep things going no matter how big the data becomes, increasing server power, increasing operational costs. However, with the rise of AI/bots/spam, it's going up in flames as you speak. Human identity for a social media account is a game of smoke and mirrors, 2 Factor Authentication means I can't use a computer without a phone or code gen dongle. API pricing is rising like Australian waves, and it will keep rising indefinitely. Cloud based _AAS ([Platform, Software, etc.] As A Service) has made things wonderfully fast, at the cost of lots, and lots of money.
+
+<br />
+<br />
+
+Thankfully, the kids have come up with a solution: Web 3.0
+
+<br />
+<br />
+
+Two months ago, I thought 3.0 was nothing, a bunch of hullabaloo without any new benefits. But today, I truly believe it's the key to a better future. Let me explain.
+
+<br />
+<br />
+
+2.0 is what the world is now, servers. Lots of servers, all around the world, hosting all videos images texts everything. Compressed, encrypted, cool. 2.0 means a person has to record their video, then upload it to your server, then you'll compress it, and keep it forever. Now, the user still has their original copy of the video. So, what if everybody could just view that original file, directly?
+
+<br />
+<br />
+
+That'd mean y'all wouldn't have to spend millions, billions on housing and securing that content, right?
+
+<br />
+<br />
+
+Bingo. That's Web 3.0.
+
+<br />
+<br />
+
+Forget NFTs, forget crypto, for a second forget everything but the internet: a place for people to read, write, post, create, and share. These web servers / databases of 2.0 hold everything, from the layouts of sites to the content, even though the creators have them on their machines. So, why not just let the users view those original files? Do you want to keep spending that money on servers? Your algorithms can still work on Web 3.0, but now you're not holding the cards, you're just doing what you've been doing, managing and handling content according to how you want and presenting it according to your aggregation algorithms. It's awesome! And now, Web 3.0 means you can just focus on the awesome now! Content curation, instead of content storage / security / authorization / big data.
+
+<br />
+<br />
+
+"But Captain Brando! This sounds very sketchy and unsecure, how can 3.0 be secure?" - my good friend circa 2023
+
+<br />
+<br />
+
+That's the thing my good friend, it already is! 3.0 begins with a user's crypto wallet, aka, a giant humongous rsh256 encrypted passkey. Now, if anybody reads this passkey, even the user themselves, it is rendered null and void until the user regenerates it. If anybody tries to imitate this key, they cannot validate their guesses, as the Web 3.0 network will know the source of the key is different from the actual location of the key. If brute force, or any tomfoolery is detected on the network, Web 3.0 shuts those fraudulant connections down, blocking them from validating their forgery against anything. If the key is opened, it immediatly lifts up a white flag on the file itself, just like a letter with a confetti string under the seal.
+
+<br />
+<br />
+
+If a hacker cannot validate their key, they can't hack the system. Suddenly, even an army of giant quantum computers are rendered obsolete, as they cannot validate their guesses without being disconnected. That's Web 3.0, encryption barricading everything, and trust in the devices themselves.
+
+<br />
+<br />
+
+When you go to Facebook, Amazon, everything, the first thing you do on a new PC is log in. Now imagine if every one of these sites is connected to your Web 3.0 wallet- aka the giant humongous private unreadable passkey and the user's public wallet address (another random string of data).
+
+<br />
+<br />
+
+Bing bang, no more log in pages. Because the device, which can only house one crypto wallet account, is guaranteed to be the person on your site (or at least, can be linked to one single device / owner, so long as any created accounts on the device hard-link back to the wallet).
+
+<br />
+<br />
+
+Now there's trust. Web 3.0 means that all creators are easily identifiable from the company's perspective (not the connected nodes perspective mind you, just the underlying system, the blockchain).
+
+<br />
+<br />
+
+Without sign-in pages, there's just immediate content access, because the system now knows exactly who you are for any/all of your accounts across the web. If done right, devices can have their private encrypted passkey buried way deep under the hood, inaccesible by all, guaranteeing safety and security. All of a sudden, truth. Web 3.0 guarantees identity; no more untraceable bots or spam, because the system, the network, knows exactly who you are or who created your bot account, regardless of what you choose to call yourself. Nothing but the public wallet address is visible, and under the hood, sites use authenticated global verification to ensure your device has your passkey, your DNA, your truth, your identity. Nobody else except those who never cache, store, or copy this key. No storage of keys, anywhere. Just authentication, then continuing to your internet.
+
+<br />
+<br />
+
+That's Web 3.0, a world without log in pages.
+
+<br />
+<br />
+
+"Captain, this sounds too good to be true!" Yes friend, you're right. Right now, Web 3.0 needs help. It can be done right, and this world, this internet, can be owned by the people. An open internet without all the annoying spam, it can all be ours, the people, the users! If done right, it can be so secure that even voting can be done right from home, because it's all based on an airtight ledger, an immutable record of events, where if one node has a different copy than a forged node, the fake one cannot connect to it. These nodes can be connected to government IDs, but they don't have to be (they should be tho). It's crazy! But possible!
+
+<br />
+<br />
+
+Ok, to justify this crazy talk, we gotta talk about blockchain now. Stay with me! I'll dumb it down.
+
+<br />
+<br />
+
+Imagine every cell phone in America. These can act as the nodes of a blockchain, which is a grid of these nodes. Nodes can connect directly to other nodes, no middle server just node to node. Instead of downloading a post from Instagram's web of servers / databases, we would download/stream the post directly from the poster's device. Currently, this would require a sort of leapfrog-esque network traffic, however, I believe this can be streamlined either with better algorithms or with satelites in space. Data centers in the stars, connected to satelites in the stars, raining down site styling / javascript / markup language to cell phone nodes. The device then goes through the blockchain nodes, and retrieves specific content according to site algorithms, right from the poster's devices. Even if the same 2.0 servers were used just to transmit site styling / js / templating data, the ones currently scattered around the globe, you could throw away your databases and pocket that money. Hundreds of millions of infinitely scaling money growing year after year after year, now back in your pockets.
+
+<br />
+<br />
+
+Let's visualize this:
+
+<br />
+<br />
+
+Barry is a guy with a phone, and he tweets out a good tweet, the best tweet ever. Sandra follows Barry, and she's scrolling along, and the beautiful Twitter algorithm is showing her good stuff, making her laugh. Pause time here for a second. At the bottom of the page is a new tweet, the algorithm wants to show Barry's cool new content (along with more paginated content of course!). So, Sandra's web 3.0 phone goes and gets it, but not directly as Sandra's in Uganda and Barry's in New Orleans. Sandras phone is connected to her friend Tammy, who's in Chad. Tammy is connected to a satellite, up in space, that holds all of the site data for Facebook Amazon Google etc. Thanks to Tammy, Sandra's tweets look nice, but she still doesn't have Barry's tweet. For that, her device will keep traveling through the chain. Sandra to Tammy, Tammy to Henry, Henry to Frank, Frank to Barry... this is slow! 2.0 is cool because it's just one set of servers, one fragmented database, coagulated together. But if you think about it, ain't that the same thing? In 3.0, Sandra makes about 6 requests to get Barry's content. In 2.0, Sandra actually makes way more, as the databases are fragmented for the sake of housing the giant warehouse of tweets, and the application needs to GET data all day so it can be fast. 3.0 can still get data all day, but now, it's just connecting to other encrypted devices, saving companies an immense amount of bandwidth.
+
+<br />
+<br />
+
+Seriously, this is possible now. And frankly, it was a crazy idea to copy everybody's content away from their devices, just to store it in Antarctica, in a bunch of computer farms, when the creators have the content on their devices already!
+
+<br />
+<br />
+
+In 3.0, the power goes back to the people. Blockchains are, by definition, uneditable. Any edits require more additions, so with any transaction it's easy to see who did it, tracked by their randomly generated passkey and public wallet address (This is similar to IP address, which can be used to track a user's location. Now, a user's location is not hidden, proving they are real. This may sound scary, but it's the only way to eliminate spam / junk mail / phishing schemes / everything that can violate a user's internet experience). For voting procedures, the locations can easily be tracked too, so if 500 votes all of a sudden come from an apartment in Tokyo, we can call them up and see what the truth is, because we'll know where the apartment is and who lives there. We'll know their history of internet activity. It's like how a webserver logs user interactions, except now, it's baked right into the network. No more Log4J, printing/zipping text files, it's all visible right there, providing security and trust to all.
+
+<br />
+<br />
+
+NFTs, Crypto, there's a lot the kids want in this network. And it deserves to be there too! But the world deserves to use it too, and if done properly by a good community, Web 3.0 can change everything. But, right now, it's just an idea.
+
+<br />
+<br />
+
+This is why this needs to be done right. We need innovation in new tech, new algorithms, new wifi, new ideas to cook this delicious Web 3.0 stew! I am in favor of a new device that can only access Web 3.0, linking one single new wallet immediately to the blockchain and the device, so that the user doesn't have to remember a password ever again. This device does not need WiFi if we can engineer a way to connect directly to another device, that's how we can make this Web 3.0 fast! WiFi, 5G, web servers, it adds unnecessary traffic to a simple concept- User to User connection. If done right, no more pass managers, no more sign in pages, no more wasted time, because the truth is baked into the OS, and an immutable ledger of events is uncrackable / automatically maintains and manages itself. AI is a major part of this system, and if done right, so many things can be automated just by asking it to do so.
+
+<br />
+<br />
+
+"Hey Web3! Make me a blog website and add an article titled "Cats!". Use my Google Keep note for the body, and add some nice pictures of cats. Host it on my node, and add it to my Web3 portfolio card, please!"
+
+<br />
+<br />
+
+AI: "Done deal, your blog is now live. Visit it here: [cat blog site, not a url, just a simple name like 'BrandosCatBlog']."
+
+<br />
+<br />
+
+Seriously, it can be that easy for creators of any size to produce content for Web 3.0. If the device syncs with all social media platforms, the AI can post it there too, on all of them simultaneously as soon as it's created!
+
+<br />
+<br />
+
+"Captain Brando, this sounds way too powerful of a pipe dream, and the people will flood the internet with dumb articles about Cats." Exactly! They're already flooding Web 2.0 right now! Even worse, content is easily downloaded and copied to other accounts/platforms, giving the copier revenue while the original artist makes nothing. Web 3.0 ensures content cannot be stolen, or rather, it gives people an easier way to share their favorite posts, all linking to the same file from the original artist on their original device. We know who's the original artist, because of a consistent ledger, a global log of events (even better, this log isn't just text. We can search the log with an input video file, and it will show the original owner).
+
+<br />
+<br />
+
+This internet is the future! No more emails (perhaps a better app/site that aggregates your messages from all of your social medias/texts/calls ?). No more "Sign in With Facebook / Google / LinkedIn / MySpace." No more captchas (even if you build and use a web bot, as their identity is linked to yours, so the world can trust your creations). No more refactoring code (unless you mess up the initial conversion to web3, in which case an AI can fix it for you at the push of a button, or you can fix the code yourself if you're a cool human bean). No more AWS bills that endlessly increase as you get more popular. Scalibility, Synergy, Fake News, none of it!
+
+<br />
+<br />
+
+Web 3.0 is coming, and you should join the party. It's raining money here, and everybody's a human. The memes are golden, the music is awesome, and we trust you for being yourself. Welcome to the world!
+
+<br />
+<br />
+
+Now, we just have to build it...`;
+
+export const stories: string[] = [spam, web3];

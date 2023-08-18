@@ -14,10 +14,10 @@
 		{#if show}
 		<ul in:fly="{{ x: -600, duration: 400, delay: 200 }}" out:fly="{{ x: -600, duration: 400 }}" class="buttons">
 			<li>
-				<a href="#games">
-					<DribbbleIcon {size} />
+				<a href="#books">
+					<BookIcon {size} />
 					{#if !isMobile}
-					<h4>Games</h4>
+					<h4>Books</h4>
 					{/if}
 				</a>
 			</li>
@@ -30,6 +30,14 @@
 				</a>
 			</li>
 			<li>
+				<a href="#games">
+					<DribbbleIcon {size} />
+					{#if !isMobile}
+					<h4>Games</h4>
+					{/if}
+				</a>
+			</li>
+			<!-- <li>
 				<a href="#radio">
 					<RadioIcon {size} />
 					{#if !isMobile}
@@ -44,15 +52,7 @@
 					<h4>Contact</h4>
 					{/if}
 				</a>
-			</li>
-			<li>
-				<a href="#books">
-					<BookIcon {size} />
-					{#if !isMobile}
-					<h4>Books</h4>
-					{/if}
-				</a>
-			</li>
+			</li> -->
 		</ul>
 		{:else}
 		<span class="navBox">

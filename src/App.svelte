@@ -30,21 +30,21 @@
 <svelte:window />
 <main>
   <Navbar />
-  <article id="games">
-    <Games />
+  <article id="books">
+    <Notes />
   </article>
   <article id="music">
     <Music {scrollEvent} {isMobile} />
   </article>
-  <article id="radio">
+  <article id="games">
+    <Games />
+  </article>
+  <!-- <article id="radio">
     <Radio />
   </article>
   <article id="contact">
     <Contact {isMobile} />
-  </article>
-  <article id="books">
-    <Notes />
-  </article>
+  </article> -->
 </main>
 
 <style lang="scss">
@@ -76,7 +76,7 @@
     scroll-snap-type: y mandatory;
     scroll-behavior: smooth;
     max-height: 100vh;
-    scroll-padding-top: 7.5vh;
+    scroll-padding-top: 9vh;
     overflow-x: hidden;
     padding-top: 5px;
   }
@@ -134,7 +134,7 @@
 
   @media only screen and (max-width: 600px) {
   main {
-    scroll-padding-top: 7.5vh;
+    scroll-padding-top: 8.5vh;
   }
 }
 </style>
