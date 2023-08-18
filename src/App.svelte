@@ -5,26 +5,25 @@
   import Music from "./lib/music/Music.svelte";
   import Contact from "./lib/contact/Contact.svelte";
   import Notes from "./lib/notes/panel/Notes.svelte";
-  import Radio from "./lib/radio/Radio.svelte"
+  import Radio from "./lib/radio/Radio.svelte";
 
   let scrollEvent: any = null;
   let isMobile: boolean = false;
 
   function onScroll(event) {
-		scrollEvent = event;
-	}
+    scrollEvent = event;
+  }
 
   function onResize() {
-		isMobile = (window.innerWidth < 800);
-		// navHeight = window.innerHeight * 0.08;
-		// navHeight = (navHeight < 50) ? 50 : navHeight; 
-		// articleHeight = window.innerHeight - navHeight;
-	}
+    isMobile = window.innerWidth < 800;
+    // navHeight = window.innerHeight * 0.08;
+    // navHeight = (navHeight < 50) ? 50 : navHeight;
+    // articleHeight = window.innerHeight - navHeight;
+  }
 
   onMount(async () => {
-		onResize();
-	});
-
+    onResize();
+  });
 </script>
 
 <svelte:window />
@@ -67,8 +66,8 @@
   }
 
   #music {
-		position: relative;
-	}
+    position: relative;
+  }
 
   main {
     padding: 0;
@@ -133,8 +132,12 @@
   // }
 
   @media only screen and (max-width: 600px) {
-  main {
-    scroll-padding-top: 8.5vh;
+    main {
+      scroll-padding-top: 7vh;
+    }
+
+    article {
+      height: 90vh;
+    }
   }
-}
 </style>
