@@ -282,7 +282,7 @@ This 3.0 internet is the future! No more emails (perhaps a better app/site that 
 <br />
 <br />
 
-Scalibility, Synergy, Fake News, none of it! This doesn't even cover the glorious AI technology conducting everything like Mozart. This article is just the tip of the iceburg. Yes, it's a million, billion, maybe even trillion dollar product. Yes, it's capable of changing the world, freeing us all.
+Scalibility, Synergy, Fake News, none of it! This doesn't even cover the glorious AI technology conducting everything like Mozart. This article is just the tip of the iceberg. Yes, it's a million, billion, maybe even trillion dollar product. Yes, it's capable of changing the world, freeing us all.
 
 <br />
 <br />
