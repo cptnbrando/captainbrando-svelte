@@ -277,7 +277,12 @@ Seriously, it can be that easy for creators of any size to produce content for W
 <br />
 <br />
 
-This internet is the future! No more emails (perhaps a better app/site that aggregates your messages from all of your social medias/texts/calls ?). No more "Sign in With Facebook / Google / LinkedIn / MySpace." No more captchas (even if you build and use a web bot, as their identity is linked to yours, so the world can trust your creations). No more refactoring code (unless you mess up the initial conversion to web3, in which case an AI can fix it for you at the push of a button, or you can fix the code yourself if you're a cool human bean). No more AWS bills that endlessly increase as you get more popular. Scalibility, Synergy, Fake News, none of it!
+This 3.0 internet is the future! No more emails (perhaps a better app/site that aggregates your messages from all of your social medias/texts/calls ?). No more "Sign in With Facebook / Google / LinkedIn / MySpace." No more captchas (even if you build and use a web bot, as their identity is linked to yours, so the world can trust your creations). No more refactoring code (unless you mess up the initial conversion to web3, in which case an AI can fix it for you at the push of a button, or you can fix the code yourself if you're a cool human bean). No more AWS bills that endlessly increase as you get more popular. No more linking all your financial / personal videos / life to a public email address or phone number that's known by everybody. No more giving your credit card number, date, cvc codes to random sellers and marketplaces that you'll never use again, where it'll live indefinitely on their database whether you cancel your subscription or not.
+
+<br />
+<br />
+
+Scalibility, Synergy, Fake News, none of it! This doesn't even cover the glorious AI technology conducting everything like Mozart. This article is just the tip of the iceburg. Yes, it's a million, billion, maybe even trillion dollar product. Yes, it's capable of changing the world, freeing us all.
 
 <br />
 <br />
