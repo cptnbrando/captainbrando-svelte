@@ -26,11 +26,14 @@
   });
 </script>
 
-<svelte:window />
+<svelte:window on:resize={onResize} />
 <main>
-  <Navbar />
+  <Navbar {isMobile} />
   <article id="music">
     <Music {scrollEvent} {isMobile} />
+  </article>
+  <article id="games">
+    <Games {isMobile} />
   </article>
 </main>
 
@@ -62,8 +65,8 @@
     margin: 0;
     scroll-snap-type: y mandatory;
     scroll-behavior: smooth;
-    max-height: 100vh;
-    scroll-padding-top: 9vh;
+    max-height: 99vh;
+    scroll-padding-top: 8vh;
     overflow-x: hidden;
     padding-top: 5px;
   }
@@ -119,13 +122,13 @@
   //   padding-top: 0;
   // }
 
-  @media only screen and (max-width: 600px) {
-    main {
-      scroll-padding-top: 7vh;
-    }
+  // @media only screen and (max-width: 600px) {
+  //   main {
+  //     scroll-padding-top: 7vh;
+  //   }
 
-    article {
-      height: 90vh;
-    }
-  }
+  //   article {
+  //     height: 92vh;
+  //   }
+  // }
 </style>

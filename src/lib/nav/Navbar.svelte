@@ -21,6 +21,14 @@
 					{/if}
 				</a>
 			</li>
+			<li>
+				<a href="#games">
+					<DribbbleIcon {size} />
+					{#if !isMobile}
+					<h4>Games</h4>
+					{/if}
+				</a>
+			</li>
 		</ul>
 		{:else}
 		<span class="navBox">
@@ -114,12 +122,6 @@
 		&:hover {
 			color: red;
 			cursor: pointer;
-		}
-	}
-
-	@media only screen and (max-width: 800px) {
-		li {
-			padding: 0 0.5rem 0 0.5rem;
 		}
 	}
 </style>
