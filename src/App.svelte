@@ -127,13 +127,9 @@
   //   padding-top: 0;
   // }
 
-  // @media only screen and (max-width: 600px) {
-  //   main {
-  //     scroll-padding-top: 7vh;
-  //   }
-
-  //   article {
-  //     height: 92vh;
-  //   }
-  // }
+  @media only screen and (max-width: 600px) {
+    article {
+      height: 90vh;
+    }
+  }
 </style>
