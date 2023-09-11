@@ -36,12 +36,12 @@
     </div>
     <div class="emu-flex over" id="emuControls">
         <h3>Controls</h3>
-        <span>WASD to move</span>
-        <span>Enter to click!</span>
+        <span>Arrow Keys to move</span>
         <br />
-        <span>J to do something</span>
-        <span>K to do something else</span>
-        <span>SPACE to crouch</span>
+        <span>Z to do something</span>
+        <span>X to do something else</span>
+        <span>C to do more</span>
+        <span>D to do less (crouch)</span>
     </div>
     {:else}
     <div class="emu-flex" id="emuMain">

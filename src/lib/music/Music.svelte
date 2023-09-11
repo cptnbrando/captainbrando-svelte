@@ -183,7 +183,7 @@
 	id="musicBox"
 	on:mousemove={(e) => onMousemove(e)}
 >
-	<Visualizer {isPlaying} audioElement={audioPlayer} {scrollEvent} {mousePos} />
+	<Visualizer {isPlaying} audioElement={audioPlayer} {scrollEvent} {mousePos} {isMobile} />
 	<Controls on:message={handleCmd} {...AudioInfo} {isMobile} />
 </div>
 <audio

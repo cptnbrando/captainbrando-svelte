@@ -17,7 +17,7 @@
 	const speedBetweenLines = 2000; //Wait between first and second lines
 	const speedBackspace = 100; //Backspace Speed
 
-	onMount(async () => {
+	onMount(() => {
 		a = Math.floor(Math.random() * (array.length - 1));
 		typeWriter(array);
 	});

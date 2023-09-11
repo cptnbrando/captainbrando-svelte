@@ -9,8 +9,12 @@
 
 	export let isPlaying: boolean;
 
+	export let isMobile: boolean;
+
 	let isAnimating: boolean = false;
 	let animationLoopID: number = 0;
+
+	let onMusic: boolean = true;
 
 	let canvasElement!: HTMLCanvasElement;
 	let drawCtx!: CanvasRenderingContext2D;
@@ -34,9 +38,9 @@
 	let setup: boolean = false;
 
 	onMount(async () => {
-		setupCanvas();
-		resizeCanvas();
-		beginInactive();
+		await setupCanvas();
+		await resizeCanvas();
+		await beginInactive();
 	});
 
     afterUpdate(() => {
@@ -59,7 +63,8 @@
 			drawCtx.canvas.clientHeight
 		);
 		drawCtx.font = "48px serif";
-		drawCtx.strokeText("inactive...", width / 2 - 80, height / 2);
+		const widthAdjust = isMobile ? 60 : 20;
+		drawCtx.strokeText("inactive", width / 2 - widthAdjust, height / 2 - 80);
 	}
 
 	function setupWebaudio(): void {
@@ -131,6 +136,7 @@
 	}
 
 	function update(): void {
+		if(!onMusic) return;
 		/*
         Nyquist Theorem
         http://whatis.techtarget.com/definition/Nyquist-Theorem
@@ -148,8 +154,8 @@
 		const blue = makeColor(0, 0, 255, 255);
 		const sun = makeColor(255, 111, 111, 1);
 
-		const xRatio = mousePos.x / window.innerWidth;
-		const yRatio = mousePos.y / window.innerHeight;
+		// const xRatio = mousePos.x / window.innerWidth;
+		// const yRatio = mousePos.y / window.innerHeight;
 
 		// const midpoint = (505 * xRatio) + 55;
 		// const highPoint = halfH / 2 + (yRatio * 300);
@@ -266,6 +272,13 @@
 		if(isAnimating && !isPlaying) {
 			beginInactive();
 		}
+
+		// if(scrollEvent) {
+		// 	console.log(scrollEvent);
+		// 	console.log(scrollEvent.target.offsetHeight);
+		// }
+
+		// console.log({isPlaying, isAnimating});
 	}
 </script>
 

@@ -8,10 +8,15 @@
   import Radio from "./lib/radio/Radio.svelte";
 
   let scrollEvent: any = null;
+  let scrollTimestamp: number = 0;
   let isMobile: boolean = false;
 
-  function onScroll(event) {
-    scrollEvent = event;
+  function onScroll(event: Event) {
+    if(event.timeStamp - scrollTimestamp > 500) {
+      // console.log(event.timeStamp - scrollTimestamp);
+      scrollTimestamp = event.timeStamp;
+      scrollEvent = event;
+    }
   }
 
   function onResize() {
@@ -27,7 +32,7 @@
 </script>
 
 <svelte:window on:resize={onResize} />
-<main>
+<main on:scroll={(e) => {onScroll(e)}}>
   <Navbar {isMobile} />
   <article id="music">
     <Music {scrollEvent} {isMobile} />
