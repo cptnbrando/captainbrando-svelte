@@ -129,7 +129,7 @@
 
   @media only screen and (max-width: 600px) {
     article {
-      height: 90vh;
+      height: 87.5vh;
     }
   }
 </style>
