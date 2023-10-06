@@ -29,7 +29,7 @@
         <br>
         <span>After it loads, click the blinking pause symbol at the top ⏸️</span>
         <br>
-        <span>bada bing bada boom!</span>
+        <span>bada bing bada boom!!</span>
     </div>
     <div class="emu-flex" id="emuMain">
         <Emu />
