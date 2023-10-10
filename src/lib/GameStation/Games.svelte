@@ -11,7 +11,7 @@
 </script>
 
 <div class="container" id="emuPanel">
-    {#if !isMobile}
+    <!-- {#if !isMobile} -->
     <div class="emu-flex over" id="emuOver">
         <h3>Game Time</h3>
         <span>
@@ -43,11 +43,11 @@
         <span>C to do more</span>
         <span>D to do less (crouch)</span>
     </div>
-    {:else}
+    <!-- {:else}
     <div class="emu-flex" id="emuMain">
         <h1>No games on mobile for now...</h1>
     </div>
-    {/if}
+    {/if} -->
 </div>
 
 <style lang="scss">
@@ -59,6 +59,7 @@
         align-items: center;
         width: 100%;
         height: 100%;
+        margin-top: 3rem;
     }
 
     .emu-flex {
