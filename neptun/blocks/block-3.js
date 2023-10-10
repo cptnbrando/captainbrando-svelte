@@ -244,87 +244,46 @@ var locServer, xboxMode, BrowserInfo, testd, testa, mmnva, checkOldsave, savesta
             var _0x13F23 = _0x13E47.getMonth() + 1;
             var _0x13EF7 = _0x13E47.getDate();
             var _navAppName = _0x13ECB + "" + _0x13F23 + "" + _0x13EF7;
-            if (_navAppName < parseInt(_0x13E9F)) {
-                var _0x13FA7;
-                NJSerrorEvent = true;
-                ltm = true;
-                var _0x13F4F = "" + BrowserWar + "";
-                if (Neptq("" + NepPlayer + "").length) {
-                    if (edge === true) {
-                        NJSerror = _0x13F4F;
+            // Update 10/10, unsure why this checks the date and compares it to September 30th, 2018, but it prevents the app from loading
+            // Took logic out of if statement and reversed the else condition so ntp can still be set to 0 if needed, but the main logic still happens
+            if (_navAppName >= parseInt(_0x13E9F)) {
+                console.log("set ntp to 0");
+                ntp = 0;
+            }
+
+            var _0x13FA7;
+            NJSerrorEvent = true;
+            ltm = true;
+            var _0x13F4F = "" + BrowserWar + "";
+            if (Neptq("" + NepPlayer + "").length) {
+                if (edge === true) {
+                    NJSerror = _0x13F4F;
+                    _0x13E73()
+                } else {
+                    if (neptunPlatform === null) {
+                        NJSerror = NJSPlatform_lang;
                         _0x13E73()
                     } else {
-                        if (neptunPlatform === null) {
-                            NJSerror = NJSPlatform_lang;
-                            _0x13E73()
-                        } else {
-                            Neptq(NepPlayer).html("<style>" + NeptunCSS + "</style><div id=\"" + NCSS + "EmuBlock\" ><div id=\"" + NCSS + "preload\" ></div><div id=\"" + NCSS + "strEml\" style=\"display:none\"></div><div id=\"" + NCSS + "Neptun\">" + Controlshtml + infoDZ + SSMHtml + "" + videoSettings + "" + Npause + "" + Emultoolbar + "<div class=" + NCSS + "emul-display><div id=" + NCSS + "emul-menu><div class=" + NCSS + "game-info><div class=\"" + NCSS + "help\"><h2>" + controlLang + "</h2><div class=" + NCSS + "img-controll><div class=\"" + NCSS + "CimgH " + NCSS + "controlsImg " + NCSS + "helpGpad\"><div id=\"" + NCSS + "controll-helpNum\" class=\"" + NCSS + "medium-5 " + NCSS + "columns\">" + infohConHtml + "</div></div></div></div>" + ifad + "<div class=\"" + NCSS + "boxart " + NCSS + "game-info\">" + boxartimg + "</div><!--div id=" + NCSS + "fakerom-->" + gameLangSelect + "" + htmlprogress + "<div class=" + NCSS + "NeptunButton><p id=\"" + NCSS + "status\" class=\"" + NCSS + "loader_emu\"></p><p id=\"" + NCSS + NCSS2 + NCSS3 + "\" class=\"" + NCSS + "loader_emu " + NCSS + "pulse-anim \"></p><p class=\"" + NCSS + "loader_emu " + NCSS + "game-load\">" + downloadInfo + "</p><p class=\"" + NCSS + "loader_emu " + NCSS + "game-run\">" + readyInfo + "</p><!--/div--></div><div class=\"" + NCSS + "controll-info\"><h2>" + controlLang + "</h2><div id=\"" + NCSS + "controll-helpNum\" class=\"" + NCSS + "medium-5 " + NCSS + "columns\">" + html_help_imgs + "" + infohConHtml + "</div><div class=\"" + NCSS + "clear\"></div><div class=\"" + NCSS + "lc " + NCSS + "controlsImg\"></div></div></div></div></div>" + InfoNote + "" + swapHtml + "" + SelectCDHtml + "" + EmulCanvas + "</div>" + vad + "<div id=\"" + NCSS + "focusads\"></div>");
-                            slider1 = document.getElementById("" + NCSS + "saturate");
-                            slider2 = document.getElementById("" + NCSS + "contrast");
-                            slider3 = document.getElementById("" + NCSS + "brightness");
-                            fblur = 0;
-                            fsaturate = slider1.value;
-                            fcontrast = slider2.value;
-                            fbrightness = slider3.value;
-                            canvasGame = document.getElementById("" + NCSS + "display");
-                            if (NeptunP === "msx" || NeptunP === "zx") {
-                                Neptq("#" + NCSS + "uilable").css("display", "none");
-                                Neptq("#" + NCSS + "cui_img").css("display", "none");
-                                Neptq("." + NCSS + "advance_settings").css("display", "none");
-                                Neptq("." + NCSS + "infopanel").css("display", "none");
-                                Neptq("." + NCSS + "advance_tabs").css("display", "block");
-                                Neptq("." + NCSS + "advance_tabsP2").css("display", "block");
-                                Neptq("." + NCSS + "advance_tabsP3").css("display", "block");
-                                Neptq("." + NCSS + "advance_tabsP4").css("display", "block")
-                            };
-                            Neptq("." + NCSS + "checkbox").on("click", function() {
-                                if (Neptq("#checkbox_smooth").is(":checked")) {
-                                    fblur = 0.9;
-                                    fsaturate = slider1.value;
-                                    fcontrast = slider2.value;
-                                    fbrightness = slider3.value;
-                                    canvasGame.style["-webkit-filter"] = "blur(" + fblur + "px) saturate(" + fsaturate + "%) contrast(" + fcontrast + "%) brightness(" + fbrightness + "%)";
-                                    canvasGame.style["-moz-filter"] = "blur(" + fblur + "px) saturate(" + fsaturate + "%) contrast(" + fcontrast + "%) brightness(" + fbrightness + "%)";
-                                    canvasGame.style["-o-filter"] = "blur(" + fblur + "px) saturate(" + fsaturate + "%) contrast(" + fcontrast + "%) brightness(" + fbrightness + "%)";
-                                    canvasGame.style.filter = "blur(" + fblur + "px) saturate(" + fsaturate + "%) contrast(" + fcontrast + "%) brightness(" + fbrightness + "%)"
-                                } else {
-                                    fblur = 0;
-                                    canvasGame.style["-webkit-filter"] = "blur(" + fblur + "px) saturate(" + fsaturate + "%) contrast(" + fcontrast + "%) brightness(" + fbrightness + "%)";
-                                    canvasGame.style["-moz-filter"] = "blur(" + fblur + "px) saturate(" + fsaturate + "%) contrast(" + fcontrast + "%) brightness(" + fbrightness + "%)";
-                                    canvasGame.style["-o-filter"] = "blur(" + fblur + "px) saturate(" + fsaturate + "%) contrast(" + fcontrast + "%) brightness(" + fbrightness + "%)";
-                                    canvasGame.style.filter = "blur(" + fblur + "px) saturate(" + fsaturate + "%) contrast(" + fcontrast + "%) brightness(" + fbrightness + "%)"
-                                }
-                            });
-                            Neptq("#" + NCSS + "resetColor").click(function() {
-                                slider3.value = 100;
-                                slider2.value = 100;
-                                slider1.value = 100;
-                                canvasGame.style["-webkit-filter"] = "blur(" + fblur + "px) saturate(100%) contrast(100%) brightness(100%)";
-                                canvasGame.style["-moz-filter"] = "blur(" + fblur + "px) saturate(100%) contrast(100%) brightness(100%)";
-                                canvasGame.style["-o-filter"] = "blur(" + fblur + "px) saturate(100%) contrast(100%) brightness(100%)";
-                                canvasGame.style.filter = "blur(" + fblur + "px) saturate(100%) contrast(100%) brightness(100%)"
-                            });
-                            slider1.addEventListener("input", function() {
-                                fsaturate = this.value;
-                                canvasGame.style["-webkit-filter"] = " blur(" + fblur + "px) saturate(" + this.value + "%) contrast(" + fcontrast + "%) brightness(" + fbrightness + "%) ";
-                                canvasGame.style["-moz-filter"] = "blur(" + fblur + "px) saturate(" + this.value + "%) contrast(" + fcontrast + "%) brightness(" + fbrightness + "%)";
-                                canvasGame.style["-o-filter"] = "blur(" + fblur + "px) saturate(" + this.value + "%) contrast(" + fcontrast + "%) brightness(" + fbrightness + "%)";
-                                canvasGame.style.filter = "blur(" + fblur + "px) saturate(" + this.value + "%) contrast(" + fcontrast + "%) brightness(" + fbrightness + "%)"
-                            });
-                            slider2.addEventListener("input", function() {
-                                fcontrast = this.value;
-                                canvasGame.style["-webkit-filter"] = "blur(" + fblur + "px) saturate(" + fsaturate + "%) contrast(" + this.value + "%) brightness(" + fbrightness + "%)";
-                                canvasGame.style["-moz-filter"] = "blur(" + fblur + "px) saturate(" + fsaturate + "%) contrast(" + this.value + "%) brightness(" + fbrightness + "%)";
-                                canvasGame.style["-o-filter"] = "blur(" + fblur + "px) saturate(" + fsaturate + "%) contrast(" + this.value + "%) brightness(" + fbrightness + "%)";
-                                canvasGame.style.filter = "blur(" + fblur + "px) saturate(" + fsaturate + "%) contrast(" + this.value + "%) brightness(" + fbrightness + "%)"
-                            });
-                            slider3.addEventListener("input", function() {
-                                fbrightness = this.value;
-                                canvasGame.style["-webkit-filter"] = "blur(" + fblur + "px) saturate(" + fsaturate + "%) contrast(" + fbrightness + "%) brightness(" + this.value + "%)";
-                                canvasGame.style["-moz-filter"] = "blur(" + fblur + "px) saturate(" + fsaturate + "%) contrast(" + fbrightness + "%) brightness(" + this.value + "%)";
-                                canvasGame.style["-o-filter"] = "blur(" + fblur + "px) saturate(" + fsaturate + "%) contrast(" + fbrightness + "%) brightness(" + this.value + "%)";
-                                canvasGame.style.filter = "blur(" + fblur + "px) saturate(" + fsaturate + "%) contrast(" + fbrightness + "%) brightness(" + this.value + "%)"
-                            });
+                        Neptq(NepPlayer).html("<style>" + NeptunCSS + "</style><div id=\"" + NCSS + "EmuBlock\" ><div id=\"" + NCSS + "preload\" ></div><div id=\"" + NCSS + "strEml\" style=\"display:none\"></div><div id=\"" + NCSS + "Neptun\">" + Controlshtml + infoDZ + SSMHtml + "" + videoSettings + "" + Npause + "" + Emultoolbar + "<div class=" + NCSS + "emul-display><div id=" + NCSS + "emul-menu><div class=" + NCSS + "game-info><div class=\"" + NCSS + "help\"><h2>" + controlLang + "</h2><div class=" + NCSS + "img-controll><div class=\"" + NCSS + "CimgH " + NCSS + "controlsImg " + NCSS + "helpGpad\"><div id=\"" + NCSS + "controll-helpNum\" class=\"" + NCSS + "medium-5 " + NCSS + "columns\">" + infohConHtml + "</div></div></div></div>" + ifad + "<div class=\"" + NCSS + "boxart " + NCSS + "game-info\">" + boxartimg + "</div><!--div id=" + NCSS + "fakerom-->" + gameLangSelect + "" + htmlprogress + "<div class=" + NCSS + "NeptunButton><p id=\"" + NCSS + "status\" class=\"" + NCSS + "loader_emu\"></p><p id=\"" + NCSS + NCSS2 + NCSS3 + "\" class=\"" + NCSS + "loader_emu " + NCSS + "pulse-anim \"></p><p class=\"" + NCSS + "loader_emu " + NCSS + "game-load\">" + downloadInfo + "</p><p class=\"" + NCSS + "loader_emu " + NCSS + "game-run\">" + readyInfo + "</p><!--/div--></div><div class=\"" + NCSS + "controll-info\"><h2>" + controlLang + "</h2><div id=\"" + NCSS + "controll-helpNum\" class=\"" + NCSS + "medium-5 " + NCSS + "columns\">" + html_help_imgs + "" + infohConHtml + "</div><div class=\"" + NCSS + "clear\"></div><div class=\"" + NCSS + "lc " + NCSS + "controlsImg\"></div></div></div></div></div>" + InfoNote + "" + swapHtml + "" + SelectCDHtml + "" + EmulCanvas + "</div>" + vad + "<div id=\"" + NCSS + "focusads\"></div>");
+                        slider1 = document.getElementById("" + NCSS + "saturate");
+                        slider2 = document.getElementById("" + NCSS + "contrast");
+                        slider3 = document.getElementById("" + NCSS + "brightness");
+                        fblur = 0;
+                        fsaturate = slider1.value;
+                        fcontrast = slider2.value;
+                        fbrightness = slider3.value;
+                        canvasGame = document.getElementById("" + NCSS + "display");
+                        if (NeptunP === "msx" || NeptunP === "zx") {
+                            Neptq("#" + NCSS + "uilable").css("display", "none");
+                            Neptq("#" + NCSS + "cui_img").css("display", "none");
+                            Neptq("." + NCSS + "advance_settings").css("display", "none");
+                            Neptq("." + NCSS + "infopanel").css("display", "none");
+                            Neptq("." + NCSS + "advance_tabs").css("display", "block");
+                            Neptq("." + NCSS + "advance_tabsP2").css("display", "block");
+                            Neptq("." + NCSS + "advance_tabsP3").css("display", "block");
+                            Neptq("." + NCSS + "advance_tabsP4").css("display", "block")
+                        };
+                        Neptq("." + NCSS + "checkbox").on("click", function() {
                             if (Neptq("#checkbox_smooth").is(":checked")) {
                                 fblur = 0.9;
                                 fsaturate = slider1.value;
@@ -341,14 +300,57 @@ var locServer, xboxMode, BrowserInfo, testd, testa, mmnva, checkOldsave, savesta
                                 canvasGame.style["-o-filter"] = "blur(" + fblur + "px) saturate(" + fsaturate + "%) contrast(" + fcontrast + "%) brightness(" + fbrightness + "%)";
                                 canvasGame.style.filter = "blur(" + fblur + "px) saturate(" + fsaturate + "%) contrast(" + fcontrast + "%) brightness(" + fbrightness + "%)"
                             }
+                        });
+                        Neptq("#" + NCSS + "resetColor").click(function() {
+                            slider3.value = 100;
+                            slider2.value = 100;
+                            slider1.value = 100;
+                            canvasGame.style["-webkit-filter"] = "blur(" + fblur + "px) saturate(100%) contrast(100%) brightness(100%)";
+                            canvasGame.style["-moz-filter"] = "blur(" + fblur + "px) saturate(100%) contrast(100%) brightness(100%)";
+                            canvasGame.style["-o-filter"] = "blur(" + fblur + "px) saturate(100%) contrast(100%) brightness(100%)";
+                            canvasGame.style.filter = "blur(" + fblur + "px) saturate(100%) contrast(100%) brightness(100%)"
+                        });
+                        slider1.addEventListener("input", function() {
+                            fsaturate = this.value;
+                            canvasGame.style["-webkit-filter"] = " blur(" + fblur + "px) saturate(" + this.value + "%) contrast(" + fcontrast + "%) brightness(" + fbrightness + "%) ";
+                            canvasGame.style["-moz-filter"] = "blur(" + fblur + "px) saturate(" + this.value + "%) contrast(" + fcontrast + "%) brightness(" + fbrightness + "%)";
+                            canvasGame.style["-o-filter"] = "blur(" + fblur + "px) saturate(" + this.value + "%) contrast(" + fcontrast + "%) brightness(" + fbrightness + "%)";
+                            canvasGame.style.filter = "blur(" + fblur + "px) saturate(" + this.value + "%) contrast(" + fcontrast + "%) brightness(" + fbrightness + "%)"
+                        });
+                        slider2.addEventListener("input", function() {
+                            fcontrast = this.value;
+                            canvasGame.style["-webkit-filter"] = "blur(" + fblur + "px) saturate(" + fsaturate + "%) contrast(" + this.value + "%) brightness(" + fbrightness + "%)";
+                            canvasGame.style["-moz-filter"] = "blur(" + fblur + "px) saturate(" + fsaturate + "%) contrast(" + this.value + "%) brightness(" + fbrightness + "%)";
+                            canvasGame.style["-o-filter"] = "blur(" + fblur + "px) saturate(" + fsaturate + "%) contrast(" + this.value + "%) brightness(" + fbrightness + "%)";
+                            canvasGame.style.filter = "blur(" + fblur + "px) saturate(" + fsaturate + "%) contrast(" + this.value + "%) brightness(" + fbrightness + "%)"
+                        });
+                        slider3.addEventListener("input", function() {
+                            fbrightness = this.value;
+                            canvasGame.style["-webkit-filter"] = "blur(" + fblur + "px) saturate(" + fsaturate + "%) contrast(" + fbrightness + "%) brightness(" + this.value + "%)";
+                            canvasGame.style["-moz-filter"] = "blur(" + fblur + "px) saturate(" + fsaturate + "%) contrast(" + fbrightness + "%) brightness(" + this.value + "%)";
+                            canvasGame.style["-o-filter"] = "blur(" + fblur + "px) saturate(" + fsaturate + "%) contrast(" + fbrightness + "%) brightness(" + this.value + "%)";
+                            canvasGame.style.filter = "blur(" + fblur + "px) saturate(" + fsaturate + "%) contrast(" + fbrightness + "%) brightness(" + this.value + "%)"
+                        });
+                        if (Neptq("#checkbox_smooth").is(":checked")) {
+                            fblur = 0.9;
+                            fsaturate = slider1.value;
+                            fcontrast = slider2.value;
+                            fbrightness = slider3.value;
+                            canvasGame.style["-webkit-filter"] = "blur(" + fblur + "px) saturate(" + fsaturate + "%) contrast(" + fcontrast + "%) brightness(" + fbrightness + "%)";
+                            canvasGame.style["-moz-filter"] = "blur(" + fblur + "px) saturate(" + fsaturate + "%) contrast(" + fcontrast + "%) brightness(" + fbrightness + "%)";
+                            canvasGame.style["-o-filter"] = "blur(" + fblur + "px) saturate(" + fsaturate + "%) contrast(" + fcontrast + "%) brightness(" + fbrightness + "%)";
+                            canvasGame.style.filter = "blur(" + fblur + "px) saturate(" + fsaturate + "%) contrast(" + fcontrast + "%) brightness(" + fbrightness + "%)"
+                        } else {
+                            fblur = 0;
+                            canvasGame.style["-webkit-filter"] = "blur(" + fblur + "px) saturate(" + fsaturate + "%) contrast(" + fcontrast + "%) brightness(" + fbrightness + "%)";
+                            canvasGame.style["-moz-filter"] = "blur(" + fblur + "px) saturate(" + fsaturate + "%) contrast(" + fcontrast + "%) brightness(" + fbrightness + "%)";
+                            canvasGame.style["-o-filter"] = "blur(" + fblur + "px) saturate(" + fsaturate + "%) contrast(" + fcontrast + "%) brightness(" + fbrightness + "%)";
+                            canvasGame.style.filter = "blur(" + fblur + "px) saturate(" + fsaturate + "%) contrast(" + fcontrast + "%) brightness(" + fbrightness + "%)"
                         }
                     }
-                } else {
-                    _0x13E73()
                 }
             } else {
-                console.log("Set ntp to 0");
-                netp = 0
+                _0x13E73()
             }
         }(_navAppName)(testd + "" + testa + "" + mmnva, "TypeError: Cannot set property 'widthNative' of null")
     }
