@@ -6,7 +6,7 @@
 
 ## Svelte + TS + Vite
 
-Check out [SvelteKit](https://github.com/sveltejs/kit#readme), which is also powered by Vite... ah i am unable to make the sveltekit run fast for whatever reason, so using this 
+Check out [SvelteKit](https://github.com/sveltejs/kit#readme), which is also powered by Vite
 
 ## Technical considerations
 
