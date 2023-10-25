@@ -21,14 +21,14 @@
 					{/if}
 				</a>
 			</li>
-			<li>
+			<!-- <li>
 				<a href="#games">
 					<DribbbleIcon {size} />
 					{#if !isMobile}
 					<h4>Games</h4>
 					{/if}
 				</a>
-			</li>
+			</li> -->
 		</ul>
 		{:else}
 		<span class="navBox">
