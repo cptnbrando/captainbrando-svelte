@@ -202,9 +202,9 @@ DownloadIcon
 					<span on:click={() => command('loop')} class={loop ? 'active button' : 'button'}>
 						<RepeatIcon size="40" />
 					</span>
-					<!-- <span on:click={() => window.open(track.src, '_blank')} class='button'>
+					<span on:click={() => window.open(track.src, '_blank')} class='button'>
 						<DownloadIcon size="40" />
-					</span> -->
+					</span>
 				</span>
 			</div>
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
