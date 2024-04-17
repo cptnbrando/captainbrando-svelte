@@ -37,9 +37,9 @@
   <article id="music">
     <Music {scrollEvent} {isMobile} />
   </article>
-  <!-- <article id="games">
+  <article id="games">
     <Games {isMobile} />
-  </article> -->
+  </article>
 </main>
 
 <style lang="scss">
