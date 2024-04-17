@@ -107,7 +107,7 @@
     }
 
     main::-webkit-scrollbar-track {
-      border-radius: 100px;
+      border-radius: 101px;
     }
   }
 
