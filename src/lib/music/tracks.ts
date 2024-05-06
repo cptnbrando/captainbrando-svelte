@@ -64,7 +64,7 @@ export let albums: Album[] = [
 	// 	'😁'
 	// ),
 	new Album(
-		'one hundred dollars',
+		'a hundred fifty',
 		'hundred',
 		'Captain Brando!'
 	),
@@ -130,7 +130,7 @@ export const tracks: Track[] = [
 	new Track(
 		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/udnm.mp3',
 		'u dont need much',
-		'iacgul',
+		'a hundred fifty',
 	),
 	new Track(
 		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/isthereanybodyoutthere.mp3',
