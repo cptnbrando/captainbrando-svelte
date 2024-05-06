@@ -64,8 +64,8 @@ export let albums: Album[] = [
 	// 	'😁'
 	// ),
 	new Album(
-		'iacgul',
-		'bbetc',
+		'one hundred dollars',
+		'hundred',
 		'Captain Brando!'
 	),
 	new Album(
