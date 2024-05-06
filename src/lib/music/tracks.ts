@@ -64,6 +64,11 @@ export let albums: Album[] = [
 	// 	'😁'
 	// ),
 	new Album(
+		'iacgul',
+		'bbetc',
+		'Captain Brando!'
+	),
+	new Album(
 		'covers, etc. (saul)',
 		'saul',
 		'brandon & theo'
@@ -122,6 +127,11 @@ export const tracks: Track[] = [
 	// 	'2 Bedroom Toyota',
 	// 	'2023',
 	// ),
+	new Track(
+		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/youdontneedmuch.mp3',
+		'u dont need much',
+		'iacgul',
+	),
 	new Track(
 		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/isthereanybodyoutthere.mp3',
 		'need2/creep (Pinegrove/Radiohead)',
