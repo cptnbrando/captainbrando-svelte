@@ -148,6 +148,11 @@ export const tracks: Track[] = [
 		'hundred fifty',
 	),
 	new Track(
+		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/vitamind.mp3',
+		'vitamin d',
+		'hundred fifty',
+	),
+	new Track(
 		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/isthereanybodyoutthere.mp3',
 		'need2/creep (Pinegrove/Radiohead)',
 		'covers, etc. (saul)',
