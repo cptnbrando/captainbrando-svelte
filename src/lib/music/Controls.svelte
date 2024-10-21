@@ -153,7 +153,6 @@
 				<div id="tracklist">
 					{#if stats}
 						<br />
-						<div>{test}</div>
 						<span>Thanks for listening :)</span>
 						<p>Most songs written and performed by me except for the ones with friends 
 							<a href="https://www.instagram.com/honeydutheband/" target="_blank">(Cigs Inside is now 𝘩𝘰𝘯𝘦𝘺𝘥ü, check them out here)</a>
@@ -332,6 +331,7 @@
 		overflow: hidden;
 		max-height: 100%;
 		
+		
 		#boxie {
 			height: 100%;
 			display: flex;
@@ -461,7 +461,7 @@
 			height: 100%;
 			padding-left: 10px;
 			padding-right: 10px;
-			overflow: scroll;
+			overflow-y: scroll;
 			height: 100%;
 			max-height: 100%;
 		}
