@@ -9,7 +9,7 @@
 
   let scrollEvent: any = null;
   let scrollTimestamp: number = 0;
-  let isMobile: boolean = false;
+  let isMobile: boolean = window.innerWidth < 800;
 
   function onScroll(event: Event) {
     if(event.timeStamp - scrollTimestamp > 500) {

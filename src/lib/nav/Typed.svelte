@@ -2,8 +2,13 @@
 	import { heads } from "./heads";
 	import { onMount } from "svelte";
 
+	export let isMobile: boolean = false;
+
 	let text: string = "Captain Brando is ";
 	let array: string[] = [];
+
+	let selectedHeads = heads;
+	const MOBILE_HEAD_MAX_LENGTH = 14;
 
 	// values to keep track of the number of letters typed, which quote to use. etc. Don't change these values.
 	let i = 0;
@@ -18,7 +23,10 @@
 	const speedBackspace = 100; //Backspace Speed
 
 	onMount(() => {
-		array = heads.copyWithin(0, 0);
+		if(isMobile) {
+			selectedHeads = heads.filter((el) => el.length < MOBILE_HEAD_MAX_LENGTH);
+		}
+		array = selectedHeads.copyWithin(0, 0);
 		a = Math.floor(Math.random() * (array.length - 1));
 		typeWriter(array);
 	});
@@ -97,7 +105,7 @@
 				i = 0;
 				isParagraph = false;
 				// New random word
-				if(ar.length < 3) ar = heads.copyWithin(0, 0);
+				if(ar.length < 3) ar = selectedHeads.copyWithin(0, 0);
 				ar.splice(a, 1);
 				a = Math.floor(Math.random() * (array.length - 1));
 				setTimeout(() => {

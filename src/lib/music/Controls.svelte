@@ -107,20 +107,30 @@
 	function shareSong() {
 		const trackSrcArr = track.src.split("/");
 		const baseUrl = window.location.origin;  // Get the base URL (e.g., https://captainbrando.com or http://localhost:3000)
-		const lastTrack = trackSrcArr[trackSrcArr.length - 1];  // Get the last item in the trackSrcArr
-		const fullUrl = `${baseUrl}/?song=${lastTrack}`;  // Construct the URL with the song query param
-		navigator.clipboard.writeText(fullUrl)
-        .then(() => {
-          // Notify the user that the text was copied successfully
-		  const msg = document.querySelector(".ghost") as HTMLElement;
-		  msg.style.visibility = "visible";
-		  setTimeout(() => {
-			msg.style.visibility = "hidden";
-		  }, 2000);
-        });
+		const lastFieldOfTrackURL = trackSrcArr[trackSrcArr.length - 1];  // Get the last item in the url 'github.com/blah/track.mp3 trackSrcArr
+		const fullUrl = `${baseUrl}/?song=${lastFieldOfTrackURL}`;  // Construct the URL with the song query param
+		const msg = document.querySelector(".ghost") as HTMLElement;
+		if(navigator.clipboard) {
+			navigator.clipboard.writeText(fullUrl)
+			.then(() => {
+			  // Notify the user that the text was copied successfully
+			  flashVisibility(msg);
+			});
+		} else {
+			msg.innerHTML = "No HTTPS ?";
+			// Notify the user that the text cannot be copied
+			flashVisibility(msg);
+		}
 	}
 
 	const goBack: string = '<- go back';
+
+	function flashVisibility(el: HTMLElement) {
+		el.style.visibility = "visible";
+		setTimeout(() => {
+			el.style.visibility = "hidden";
+		}, 2000);
+	}
 </script>
 
 <div ref="box" id="controlsBox">
@@ -142,6 +152,8 @@
 				</div>
 				<div id="tracklist">
 					{#if stats}
+						<br />
+						<div>{test}</div>
 						<span>Thanks for listening :)</span>
 						<p>Most songs written and performed by me except for the ones with friends 
 							<a href="https://www.instagram.com/honeydutheband/" target="_blank">(Cigs Inside is now 𝘩𝘰𝘯𝘦𝘺𝘥ü, check them out here)</a>
@@ -238,8 +250,8 @@
 			</div>
 			<div id="seek">
 				<span>{_time}</span>
-				<span
-					><RangeSlider
+				<span>
+					<RangeSlider
 						values={[extraTime]}
 						min={0}
 						max={duration}
@@ -250,8 +262,8 @@
 							command(e.detail.value);
 							isSeeking = false;
 						}}
-					/></span
-				>
+					/>
+				</span>
 				<span>{_duration}</span>
 			</div>
 		</div>

@@ -9,7 +9,7 @@
 	let size: string = "2x";
 </script>
 
-<nav class="sticky" on:mouseenter={() => show = true} on:mouseleave={() => show = false} style="height: {navHeight}px;">
+<nav class="sticky" on:mouseenter={() => {if(!isMobile) show = true}} on:mouseleave={() => {if(!isMobile) show = false}} style="height: {navHeight}px;">
 	<span>
 		{#if show}
 		<ul in:fly="{{ x: -600, duration: 400, delay: 200 }}" out:fly="{{ x: -600, duration: 400 }}" class="buttons">
@@ -33,7 +33,7 @@
 		{:else}
 		<span class="navBox">
 			<div id="typer" in:fade="{{ duration: 200, delay: 400 }}" out:fly="{{ x: -400, duration: 200 }}">
-				<Typed />
+				<Typed {isMobile} />
 			</div>
 		</span>
 		{/if}
