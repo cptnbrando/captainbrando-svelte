@@ -105,6 +105,22 @@ DownloadIcon
 		(!showControls && list) ? showControls = true : showControls = false;
 	}
 
+	function shareSong() {
+		const trackSrcArr = track.src.split("/");
+		const baseUrl = window.location.origin;  // Get the base URL (e.g., https://captainbrando.com or http://localhost:3000)
+		const lastTrack = trackSrcArr[trackSrcArr.length - 1];  // Get the last item in the trackSrcArr
+		const fullUrl = `${baseUrl}/?song=${lastTrack}`;  // Construct the URL with the song query param
+		navigator.clipboard.writeText(fullUrl)
+        .then(() => {
+          // Notify the user that the text was copied successfully
+		  const msg = document.querySelector(".ghost") as HTMLElement;
+		  msg.style.visibility = "visible";
+		  setTimeout(() => {
+			msg.style.visibility = "hidden";
+		  }, 3000);
+        });
+	}
+
 	const goBack: string = '<- go back';
 </script>
 
@@ -178,32 +194,40 @@ DownloadIcon
 		<div id="controller">
 			<div class="wide">
 				<span id="mobileControls" class="icons">
-					<!-- svelte-ignore a11y-click-events-have-key-events -->
-					<span on:click={() => command('shuffle')} class={shuffle ? 'active button' : 'button'}>
-						<ShuffleIcon size="40" />
+					<span>
+						<!-- svelte-ignore a11y-click-events-have-key-events -->
+						<span class="button" on:click={() => command('prev')}>
+							<SkipBackIcon size="40" />
+						</span>
+						<!-- svelte-ignore a11y-click-events-have-key-events -->
+						<span class="button" on:click={() => command('playPause')}>
+							{#if isPlaying}
+								<PauseIcon size="40" />
+							{:else}
+								<PlayIcon size="40" />
+							{/if}
+						</span>
+						<!-- svelte-ignore a11y-click-events-have-key-events -->
+						<span class="button" on:click={() => command('next')}>
+							<SkipForwardIcon size="40" />
+						</span>
 					</span>
-					<!-- svelte-ignore a11y-click-events-have-key-events -->
-					<span class="button" on:click={() => command('prev')}>
-						<SkipBackIcon size="40" />
-					</span>
-					<!-- svelte-ignore a11y-click-events-have-key-events -->
-					<span class="button" on:click={() => command('playPause')}>
-						{#if isPlaying}
-							<PauseIcon size="40" />
-						{:else}
-							<PlayIcon size="40" />
-						{/if}
-					</span>
-					<!-- svelte-ignore a11y-click-events-have-key-events -->
-					<span class="button" on:click={() => command('next')}>
-						<SkipForwardIcon size="40" />
-					</span>
-					<!-- svelte-ignore a11y-click-events-have-key-events -->
-					<span on:click={() => command('loop')} class={loop ? 'active button' : 'button'}>
-						<RepeatIcon size="40" />
-					</span>
-					<span on:click={() => window.open(track.src, '_blank')} class='button'>
-						<DownloadIcon size="40" />
+					<span>
+						<!-- svelte-ignore a11y-click-events-have-key-events -->
+						<span on:click={() => command('shuffle')} class={shuffle ? 'active button' : 'button'}>
+							<ShuffleIcon size="25" />
+						</span>
+						<!-- svelte-ignore a11y-click-events-have-key-events -->
+						<span on:click={() => command('loop')} class={loop ? 'active button' : 'button'}>
+							<RepeatIcon size="25" />
+						</span>
+						<span>
+							<span class="ghost">copied!</span>
+							<span id="shareBtn" class="button clickable redHover" on:click={shareSong}>share me</span>
+						</span>
+						<span on:click={() => window.open(track.src, '_blank')} class='button'>
+							<DownloadIcon size="25" />
+						</span>
 					</span>
 				</span>
 			</div>
@@ -239,6 +263,10 @@ DownloadIcon
 <style lang="scss">
 
 	$red: #E62020;
+
+	.ghost {
+		visibility: hidden;
+	}
 
 	.gold {
 		color: blue;
@@ -283,7 +311,7 @@ DownloadIcon
 		position: absolute;
 		top: 0;
 		z-index: 10;
-		margin-top: 10px;
+		// padding-top: 67px;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-around;
@@ -301,20 +329,23 @@ DownloadIcon
 	}
 
 	.icons {
-		width: 70%;
+		width: 100%;
 		align-items: center;
 		display: flex;
 		justify-content: space-between;
 
 		span {
-			transition: 0.3s;
-			&:hover {
-				color: gray;
-				transform: scale(1.3);
-			}
-
-			&:active {
-				color: $red;
+			span {
+				cursor: pointer;
+				transition: 0.3s;
+				&:hover {
+					color: gray;
+					transform: scale(1.3);
+				}
+	
+				&:active {
+					color: $red;
+				}
 			}
 		}
 
@@ -475,6 +506,15 @@ DownloadIcon
 		padding-top: .5em;
 		padding-bottom: .5em;
 		align-items: center;
+		flex-direction: column;
+
+		span:first-child {
+
+		}
+
+		span:last-child {
+
+		}
 	}
 
 	#controller {

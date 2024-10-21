@@ -27,11 +27,35 @@
 	 * Random track on launch
 	 */
 	onMount(async () => {
-		trackNum = defaultTracks[Math.floor(Math.random() * defaultTracks.length)];
-		// trackNum = Math.floor(Math.random() * songs.length);
-		track = songs[trackNum];
+
+		// To share tracks easily, we can attach the name of the .mp3 and play that one instead of random if a query param exists
+		const queryParams = new URLSearchParams(window.location.search);
+		const song = queryParams.get('song'); // 'song' is the query param you want
+
+		if(song) {
+			handleQueryParam(song);
+			trackNum = songs.findIndex((el => el.src.includes(song)));
+			
+			if(trackNum == -1) loadRandomTrack();
+			else {
+				track = songs[trackNum];
+			}
+		} else {
+			loadRandomTrack();
+		}
+
 		audioPlayer.load();
 	});
+
+	function loadRandomTrack() {
+		// trackNum = defaultTracks[Math.floor(Math.random() * defaultTracks.length)];
+		trackNum = Math.floor(Math.random() * songs.length);
+		track = songs[trackNum];
+	}
+
+	function handleQueryParam(song) {
+		console.log(`handleQueryParam ${song}`);
+	}
 
 	/**
 	 * Update mouse position for visualizer

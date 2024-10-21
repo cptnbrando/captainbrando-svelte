@@ -58,7 +58,9 @@
   article {
     scroll-snap-align: start;
     scroll-snap-stop: always;
-    height: 92vh;
+    scroll-margin: 69px;
+    height: calc(100vh - 60px);
+    // padding-top: 69px;
   }
 
   #music {
@@ -70,8 +72,8 @@
     margin: 0;
     scroll-snap-type: y mandatory;
     scroll-behavior: smooth;
+    // scroll-padding-top: 670px;
     max-height: 99vh;
-    scroll-padding-top: 8vh;
     overflow-x: hidden;
     padding-top: 5px;
   }
@@ -129,7 +131,7 @@
 
   @media only screen and (max-width: 600px) {
     article {
-      height: 87.5vh;
+      // height: calc(100vh - 6vh);
     }
   }
 </style>
