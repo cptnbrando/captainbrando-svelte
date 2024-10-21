@@ -74,17 +74,17 @@ export let albums: Album[] = [
 		'brandon & theo'
 	),
 	new Album(
-		'2024',
-		'yuh',
-		'The Cut Ties'
-	),
-	new Album(
 		'2023',
-		'chase',
+		'yuh',
 		'Captain Brando!'
 	),
 	new Album(
 		'2022',
+		'chase',
+		'Captain Brando!'
+	),
+	new Album(
+		'2021',
 		'paint',
 		'Captain Brando!'
 	),
@@ -175,32 +175,32 @@ export const tracks: Track[] = [
 	new Track(
 		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2023/2bedroomtoyota.mp3',
 		'2 Bedroom Toyota',
-		'2023',
+		'2022',
 	),
 	new Track(
 		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2023/BEGIN.mp3',
 		'BEGIN!',
-		'2023',
+		'2022',
 	),
 	new Track(
 		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2023/Lamborghini.mp3',
 		'Lamborghini',
-		'2023',
+		'2022',
 	),
 	new Track(
 		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2023/eyes.mp3',
 		'eyesss.mp3',
-		'2023',
+		'2022',
 	),
 	new Track(
 		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2023/spanish.mp3',
 		'spanish!',
-		'2023',
+		'2022',
 	),
 	new Track(
 		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2023/velvet.mp3',
 		'Velvet',
-		'2023',
+		'2022',
 	),
 	new Track(
 		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/IDKOK.mp3',
@@ -310,7 +310,7 @@ export const tracks: Track[] = [
 	new Track(
 		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/bulkhead.mp3',
 		'BULKHEAD',
-		'2022',
+		'2021',
 	),
 	new Track(
 		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/cigs/alone.mp3',
@@ -340,22 +340,22 @@ export const tracks: Track[] = [
 	new Track(
 		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2022/drrrrrumerrrrrrr.mp3',
 		'drrrrrumerrrrrrr.mp3',
-		'2022',
+		'2021',
 	),
 	new Track(
 		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2022/somewhere.mp3',
 		'somewhere.mp3',
-		'2022',
+		'2021',
 	),
 	new Track(
 		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2022/comeback.mp3',
 		'(dont call it a) comeback!',
-		'2022',
+		'2021',
 	),
 	new Track(
 		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2022/whereyougoin.mp3',
 		'where you goin? (demo)',
-		'2024',
+		'2023',
 	),
 	new Track(
 		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2022/error/kernalPanic.mp3',
@@ -410,31 +410,31 @@ export const tracks: Track[] = [
 	new Track(
 		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2022/ILLFINDHER.mp3',
 		"I'LL FIND HER",
-		'2022',
+		'2021',
 	),
 	new Track(
 		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2022/life.mp3',
 		'life.mp3',
-		'2024',
+		'2023',
 	),
 	new Track(
 		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/4/shoulda%2C%20my%20addition%20to%20brandos%20ideamp3.mp3',
 		'shoulda',
-		'2024',
+		'2023',
 	),
 	new Track(
 		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2023/problems.mp3',
-		'PROBLEMS',
-		'2024',
+		'FCKN PRBLMS by The Cut Ties',
+		'hundred fifty',
 	),
 	new Track(
 		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2023/drive.mp3',
 		'brightside',
-		'2024',
+		'2023',
 	),
 	new Track(
 		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/newAYUP.mp3',
 		'ayup.mp3',
-		'2024',
+		'2023',
 	)
 ];
