@@ -132,6 +132,9 @@
   @media only screen and (max-width: 600px) {
     article {
       // height: calc(100vh - 6vh);
+      height: calc(100vh - 16vh);
+      // scroll-margin: 0px;
+      // margin-bottom: 69px;
     }
   }
 </style>
