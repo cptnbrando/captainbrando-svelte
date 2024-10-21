@@ -151,7 +151,7 @@ DownloadIcon
 							<a href="https://www.youtube.com/watch?v=uzTMHcWtP2Q">(Check out The Cut Ties here! Greg and I jammin again, mostly just greg tho that dude's a g)</a>
 						</p>
 						<p>All tracks recorded and produced by me in dorm rooms, cars, bars, airplanes, or bathrooms (always with dogs/cats)</p>
-						<p>Now I make music at my apt in tulsa OK. I stay quiet most days, meditation and video games</p>
+						<p>Now I make music at my apt in plano TX 😜. I stay quiet most days, meditation and video games</p>
 						<p>Feel free to download and use anything you like, post it wherever too just please credit me</p>
 						<p>imma set up a message box here soon just gimme a minute...</p>
 						<a href="https://www.youtube.com/watch?v=LG4Oi9cnUvw"><p>come dance with me if you can find me, and plz say hi instead of shittalkin me</p></a>
