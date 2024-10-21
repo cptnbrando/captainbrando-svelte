@@ -17,6 +17,8 @@
 	import { albums } from './tracks';
 	import RangeSlider from 'svelte-range-slider-pips';
 
+	const COPY_MSG = "copied to clip🛹!";
+
 	export let isMobile: boolean;
 
 	export let track: Track;
@@ -129,8 +131,42 @@
 		el.style.visibility = "visible";
 		setTimeout(() => {
 			el.style.visibility = "hidden";
+			el.innerHTML = COPY_MSG;
 		}, 2000);
 	}
+
+	let isHolding = false;
+    let holdTimeout;
+
+	function handleShareMouseDown() {
+        isHolding = true;
+        console.log('Div is being pressed down');
+
+        // Start a timer for 1.5 seconds
+        holdTimeout = setTimeout(() => {
+            if (isHolding) {
+                console.log('Share Button has been held for 1.5 seconds');
+				const msg = document.querySelector(".ghost") as HTMLElement;
+				msg.innerHTML = "Downloading...";
+				flashVisibility(msg);
+				window.open(track.src, '_blank');
+            }
+        }, 1500); // 1500 milliseconds
+    }
+
+    function handleShareMouseUp() {
+        isHolding = false;
+        clearTimeout(holdTimeout); // Clear the timer if the mouse is released
+        console.log('Share Button is released');
+    }
+
+    function handleShareMouseLeave() {
+        if (isHolding) {
+            isHolding = false;
+            clearTimeout(holdTimeout); // Clear the timer if the mouse leaves the div
+            console.log('Mouse left the Share Button while holding');
+        }
+    }
 </script>
 
 <div ref="box" id="controlsBox">
@@ -164,7 +200,7 @@
 						</p>
 						<p>All tracks recorded and produced by me in dorm rooms, cars, bars, airplanes, or bathrooms (always with dogs/cats)</p>
 						<p>Now I make music at my apt in plano TX 😜. I stay quiet most days, meditation and video games</p>
-						<p>Feel free to download and use anything you like, post it wherever too just please credit me</p>
+						<p>Feel free to download and use anything you like (hold the share icon to download). Post it wherever too just please credit me</p>
 					{:else}
 						<!-- <span class="redHover">{goBack}</span> -->
 						<span>
@@ -232,15 +268,20 @@
 							<RepeatIcon size="25" />
 						</span>
 						<!-- svelte-ignore a11y-click-events-have-key-events -->
-						<span id="shareBtn" class="button clickable redHover" on:click={shareSong}>
+						<span id="shareBtn" class="button clickable redHover" 
+						on:click={shareSong} 
+						on:mousedown={handleShareMouseDown}
+						on:mouseup={handleShareMouseUp}
+						on:mouseleave={handleShareMouseLeave}>
 							<Share2Icon size=25 />
 						</span>
-						<div></div>
-						<span class="ghost">copied to clip🛹!</span>
-						<!-- <span on:click={() => window.open(track.src, '_blank')} class='button'>
+						<!-- svelte-ignore a11y-click-events-have-key-events
+						<span on:click={() => window.open(track.src, '_blank')} class='button'>
 							<DownloadIcon size="25" />
 						</span> -->
+						<div></div>
 					</span>
+					<span class="ghost">copied to clip🛹!</span>
 				</span>
 			</div>
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -420,8 +461,8 @@
 		span {
 			position: absolute;
 			z-index: 10;
-			left: 33%;
-			top: 25%;
+			left: 30%;
+			top: 22%;
 		}
 	}
 
