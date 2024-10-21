@@ -140,11 +140,13 @@
 				<div id="albums">
 					<ul>						
 						{#each albums as album}
+						<!-- svelte-ignore a11y-click-events-have-key-events -->
 						<li on:click={() => {selected = album; stats = false;}} class="{selected === album && !stats ? 'active' : ''}">
 							<img src={album.src} alt="" />
 							<span>{album.name}</span>
 						</li>
 						{/each}
+						<!-- svelte-ignore a11y-click-events-have-key-events -->
 						<li on:click={() => {stats = !stats;}} class="{stats ? 'active' : 'colors'}">
 							<span>Stats</span>
 						</li>
@@ -187,9 +189,9 @@
 		<div id="img" on:click={toggleList} class="clickable redHover">
 			<img src={track.img} alt="" />
 			{#if !list}
-			<h3 class="gold">openthegates</h3>
+			<h3 class="whattodowhattodo gold">openthegates</h3>
 			{:else}
-			<h3 class="purp">ah close em!</h3>
+			<h3 class="whattodowhattodo purp">ah close em!</h3>
 			{/if}
 			<span class={list ? 'red' : ''}>
 				{#if !list}
@@ -229,6 +231,7 @@
 						<span on:click={() => command('loop')} class={loop ? 'active button' : 'button'}>
 							<RepeatIcon size="25" />
 						</span>
+						<!-- svelte-ignore a11y-click-events-have-key-events -->
 						<span id="shareBtn" class="button clickable redHover" on:click={shareSong}>
 							<Share2Icon size=25 />
 						</span>
@@ -461,7 +464,7 @@
 			height: 100%;
 			padding-left: 10px;
 			padding-right: 10px;
-			overflow-y: scroll;
+			overflow-y: auto;
 			height: 100%;
 			max-height: 100%;
 		}
@@ -531,6 +534,10 @@
 
 	.clickable {
 		cursor: pointer;
+	}
+
+	.whattodowhattodo {
+		padding-top: 9px;
 	}
 
 	@media only screen and (max-width: 800px) {
