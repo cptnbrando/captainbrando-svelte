@@ -1,17 +1,16 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
 	import {
-		PauseCircleIcon,
-		PlayCircleIcon,
 		RepeatIcon,
 		ShuffleIcon,
 		SkipBackIcon,
 		SkipForwardIcon,
 		ChevronUpIcon,
 		ChevronDownIcon,
-PauseIcon,
-PlayIcon,
-DownloadIcon
+		PauseIcon,
+		PlayIcon,
+		DownloadIcon,
+		Share2Icon
 	} from 'svelte-feather-icons';
 	import { fade, fly } from 'svelte/transition';
 	import { type Track, type Album, tracks } from './tracks';
@@ -117,7 +116,7 @@ DownloadIcon
 		  msg.style.visibility = "visible";
 		  setTimeout(() => {
 			msg.style.visibility = "hidden";
-		  }, 3000);
+		  }, 2000);
         });
 	}
 
@@ -221,13 +220,16 @@ DownloadIcon
 						<span on:click={() => command('loop')} class={loop ? 'active button' : 'button'}>
 							<RepeatIcon size="25" />
 						</span>
-						<span>
-							<span class="ghost">copied!</span>
-							<span id="shareBtn" class="button clickable redHover" on:click={shareSong}>share me</span>
+						<span id="shareBtn" class="button clickable redHover" on:click={shareSong}>
+							<Share2Icon size=25 />
 						</span>
-						<span on:click={() => window.open(track.src, '_blank')} class='button'>
+						{#if (isMobile)}
+						<div></div>
+						{/if}
+						<span class="ghost">copied to clip🛹!</span>
+						<!-- <span on:click={() => window.open(track.src, '_blank')} class='button'>
 							<DownloadIcon size="25" />
-						</span>
+						</span> -->
 					</span>
 				</span>
 			</div>
