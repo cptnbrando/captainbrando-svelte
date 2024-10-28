@@ -326,5 +326,8 @@ export const heads: string[] = [
     "giving it away",
     "on sale for 9.99!",
     "a NFT (non-fungible token)",
-    "a DOG (Dastardly Original GOD (Giga-Optimal DOG))"
+    "a DOG (Dastardly Original GOD (Giga-Optimal DOG))",
+    "bad at goodbyes",
+    "bad at first impressions",
+    "a desert rider 🏍️"
 ];
