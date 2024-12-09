@@ -30,16 +30,10 @@
 
 		// To share tracks easily, we can attach the name of the .mp3 and play that one instead of random if a query param exists
 		const queryParams = new URLSearchParams(window.location.search);
-		const song = queryParams.get('song'); // 'song' is the query param you want
+		let song = queryParams.get('song'); // 'song' is the query param you want
 
 		if(song) {
 			handleQueryParam(song);
-			trackNum = songs.findIndex((el => el.src.includes(song)));
-			
-			if(trackNum == -1) loadRandomTrack();
-			else {
-				track = songs[trackNum];
-			}
 		} else {
 			loadRandomTrack();
 		}
@@ -55,6 +49,10 @@
 
 	function handleQueryParam(song) {
 		console.log(`handleQueryParam ${song}`);
+		trackNum = songs.findIndex((el => el.src.includes(song)));
+		// DEFAULT TO WHACK A MOLE
+		if(trackNum == -1) handleQueryParam('whackamole3.mp3');
+		else track = songs[trackNum];
 	}
 
 	/**
