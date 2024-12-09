@@ -128,7 +128,12 @@ export const tracks: Track[] = [
 	// 	'2023',
 	// ),
 	new Track(
-		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/whackamole2.mp3',
+		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/WHACKAMOLE.mp3',
+		'WHACK A MOLE',
+		'hundred fifty',
+	),
+	new Track(
+		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/whackamole3.mp3',
 		'whack a mole',
 		'hundred fifty',
 	),
@@ -138,7 +143,7 @@ export const tracks: Track[] = [
 		'hundred fifty',
 	),
 	new Track(
-		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/LOUDASSINDIAN.mp3',
+		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/LOUDASSINDIAN_final.mp3',
 		'LOUDASSINDIAN',
 		'hundred fifty',
 	),
