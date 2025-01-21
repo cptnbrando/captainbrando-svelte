@@ -35,13 +35,14 @@
   <script type="module" src="/src/main.ts"></script>
   <script>
     // Platform select
+    // only n64, nds, and gboy work...
     var NepEmu = "n64";
     // ID of html element where the emulator will be inserted
     var NepPlayer = "#emulator";
 
     // var neogeoBios = "./test/bios/neogeo.zip";
     // Use default psxBios included with NeptunJS, as the psx bios files make it slower
-    // var psxBios = "./test/bios/psxBios.zip";
+    var psxBios = "./test/bios/psxBios.zip";
     var psxSkipBios = false;
 
     // Add extra button on toolbar to scale up emulator. Disabled by default
@@ -57,7 +58,7 @@
       let game = `/neptun/test/`;
       switch (NepEmu) {
         case "n64":
-          game += "1m.zip";
+          game += "1g.zip";
           break;
         case "gba":
           game += "2p.zip";
@@ -65,9 +66,12 @@
         case "nds":
           game += "3d.zip";
           break;
+        case "sega":
+          game += "4m.zip";
+          break;
         default:
           // Default to the first game
-          game += "1m.zip";
+          game += "1x.zip";
           break;
       }
 
