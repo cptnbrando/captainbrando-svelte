@@ -15,7 +15,7 @@
 	let time: number = 0;
 	let duration: number = 0;
 	let loop: boolean = false;
-	let shuffle: boolean = true;
+	let shuffle: boolean = false;
 	let volume: number = 30;
 	let ended: boolean = false;
 
