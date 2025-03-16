@@ -128,6 +128,16 @@ export const tracks: Track[] = [
 	// 	'2023',
 	// ),
 	new Track(
+		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/keys.mp3',
+		'gimme the keys',
+		'hundred fifty',
+	),
+	new Track(
+		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/break.mp3',
+		'BREAK IT!',
+		'hundred fifty',
+	),
+	new Track(
 		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/jump.mp3',
 		'jump',
 		'hundred fifty',
