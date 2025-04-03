@@ -294,4 +294,4 @@ Web 3.0 is coming, and you should join the party. It's raining money here, and e
 
 Now, we just have to build it...`;
 
-export const stories: string[] = [spam, web3];
+export const stories: string[] = [short, story1, story2, story3, spam, web3];

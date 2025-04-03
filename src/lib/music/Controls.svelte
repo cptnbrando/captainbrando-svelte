@@ -10,7 +10,11 @@
 		PauseIcon,
 		PlayIcon,
 		DownloadIcon,
-		Share2Icon
+		Share2Icon,
+		VolumeIcon,
+		Volume1Icon,
+		Volume2Icon,
+		VolumeXIcon
 	} from 'svelte-feather-icons';
 	import { fade, fly } from 'svelte/transition';
 	import { type Track, type Album, tracks } from './tracks';
@@ -27,6 +31,8 @@
 
 	export let shuffle: boolean;
 	export let loop: boolean;
+
+	export let volume: number;
 
 	let isSeeking: boolean = false;
 
@@ -258,7 +264,28 @@
 							<SkipForwardIcon size="40" />
 						</span>
 					</span>
-					<span id="secondaryIcons">
+					<span id="secondaryIcons" class="inline-flex">
+						<!-- <span>
+							{#if volume === 0}
+								<VolumeXIcon class='button' />
+							{:else if volume < .3}
+								<VolumeIcon class='button' />
+							{:else if volume < .6}
+								<Volume1Icon class='button' />
+							{:else}
+								<Volume2Icon class='button' />
+							{/if}
+						</span>
+						<span id='volumeRange'>
+							<RangeSlider
+								min={0}
+								max={1}
+								step={0.05}
+								on:change={(e) => {
+									command(`volume=${e.detail.value}`);
+								}}
+							/>
+						</span> -->
 						<!-- svelte-ignore a11y-click-events-have-key-events -->
 						<span on:click={() => command('shuffle')} class={shuffle ? 'active button' : 'button'}>
 							<ShuffleIcon size="25" />
@@ -278,11 +305,11 @@
 						<!-- svelte-ignore a11y-click-events-have-key-events
 						<span on:click={() => window.open(track.src, '_blank')} class='button'>
 							<DownloadIcon size="25" />
-						</span> -->
-						<div></div>
+						</span>
+						<div></div> -->
 					</span>
-					<span class="ghost">copied to clip🛹!</span>
 				</span>
+				<span class="ghost">copied to clip🛹!</span>
 			</div>
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			<div ref="box" class="clickable redHover" id="track" on:click={toggleList}>
@@ -330,8 +357,12 @@
 		color: red;
 	}
 
+	#volumeRange {
+		width: 100px;
+	}
+
 	#secondaryIcons {
-		margin-left: 6px;
+		display: flex;
 	}
 
 	#albums {
@@ -374,7 +405,6 @@
 		justify-content: space-around;
 		overflow: hidden;
 		max-height: 100%;
-		
 		
 		#boxie {
 			height: 100%;

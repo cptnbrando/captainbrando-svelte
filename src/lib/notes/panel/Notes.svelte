@@ -28,12 +28,11 @@
     const onGP = `${github}/music/notMine/onGP.mp3`;
     
     const start = (key: string) => {
+        showNotes = false;
         if(privy === null || privy === true) {
             privy = true;
             return;
         }
-
-        showNotes = false;
         selectedNote = key;
         // TODO: make colors pop more...
         backColor = getColor();
@@ -53,23 +52,29 @@
 
 <h1>BOOKS</h1>
 
-{#each stories as key, index}
-    {#if showNotes === true}
-        <div class='note' id={`story${index}`} on:click={() => start(key)} on:keydown={() => {}}></div>
-    {:else}
-        <button class="marg" on:click={backOut}>cool, thanks</button>
-        {#if selectedNote === key}
-        <div class='fakenews marg'>
-            <video src={video1Src} controls>
-                <track kind="captions" />
-            </video>
-            <audio src={need2} controls controlsList="nodownload" />
-            <p>{@html selectedNote}</p>
-        </div>
+{#if selectedNote != null && !showNotes}
+<button class="marg" on:click={backOut}>cool, thanks</button>
+{/if}
+
+<div id='library'>
+    {#each stories as key, index}
+        {#if showNotes === true}
+            <div class='note' id={`story${index}`} on:click={() => start(key)} on:keydown={() => {}}></div>
+        {:else}
+            <!-- <button class="marg" on:click={backOut}>cool, thanks</button> -->
+            {#if selectedNote === key}
+            <div class='fakenews marg'>
+                <video src={video1Src} controls>
+                    <track kind="captions" />
+                </video>
+                <audio src={need2} controls controlsList="nodownload" />
+                <p>{@html selectedNote}</p>
+            </div>
+            {/if}
         {/if}
-    {/if}
-{/each}
-{#if notesOpenedCount > 1 && showNotes === true}
+    {/each}
+</div>
+{#if notesOpenedCount >= stories.length && showNotes === true}
     <!-- <a href="https://www.youtube.com/@videogamedunkey/?sub_confirmation=1">Subscribe to VideoGameDunky Here!</a> -->
     <video src={video2Src} controls>
         <track kind="captions" />
@@ -82,7 +87,7 @@
     <br />
     <br />
     <br />
-    <button on:click={() => {privy = false}}>Click here to agree</button>
+    <button on:click={() => {privy = false; showNotes = true;}}>Click here to agree</button>
 {/if}
 
 <!-- <audio controls src="music\etc\isthereanybodyoutthere.mp3"></audio> -->
@@ -107,10 +112,11 @@
     }
 
     .fakenews {
-        overflow-y: scroll;
+        display: block;
+        overflow-y: auto;
         overflow-x: hidden;
-        max-height: 80%;
-        height: 80%;
+        max-height: 69vh;
+        height: 69vh;
         width: 80%;
         max-width: 80%;
     }
@@ -128,6 +134,13 @@
             width: 55%;
             height: 55%;
         }
+    }
+
+    #library {
+        display: flex;
+        overflow-x: auto;
+        // width: 100%;
+        // height: 100%;
     }
 </style>
 

@@ -16,7 +16,7 @@
 	let duration: number = 0;
 	let loop: boolean = false;
 	let shuffle: boolean = false;
-	let volume: number = 30;
+	let volume: number = .30;
 	let ended: boolean = false;
 
 	let mousePos = { x: 500, y: 250 };
@@ -129,6 +129,14 @@
 		audioPlayer.currentTime = time;
 	}
 
+	/**
+	 * Change volume of track
+	 * @param volume what to change it to
+	 */
+	 function changeVol(volume: number): void {
+		audioPlayer.volume = volume;
+	}
+
 	function chooseTrack(trackName: string): void {
 		// Pause the track if it's playing, then push the track num to the array
 		if (isPlaying) playPause();
@@ -180,8 +188,14 @@
 				gimme();
 				break;
 			default:
-				seek(event.detail.cmd);
-				break;
+				if (event.detail.cmd.includes('volume=')) {
+					const volumeStr = event.detail.cmd.split('volume=')[1];
+					const volume = parseFloat(volumeStr);
+					changeVol(volume);
+				} else {
+					seek(event.detail.cmd);
+				}
+            	break;
 		}
 	}
 
@@ -195,7 +209,7 @@
 		shuffle: shuffle,
 		loop: loop,
 		ended: ended,
-
+		volume: volume,
 		isPlaying: isPlaying
 	};
 </script>
@@ -212,7 +226,7 @@
 	data-playing="no"
 	crossOrigin="anonymous"
 	{loop}
-	volume={volume / 100}
+	bind:volume
 	bind:this={audioPlayer}
 	bind:duration
 	bind:ended

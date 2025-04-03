@@ -6,6 +6,7 @@
   import Contact from "./lib/contact/Contact.svelte";
   import Notes from "./lib/notes/panel/Notes.svelte";
   import Radio from "./lib/radio/Radio.svelte";
+  import Donations from "./lib/money/Donations.svelte";
 
   let scrollEvent: any = null;
   let scrollTimestamp: number = 0;
@@ -40,12 +41,19 @@
   <article id="games">
     <Games {isMobile} />
   </article>
+  <!-- <article id="notes">
+    <Notes />
+  </article>
+  <article id="donations">
+    <Donations />
+  </article> -->
 </main>
 
 <style lang="scss">
   :root {
     font-family: "Open Sans", sans-serif;
     overflow-y: hidden;
+    user-select: none;
   }
 
   :global(body) {
