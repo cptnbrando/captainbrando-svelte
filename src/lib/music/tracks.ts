@@ -28,8 +28,10 @@ export class Track {
 	img: string;
 	arrAlbum: Album;
 	download: boolean;
+	when: string;
+	where: string;
 
-	constructor(src: string, name: string, album: string) {
+	constructor(src: string, name: string, album: string, when?: string, where?: string) {
 		this.arrAlbum = albums.find(el => el.name === album);
 		if (!this.arrAlbum) {
 			this.arrAlbum = new Album(album, 'sailboat', 'Captain Brando!');
@@ -40,6 +42,9 @@ export class Track {
 		this.name = name;
 		this.album = this.arrAlbum.name;
 		this.img = this.arrAlbum.src;
+
+		this.when = when;
+		this.where = where;
 	}
 }
 
@@ -63,6 +68,11 @@ export let albums: Album[] = [
 	// 	'friends',
 	// 	'😁'
 	// ),
+	new Album(
+		'🗣️',
+		'bark',
+		'DOGS'
+	),
 	new Album(
 		'hundred fifty',
 		'hundred',
@@ -127,15 +137,24 @@ export const tracks: Track[] = [
 	// 	'2 Bedroom Toyota',
 	// 	'2023',
 	// ),
+	//
+	// -5:00 = CT Central Time
 	new Track(
-		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/keys.mp3',
-		'gimme the keys',
-		'hundred fifty',
+		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/obsessed.mp3',
+		'obsessed',
+		'🗣️',
+		'2023-04-14T13:52:00-05:00',
+		'apartment - my home city'
 	),
 	new Track(
 		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/break.mp3',
 		'BREAK IT!',
-		'hundred fifty',
+		'🗣️',
+	),
+	new Track(
+		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/keys.mp3',
+		'gimme the keys',
+		'🗣️',
 	),
 	new Track(
 		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/jump.mp3',
