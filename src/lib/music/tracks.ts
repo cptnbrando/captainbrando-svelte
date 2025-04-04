@@ -159,7 +159,7 @@ export const tracks: Track[] = [
 	new Track(
 		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/jump.mp3',
 		'jump',
-		'hundred fifty',
+		'3RR0R 404',
 	),
 	new Track(
 		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/sexy.mp3',
