@@ -35,7 +35,9 @@
 		if(song) {
 			handleQueryParam(song);
 		} else {
-			loadRandomTrack();
+			// loadRandomTrack();
+    trackNum = 0;
+		  track = songs[trackNum];
 		}
 
 		audioPlayer.load();
