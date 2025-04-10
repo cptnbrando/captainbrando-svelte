@@ -147,6 +147,11 @@ export const tracks: Track[] = [
 		'apartment - my home city'
 	),
 	new Track(
+		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/sexy.mp3',
+		'sexy',
+		'🗣️',
+	),
+	new Track(
 		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/break.mp3',
 		'BREAK IT!',
 		'🗣️',
@@ -155,11 +160,6 @@ export const tracks: Track[] = [
 		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/keys.mp3',
 		'gimme the keys',
 		'🗣️',
-	),
-	new Track(
-		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/sexy.mp3',
-		'sexy',
-		'hundred fifty',
 	),
 	new Track(
 		'https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/beowulf.mp3',
