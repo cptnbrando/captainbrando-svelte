@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { createEventDispatcher } from 'svelte';
+	import { createEventDispatcher } from "svelte";
 	import {
 		RepeatIcon,
 		ShuffleIcon,
@@ -14,12 +14,12 @@
 		VolumeIcon,
 		Volume1Icon,
 		Volume2Icon,
-		VolumeXIcon
-	} from 'svelte-feather-icons';
-	import { fade, fly } from 'svelte/transition';
-	import { type Track, type Album, tracks } from './tracks';
-	import { albums } from './tracks';
-	import RangeSlider from 'svelte-range-slider-pips';
+		VolumeXIcon,
+	} from "svelte-feather-icons";
+	import { fade, fly } from "svelte/transition";
+	import { type Track, type Album, tracks } from "./tracks";
+	import { albums } from "./tracks";
+	import RangeSlider from "svelte-range-slider-pips";
 
 	const COPY_MSG = "copied to clip🛹!";
 
@@ -38,7 +38,7 @@
 
 	let list: boolean = false;
 	let selected: Album = albums[0];
-	let selectedTracks: Track[] = tracks.filter(track => {
+	let selectedTracks: Track[] = tracks.filter((track) => {
 		return selected.name === track.album;
 	});
 
@@ -47,7 +47,7 @@
 	let stats: boolean = false;
 
 	function onSelect() {
-		selectedTracks = tracks.filter(track => {
+		selectedTracks = tracks.filter((track) => {
 			return selected.name === track.album;
 		});
 	}
@@ -56,14 +56,14 @@
 	const dispatch = createEventDispatcher();
 
 	function command(cmd: string) {
-		dispatch('message', {
-			cmd: cmd
+		dispatch("message", {
+			cmd: cmd,
 		});
 	}
 
 	function chooseTrack(track: string) {
-		dispatch('message', {
-			track: track
+		dispatch("message", {
+			track: track,
 		});
 	}
 
@@ -79,7 +79,7 @@
 	// Current time updates
 	export let time;
 	let extraTime = 0;
-	let _time: string = '0:00';
+	let _time: string = "0:00";
 	$: time, onTime();
 
 	function onTime() {
@@ -101,7 +101,7 @@
 
 		// Format each section with a leading 0 if needed
 		// minutes = (minutes < 10) ? "0" + minutes : minutes;
-		seconds = seconds < 10 ? '0' + seconds : seconds;
+		seconds = seconds < 10 ? "0" + seconds : seconds;
 
 		// If it's more than an hour, return the hour too. Otherwise, just the min:sec
 		return `${minutes}:${seconds}`;
@@ -109,20 +109,19 @@
 
 	function toggleList() {
 		list = !list;
-		(!showControls && list) ? showControls = true : showControls = false;
+		!showControls && list ? (showControls = true) : (showControls = false);
 	}
 
 	function shareSong() {
 		const trackSrcArr = track.src.split("/");
-		const baseUrl = window.location.origin;  // Get the base URL (e.g., https://captainbrando.com or http://localhost:3000)
-		const lastFieldOfTrackURL = trackSrcArr[trackSrcArr.length - 1];  // Get the last item in the url 'github.com/blah/track.mp3 trackSrcArr
-		const fullUrl = `${baseUrl}/?song=${lastFieldOfTrackURL}`;  // Construct the URL with the song query param
+		const baseUrl = window.location.origin; // Get the base URL (e.g., https://captainbrando.com or http://localhost:3000)
+		const lastFieldOfTrackURL = trackSrcArr[trackSrcArr.length - 1]; // Get the last item in the url 'github.com/blah/track.mp3 trackSrcArr
+		const fullUrl = `${baseUrl}/?song=${lastFieldOfTrackURL}`; // Construct the URL with the song query param
 		const msg = document.querySelector(".ghost") as HTMLElement;
-		if(navigator.clipboard) {
-			navigator.clipboard.writeText(fullUrl)
-			.then(() => {
-			  // Notify the user that the text was copied successfully
-			  flashVisibility(msg);
+		if (navigator.clipboard) {
+			navigator.clipboard.writeText(fullUrl).then(() => {
+				// Notify the user that the text was copied successfully
+				flashVisibility(msg);
 			});
 		} else {
 			msg.innerHTML = "No HTTPS ?";
@@ -131,7 +130,7 @@
 		}
 	}
 
-	const goBack: string = '<- go back';
+	const goBack: string = "<- go back";
 
 	function flashVisibility(el: HTMLElement) {
 		el.style.visibility = "visible";
@@ -142,54 +141,69 @@
 	}
 
 	let isHolding = false;
-    let holdTimeout;
+	let holdTimeout;
 
 	function handleShareMouseDown() {
-        isHolding = true;
-        console.log('Div is being pressed down');
+		isHolding = true;
+		console.log("Div is being pressed down");
 
-        // Start a timer for 1.5 seconds
-        holdTimeout = setTimeout(() => {
-            if (isHolding) {
-                console.log('Share Button has been held for 1.5 seconds');
+		// Start a timer for 1.5 seconds
+		holdTimeout = setTimeout(() => {
+			if (isHolding) {
+				console.log("Share Button has been held for 1.5 seconds");
 				const msg = document.querySelector(".ghost") as HTMLElement;
 				msg.innerHTML = "Downloading...";
 				flashVisibility(msg);
-				window.open(track.src, '_blank');
-            }
-        }, 1500); // 1500 milliseconds
-    }
+				window.open(track.src, "_blank");
+			}
+		}, 1500); // 1500 milliseconds
+	}
 
-    function handleShareMouseUp() {
-        isHolding = false;
-        clearTimeout(holdTimeout); // Clear the timer if the mouse is released
-        console.log('Share Button is released');
-    }
+	function handleShareMouseUp() {
+		isHolding = false;
+		clearTimeout(holdTimeout); // Clear the timer if the mouse is released
+		console.log("Share Button is released");
+	}
 
-    function handleShareMouseLeave() {
-        if (isHolding) {
-            isHolding = false;
-            clearTimeout(holdTimeout); // Clear the timer if the mouse leaves the div
-            console.log('Mouse left the Share Button while holding');
-        }
-    }
+	function handleShareMouseLeave() {
+		if (isHolding) {
+			isHolding = false;
+			clearTimeout(holdTimeout); // Clear the timer if the mouse leaves the div
+			console.log("Mouse left the Share Button while holding");
+		}
+	}
 </script>
 
 <div ref="box" id="controlsBox">
 	<div id="boxie">
-		{#if (list)}
-			<div id="list" in:fly="{{ y: 600, duration: 400 }}" out:fly="{{ y: 600, duration: 300 }}">
+		{#if list}
+			<div
+				id="list"
+				in:fly={{ y: 600, duration: 400 }}
+				out:fly={{ y: 600, duration: 300 }}
+			>
 				<div id="albums">
-					<ul>						
+					<ul>
 						{#each albums as album}
-						<!-- svelte-ignore a11y-click-events-have-key-events -->
-						<li on:click={() => {selected = album; stats = false;}} class="{selected === album && !stats ? 'active' : ''}">
-							<img src={album.src} alt="" />
-							<span>{album.name}</span>
-						</li>
+							<!-- svelte-ignore a11y-click-events-have-key-events -->
+							<li
+								on:click={() => {
+									selected = album;
+									stats = false;
+								}}
+								class={selected === album && !stats ? "active" : ""}
+							>
+								<img src={album.src} alt="" />
+								<span>{album.name}</span>
+							</li>
 						{/each}
 						<!-- svelte-ignore a11y-click-events-have-key-events -->
-						<li on:click={() => {stats = !stats;}} class="{stats ? 'active' : 'colors'}">
+						<li
+							on:click={() => {
+								stats = !stats;
+							}}
+							class={stats ? "active" : "colors"}
+						>
 							<span>Stats</span>
 						</li>
 					</ul>
@@ -198,27 +212,49 @@
 					{#if stats}
 						<br />
 						<span>Thanks for listening :)</span>
-						<p>Most songs written and performed by me except for the ones with friends 
-							<a href="https://www.instagram.com/honeydutheband/" target="_blank">(Cigs Inside is now 𝘩𝘰𝘯𝘦𝘺𝘥ü, check them out here)</a>
+						<p>
+							Most songs written and performed by me except for the ones with
+							friends
+							<a
+								href="https://www.instagram.com/honeydutheband/"
+								target="_blank"
+								>(Cigs Inside is now 𝘩𝘰𝘯𝘦𝘺𝘥ü, check them out here)</a
+							>
 						</p>
 						<p>
-							<a href="https://www.youtube.com/watch?v=uzTMHcWtP2Q">(Check out The Cut Ties here!)</a>
+							<a href="https://www.youtube.com/watch?v=uzTMHcWtP2Q"
+								>(Check out The Cut Ties here!)</a
+							>
 						</p>
-						<p>All tracks recorded and produced by me in dorm rooms, cars, bars, airplanes, or bathrooms (always with dogs/cats)</p>
-						<p>Now I make music at my apt in plano TX 😜. I stay quiet most days, meditation and video games</p>
-						<p>Feel free to download and use anything you like (hold the share icon to download). Post it wherever too just please credit me</p>
+						<p>
+							All tracks recorded and produced by me in dorm rooms, cars, bars,
+							airplanes, or bathrooms (always with dogs/cats)
+						</p>
+						<p>
+							Now I make music at my apt in plano TX 😜. I stay quiet most days,
+							meditation and video games
+						</p>
+						<p>
+							Feel free to download and use anything you like (hold the share
+							icon to download). Post it wherever too just please credit me
+						</p>
 					{:else}
 						<!-- <span class="redHover">{goBack}</span> -->
 						<span>
-								<img src={selected.src} alt="" />
-								<h3>{selected.name} by {selected.artist}</h3>
+							<img src={selected.src} alt="" />
+							<h3>{selected.name} by {selected.artist}</h3>
 						</span>
 						<ol>
 							{#each selectedTracks as listTrack}
-							<!-- svelte-ignore a11y-click-events-have-key-events -->
-							<li on:click={() => {chooseTrack(listTrack.name)}} class="{track.name === listTrack.name ? 'active' : ''}">
-								{listTrack.name}
-							</li>
+								<!-- svelte-ignore a11y-click-events-have-key-events -->
+								<li
+									on:click={() => {
+										chooseTrack(listTrack.name);
+									}}
+									class={track.name === listTrack.name ? "active" : ""}
+								>
+									{listTrack.name}
+								</li>
 							{/each}
 						</ol>
 					{/if}
@@ -231,15 +267,15 @@
 		<div id="img" on:click={toggleList} class="clickable redHover">
 			<img src={track.img} alt="" />
 			{#if !list}
-			<h3 class="whattodowhattodo gold">openthegates</h3>
+				<h3 class="whattodowhattodo gold">openthegates</h3>
 			{:else}
-			<h3 class="whattodowhattodo purp">ah close em!</h3>
+				<h3 class="whattodowhattodo purp">ah close em!</h3>
 			{/if}
-			<span class={list ? 'red' : ''}>
+			<span class={list ? "red" : ""}>
 				{#if !list}
-				<ChevronUpIcon size="40" />
+					<ChevronUpIcon size="40" />
 				{:else}
-				<ChevronDownIcon class="red" size="40" />
+					<ChevronDownIcon class="red" size="40" />
 				{/if}
 			</span>
 		</div>
@@ -248,11 +284,11 @@
 				<span id="mobileControls" class="icons">
 					<span>
 						<!-- svelte-ignore a11y-click-events-have-key-events -->
-						<span class="button" on:click={() => command('prev')}>
+						<span class="button" on:click={() => command("prev")}>
 							<SkipBackIcon size="40" />
 						</span>
 						<!-- svelte-ignore a11y-click-events-have-key-events -->
-						<span class="button" on:click={() => command('playPause')}>
+						<span class="button" on:click={() => command("playPause")}>
 							{#if isPlaying}
 								<PauseIcon size="40" />
 							{:else}
@@ -260,7 +296,7 @@
 							{/if}
 						</span>
 						<!-- svelte-ignore a11y-click-events-have-key-events -->
-						<span class="button" on:click={() => command('next')}>
+						<span class="button" on:click={() => command("next")}>
 							<SkipForwardIcon size="40" />
 						</span>
 					</span>
@@ -287,20 +323,29 @@
 							/>
 						</span> -->
 						<!-- svelte-ignore a11y-click-events-have-key-events -->
-						<span on:click={() => command('shuffle')} class={shuffle ? 'active button' : 'button'}>
+						<span
+							on:click={() => command("shuffle")}
+							class={shuffle ? "active button" : "button"}
+						>
 							<ShuffleIcon size="25" />
 						</span>
 						<!-- svelte-ignore a11y-click-events-have-key-events -->
-						<span on:click={() => command('loop')} class={loop ? 'active button' : 'button'}>
+						<span
+							on:click={() => command("loop")}
+							class={loop ? "active button" : "button"}
+						>
 							<RepeatIcon size="25" />
 						</span>
 						<!-- svelte-ignore a11y-click-events-have-key-events -->
-						<span id="shareBtn" class="button clickable redHover" 
-						on:click={shareSong} 
-						on:mousedown={handleShareMouseDown}
-						on:mouseup={handleShareMouseUp}
-						on:mouseleave={handleShareMouseLeave}>
-							<Share2Icon size=25 />
+						<span
+							id="shareBtn"
+							class="button clickable redHover"
+							on:click={shareSong}
+							on:mousedown={handleShareMouseDown}
+							on:mouseup={handleShareMouseUp}
+							on:mouseleave={handleShareMouseLeave}
+						>
+							<Share2Icon size="25" />
 						</span>
 						<!-- svelte-ignore a11y-click-events-have-key-events
 						<span on:click={() => window.open(track.src, '_blank')} class='button'>
@@ -312,9 +357,14 @@
 				<span class="ghost">copied to clip🛹!</span>
 			</div>
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
-			<div ref="box" class="clickable redHover" id="track" on:click={toggleList}>
+			<div
+				ref="box"
+				class="clickable redHover"
+				id="track"
+				on:click={toggleList}
+			>
 				{#if !isMobile}
-				{track.artist} - 
+					{track.artist} -
 				{/if}
 				{track.name}
 			</div>
@@ -329,7 +379,7 @@
 							isSeeking = true;
 						}}
 						on:stop={(e) => {
-							command(e.detail.value);
+							command(`seek=${e.detail.value}`);
 							isSeeking = false;
 						}}
 					/>
@@ -341,8 +391,7 @@
 </div>
 
 <style lang="scss">
-
-	$red: #E62020;
+	$red: #e62020;
 
 	.ghost {
 		visibility: hidden;
@@ -350,7 +399,6 @@
 
 	.gold {
 		color: blue;
-
 	}
 
 	.purp {
@@ -405,7 +453,7 @@
 		justify-content: space-around;
 		overflow: hidden;
 		max-height: 100%;
-		
+
 		#boxie {
 			height: 100%;
 			display: flex;
@@ -430,7 +478,7 @@
 					color: gray;
 					transform: scale(1.3);
 				}
-	
+
 				&:active {
 					color: $red;
 				}
@@ -439,7 +487,7 @@
 
 		.active {
 			color: $red;
-	
+
 			&:hover {
 				color: $red;
 				transform: scale(1.3);
@@ -448,7 +496,7 @@
 	}
 
 	.button {
-		padding: .3rem;
+		padding: 0.3rem;
 	}
 
 	#seeker {
@@ -526,11 +574,12 @@
 
 	#list {
 		width: 100%;
-		background-color: rgba(224, 226, 198, .8);
+		background-color: rgba(224, 226, 198, 0.8);
 		display: flex;
 		height: 100%;
 
-		#albums, #tracklist {
+		#albums,
+		#tracklist {
 			display: block;
 			height: 100%;
 			padding-left: 10px;
@@ -549,7 +598,7 @@
 		}
 
 		div:first-child {
-			flex: .3;
+			flex: 0.3;
 			border-right: solid;
 			li {
 				list-style: symbols(cyclic ">");
@@ -573,7 +622,7 @@
 			.active {
 				font-weight: bold;
 				list-style: symbols(cyclic ">>");
-				border: 3px solid #9932CC;
+				border: 3px solid #9932cc;
 			}
 		}
 
@@ -592,8 +641,8 @@
 		width: 100%;
 		height: 100%;
 		justify-content: center;
-		padding-top: .5em;
-		padding-bottom: .5em;
+		padding-top: 0.5em;
+		padding-bottom: 0.5em;
 		align-items: center;
 		flex-direction: column;
 	}
@@ -614,7 +663,7 @@
 	@media only screen and (max-width: 800px) {
 		#list {
 			div:first-child {
-				flex: .8;
+				flex: 0.8;
 			}
 		}
 

@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import Controls from './Controls.svelte';
-	import { Track, defaultTracks, tracks } from './tracks';
-	import Visualizer from './Visualizer.svelte';
+	import { onMount } from "svelte";
+	import Controls from "./Controls.svelte";
+	import { Track, defaultTracks, tracks } from "./tracks";
+	import Visualizer from "./Visualizer.svelte";
 
 	const songs: Track[] = tracks;
 	let track: Track = songs[0];
@@ -16,7 +16,7 @@
 	let duration: number = 0;
 	let loop: boolean = false;
 	let shuffle: boolean = false;
-	let volume: number = .30;
+	let volume: number = 0.3;
 	let ended: boolean = false;
 
 	let mousePos = { x: 500, y: 250 };
@@ -27,12 +27,11 @@
 	 * Random track on launch
 	 */
 	onMount(async () => {
-
 		// To share tracks easily, we can attach the name of the .mp3 and play that one instead of random if a query param exists
 		const queryParams = new URLSearchParams(window.location.search);
-		let song = queryParams.get('song'); // 'song' is the query param you want
+		let song = queryParams.get("song"); // 'song' is the query param you want
 
-		if(song) {
+		if (song) {
 			handleQueryParam(song);
 		} else {
 			// loadRandomTrack();
@@ -51,9 +50,9 @@
 
 	function handleQueryParam(song) {
 		console.log(`handleQueryParam ${song}`);
-		trackNum = songs.findIndex((el => el.src.includes(song)));
+		trackNum = songs.findIndex((el) => el.src.includes(song));
 		// DEFAULT TO WHACK A MOLE
-		if(trackNum == -1) handleQueryParam('whackamole3.mp3');
+		if (trackNum == -1) handleQueryParam("whackamole3.mp3");
 		else track = songs[trackNum];
 	}
 
@@ -135,7 +134,7 @@
 	 * Change volume of track
 	 * @param volume what to change it to
 	 */
-	 function changeVol(volume: number): void {
+	function changeVol(volume: number): void {
 		audioPlayer.volume = volume;
 	}
 
@@ -145,7 +144,7 @@
 
 		lastTrackArray.push(trackNum);
 
-		trackNum = songs.findIndex(track => {
+		trackNum = songs.findIndex((track) => {
 			return track.name === trackName;
 		});
 		track = songs[trackNum];
@@ -154,50 +153,53 @@
 	}
 
 	function gimme(): void {
-		window.open(track.src, '_blank');
+		window.open(track.src, "_blank");
 	}
 
 	/**
-	 * 
+	 *
 	 * ---- START HERE IF YOU WANNA ADD NEW SHIT -----
-	 * 
+	 *
 	 * Callback for all Controls functions
 	 * Name it, make it do a function, keep it snappy!
 	 * @param event the message
 	 */
 	function handleCmd(event): void {
-		if(event.detail.track) {
+		if (event.detail.track) {
 			chooseTrack(event.detail.track);
 			return;
 		}
 		switch (event.detail.cmd) {
-			case 'playPause':
+			case "playPause":
 				playPause();
 				break;
-			case 'next':
+			case "next":
 				changeTrack(1);
 				break;
-			case 'prev':
+			case "prev":
 				changeTrack(-1);
 				break;
-			case 'shuffle':
+			case "shuffle":
 				shuffle = !shuffle;
 				break;
-			case 'loop':
+			case "loop":
 				loop = !loop;
 				break;
-			case 'download':
+			case "download":
 				gimme();
 				break;
 			default:
-				if (event.detail.cmd.includes('volume=')) {
-					const volumeStr = event.detail.cmd.split('volume=')[1];
+				const str = event.detail.cmd;
+				if (str.includes("volume=")) {
+					const volumeStr = str.split("volume=")[1];
 					const volume = parseFloat(volumeStr);
 					changeVol(volume);
 				} else {
-					seek(event.detail.cmd);
+					const volumeStr = str.split("seek=")[1];
+					// const volume = parseFloat(volumeStr);
+					seek(volumeStr);
 				}
-            	break;
+				break;
 		}
 	}
 
@@ -212,16 +214,18 @@
 		loop: loop,
 		ended: ended,
 		volume: volume,
-		isPlaying: isPlaying
+		isPlaying: isPlaying,
 	};
 </script>
 
-<div
-	ref="box"
-	id="musicBox"
-	on:mousemove={(e) => onMousemove(e)}
->
-	<Visualizer {isPlaying} audioElement={audioPlayer} {scrollEvent} {mousePos} {isMobile} />
+<div ref="box" id="musicBox" on:mousemove={(e) => onMousemove(e)}>
+	<Visualizer
+		{isPlaying}
+		audioElement={audioPlayer}
+		{scrollEvent}
+		{mousePos}
+		{isMobile}
+	/>
 	<Controls on:message={handleCmd} {...AudioInfo} {isMobile} />
 </div>
 <audio
@@ -239,7 +243,7 @@
 </audio>
 
 <style>
-	:global([ref='box']) {
+	:global([ref="box"]) {
 		width: 100%;
 		height: 100%;
 		display: flex;
