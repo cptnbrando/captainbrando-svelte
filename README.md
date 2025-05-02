@@ -1,3 +1,3 @@
 # Website for Captain Brando!
 
-A place for me treasures, arrr!
+A place for me treasures, arrrr!
