@@ -349,8 +349,9 @@
 						</span>
 						<!-- svelte-ignore a11y-click-events-have-key-events -->
 						<span on:click={() => window.open(track.src, '_blank')} class='button'>
-							<DownloadIcon size="25" />
-				</span>
+							  <DownloadIcon size="25" />
+				  </span>
+   </span>
 				<span class="ghost">copied to clip🛹!</span>
 			</div>
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
