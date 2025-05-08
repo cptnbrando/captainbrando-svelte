@@ -16,7 +16,7 @@
 	let duration: number = 0;
 	let loop: boolean = false;
 	let shuffle: boolean = false;
-	let volume: number = 1;
+	let volume: number = 0.82;
 	let ended: boolean = false;
 
 	let mousePos = { x: 500, y: 250 };
