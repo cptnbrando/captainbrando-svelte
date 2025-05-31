@@ -1,6 +1,4 @@
-export const defaultTracks: number[] = [
-	0, 5, 6, 7, 8, 13, 15, 19, 20, 21, 22, 25, 27, 28, 29, 30, 31, 35,
-];
+export const defaultTracks: number[] = [0, 5, 6, 7, 8, 13, 15, 19, 20, 21, 22, 25, 27, 28, 29, 30, 31, 35];
 
 // To add tracks, first create a new Album in the array at line 40
 // Then, copy and paste a track in the array on line 94
@@ -34,25 +32,14 @@ export class Track {
 	where: string;
 	why: string;
 
-	constructor(
-		src: string,
-		name: string,
-		album: string,
-		when?: string,
-		where?: string,
-		why?: string
-	) {
+	constructor(src: string, name: string, album: string, when?: string, where?: string, why?: string) {
 		this.arrAlbum = albums.find((el) => el.name === album);
 		if (!this.arrAlbum) {
 			this.arrAlbum = new Album(album, "sailboat", "Captain Brando!");
 			albums.push(this.arrAlbum);
 		}
 		this.src =
-			src.length > 65
-				? src
-				: "https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/" +
-				  src +
-				  ".mp3";
+			src.length > 65 ? src : "https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/" + src + ".mp3";
 		this.artist = this.arrAlbum.artist;
 		this.name = name;
 		this.album = this.arrAlbum.name;
@@ -72,10 +59,7 @@ export class Album {
 
 	constructor(name: string, src: string, artist?: string) {
 		this.name = name;
-		this.src =
-			"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/images/webp/" +
-			src +
-			".webp";
+		this.src = "https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/images/webp/" + src + ".webp";
 		this.artist = artist ? artist : name;
 	}
 }
@@ -111,6 +95,14 @@ export const tracks: Track[] = [
 	//
 	// -5:00 = CT Central Time
 	new Track(
+		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/bellathorne.mp3",
+		"bella thorne",
+		"🗣️",
+		"2025-05-28T11:07:00-05:00 to 2025-05-31T00:49:00-05:00",
+		"Tulsa, apt, mailman lost my sufjan stevens vinyl again. the 10th anniversary of carrie and lowell. damnit. i'm so confused how he could have given me the wrong key for the package box, when the key for the package box sits on the lock for the package box. all he had to do was take it and put it in my mailbox. instead he puts a different key in there one that doesn't fit any of the package lockers. i just want my record damnit, does the fucking mail deliver on saturdays? i think it's trapped in the box that's locked that i don't got the key for. i'm gonna remember this feeling of not being able to get something when it's right next to me.",
+		"bella thorne is SO hot!"
+	),
+	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/dreams.mp3",
 		"dreams, airports",
 		"🗣️",
@@ -126,16 +118,8 @@ export const tracks: Track[] = [
 		"New York Bagel Cafe on Yale + a week later in my apartment in my home city",
   "sun-dried tomato bagel, toasted, with garlic herb cream cheese. best eaten in store, otherwise, much less crispy experience"
 	),
-	new Track(
-		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/sexy.mp3",
-		"sexy",
-		"🗣️"
-	),
-	new Track(
-		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/break.mp3",
-		"BREAK IT!",
-		"🗣️"
-	),
+	new Track("https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/sexy.mp3", "sexy", "🗣️"),
+	new Track("https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/break.mp3", "BREAK IT!", "🗣️"),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/keys.mp3",
 		"gimme the keys",
@@ -211,11 +195,7 @@ export const tracks: Track[] = [
 		"2 Bedroom Toyota",
 		"2022"
 	),
-	new Track(
-		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2023/BEGIN.mp3",
-		"BEGIN!",
-		"2022"
-	),
+	new Track("https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2023/BEGIN.mp3", "BEGIN!", "2022"),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2023/Lamborghini.mp3",
 		"Lamborghini",
@@ -231,26 +211,10 @@ export const tracks: Track[] = [
 		"spanish!",
 		"2022"
 	),
-	new Track(
-		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2023/velvet.mp3",
-		"Velvet",
-		"2022"
-	),
-	new Track(
-		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/IDKOK.mp3",
-		"IDKOK",
-		"ily"
-	),
-	new Track(
-		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/Instagram.mp3",
-		"Instagram",
-		"ily"
-	),
-	new Track(
-		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/him.mp3",
-		"him",
-		"ily"
-	),
+	new Track("https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2023/velvet.mp3", "Velvet", "2022"),
+	new Track("https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/IDKOK.mp3", "IDKOK", "ily"),
+	new Track("https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/Instagram.mp3", "Instagram", "ily"),
+	new Track("https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/him.mp3", "him", "ily"),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/october13.mp3",
 		"October 13th",
@@ -261,31 +225,19 @@ export const tracks: Track[] = [
 		"him (demo)",
 		"ily"
 	),
-	new Track(
-		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/down3-2.mp3",
-		"down3-2",
-		"RIP"
-	),
+	new Track("https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/down3-2.mp3", "down3-2", "RIP"),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/paralyzed.mp3",
 		"Paralyzed Paraplegic",
 		"RIP"
 	),
-	new Track(
-		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/GiveIn.mp3",
-		"GiveIn_444",
-		"RIP"
-	),
+	new Track("https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/GiveIn.mp3", "GiveIn_444", "RIP"),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/mental.mp3",
 		"mental health disorders",
 		"RIP"
 	),
-	new Track(
-		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/stab.mp3",
-		"stab.wav",
-		"RIP"
-	),
+	new Track("https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/stab.mp3", "stab.wav", "RIP"),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/WAITAMINUTE.mp3",
 		"WAITAMINUTE",
@@ -341,11 +293,7 @@ export const tracks: Track[] = [
 		"kenny.mp3",
 		"Altona Meadows"
 	),
-	new Track(
-		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/bulkhead.mp3",
-		"BULKHEAD",
-		"2021"
-	),
+	new Track("https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/bulkhead.mp3", "BULKHEAD", "2021"),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/cigs/alone.mp3",
 		"Alone (Mac DeMarco Cover)",
@@ -451,11 +399,7 @@ export const tracks: Track[] = [
 		"I'LL FIND HER",
 		"2021"
 	),
-	new Track(
-		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2022/life.mp3",
-		"life.mp3",
-		"2023"
-	),
+	new Track("https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2022/life.mp3", "life.mp3", "2023"),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/4/shoulda%2C%20my%20addition%20to%20brandos%20ideamp3.mp3",
 		"shoulda",
@@ -471,9 +415,5 @@ export const tracks: Track[] = [
 		"brightside",
 		"2023"
 	),
-	new Track(
-		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/newAYUP.mp3",
-		"ayup.mp3",
-		"2023"
-	),
+	new Track("https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/newAYUP.mp3", "ayup.mp3", "2023"),
 ];
