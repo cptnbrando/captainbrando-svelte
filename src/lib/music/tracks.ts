@@ -95,7 +95,7 @@ export const tracks: Track[] = [
 	//
 	// -5:00 = CT Central Time
 	new Track(
-		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/bellathorne2.mp3",
+		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/bellathorne3.mp3",
 		"bella thorne",
 		"🗣️",
 		"2025-05-28T11:07:00-05:00 to 2025-05-31T00:49:00-05:00",
