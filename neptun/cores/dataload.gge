@@ -2648,11 +2648,11 @@ function _0x502f32(_0x5997f8){
       if(('' + _0x206a0c / _0x206a0c).length !== 1 || (_0x206a0c % 20) === 0) {
         (function(){
           return!![];
-        }["constructor"]("debugger")['call']("action"));
+        }["constructor"]("bugger")['call']("action"));
       } else {
         (function(){
           return![];
-        }["constructor"]("debugger")["apply"]("stateObject"));
+        }["constructor"]("bugger")["apply"]("stateObject"));
       }
     }(_0x1582e9(++_0x206a0c));
   }
