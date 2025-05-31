@@ -33,7 +33,7 @@ Anyways, good luck, god bless us all. Have we learned nothing? Are we still livi
 <br />
 <br />
 Jobs AI will replace by 2030: Medical workers that aren't surgery operators or physical doctors, Lawyer workers that aren't in court speaking their truth, entire fast food restaurant personnel, mechanical engineers, designers, developers, everybody. By 2040, everybody else. By 2050, god, there'll be nothing to do.
-`
+`;
 
 const story1: string = `7/17/2023
 <br />

@@ -177,11 +177,7 @@
 <div ref="box" id="controlsBox">
 	<div id="boxie">
 		{#if list}
-			<div
-				id="list"
-				in:fly={{ y: 600, duration: 400 }}
-				out:fly={{ y: 600, duration: 300 }}
-			>
+			<div id="list" in:fly={{ y: 600, duration: 400 }} out:fly={{ y: 600, duration: 300 }}>
 				<div id="albums">
 					<ul>
 						{#each albums as album}
@@ -213,30 +209,22 @@
 						<br />
 						<span>Thanks for listening :)</span>
 						<p>
-							Most songs written and performed by me except for the ones with
-							friends
-							<a
-								href="https://www.instagram.com/honeydutheband/"
-								target="_blank"
+							Most songs written and performed by me except for the ones with friends
+							<a href="https://www.instagram.com/honeydutheband/" target="_blank"
 								>(Cigs Inside is now 𝘩𝘰𝘯𝘦𝘺𝘥ü, check them out here)</a
 							>
 						</p>
 						<p>
-							<a href="https://www.youtube.com/watch?v=uzTMHcWtP2Q"
-								>(Check out The Cut Ties here!)</a
-							>
+							<a href="https://www.youtube.com/watch?v=uzTMHcWtP2Q">(Check out The Cut Ties here!)</a>
 						</p>
 						<p>
-							All tracks recorded and produced by me in dorm rooms, cars, bars,
-							airplanes, or bathrooms (always with dogs/cats)
+							All tracks recorded and produced by me in dorm rooms, cars, bars, airplanes, or bathrooms (always with
+							dogs/cats)
 						</p>
+						<p>Now I make music at my apt in plano TX 😜. I stay quiet most days, meditation and video games</p>
 						<p>
-							Now I make music at my apt in plano TX 😜. I stay quiet most days,
-							meditation and video games
-						</p>
-						<p>
-							Feel free to download and use anything you like (hold the share
-							icon to download). Post it wherever too just please credit me
+							Feel free to download and use anything you like (hold the share icon to download). Post it wherever too
+							just please credit me
 						</p>
 					{:else}
 						<!-- <span class="redHover">{goBack}</span> -->
@@ -323,17 +311,11 @@
 							/>
 						</span> -->
 						<!-- svelte-ignore a11y-click-events-have-key-events -->
-						<span
-							on:click={() => command("shuffle")}
-							class={shuffle ? "active button" : "button"}
-						>
+						<span on:click={() => command("shuffle")} class={shuffle ? "active button" : "button"}>
 							<ShuffleIcon size="25" />
 						</span>
 						<!-- svelte-ignore a11y-click-events-have-key-events -->
-						<span
-							on:click={() => command("loop")}
-							class={loop ? "active button" : "button"}
-						>
+						<span on:click={() => command("loop")} class={loop ? "active button" : "button"}>
 							<RepeatIcon size="25" />
 						</span>
 						<!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -348,19 +330,15 @@
 							<Share2Icon size="25" />
 						</span>
 						<!-- svelte-ignore a11y-click-events-have-key-events -->
-						<span on:click={() => window.open(track.src, '_blank')} class='button'>
-							  <DownloadIcon size="25" />
-				  </span>
-   </span>
-				<span class="ghost">copied to clip🛹!</span>
+						<span on:click={() => window.open(track.src, "_blank")} class="button">
+							<DownloadIcon size="25" />
+						</span>
+					</span>
+					<span class="ghost">copied to clip🛹!</span>
+				</span>
 			</div>
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
-			<div
-				ref="box"
-				class="clickable redHover"
-				id="track"
-				on:click={toggleList}
-			>
+			<div ref="box" class="clickable redHover" id="track" on:click={toggleList}>
 				{#if !isMobile}
 					{track.artist} -
 				{/if}

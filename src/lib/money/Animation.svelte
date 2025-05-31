@@ -1,13 +1,12 @@
 <script>
-
 </script>
 
 <canvas />
 
 <style lang="scss">
-    canvas {
-        width: 100%;
-        height: 100%;
-        border: 10px;
-    }
+	canvas {
+		width: 100%;
+		height: 100%;
+		border: 10px;
+	}
 </style>

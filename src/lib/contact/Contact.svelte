@@ -1,11 +1,6 @@
 <script lang="ts">
-	import {
-		GithubIcon,
-		LinkedinIcon,
-		TwitterIcon,
-		YoutubeIcon
-	} from 'svelte-feather-icons';
-	import ScrollText from './ScrollText.svelte';
+	import { GithubIcon, LinkedinIcon, TwitterIcon, YoutubeIcon } from "svelte-feather-icons";
+	import ScrollText from "./ScrollText.svelte";
 
 	export let isMobile: boolean;
 
@@ -15,7 +10,7 @@
 	let src: string = `${github}/images/bio3.png`;
 	let totalBio: number = 4;
 
-	$: logoSize = (isMobile) ? "30" : "60";
+	$: logoSize = isMobile ? "30" : "60";
 
 	function randNum(): number {
 		return Math.floor(Math.random() * totalBio);
@@ -37,33 +32,34 @@
 		<div class="bars"><ScrollText /></div>
 		<div class="pics">
 			{#if !isMobile}
-			<div id="bio">
-				<img {src} alt="" on:click={randBio} />
-                <ul>
-                    <li>Brandon Dcruz aka Captain Brando!</li>
-                    <li>Age: 24</li>
-                    <li>Origin: Altona Meadows, Australia </li>
-                    <li>Occupation: Software Engineer</li>
-                    <li>Education: B.A.S.c from RIT 2020</li>
-                    <li>Musical Instruments: Drums, Guitar, Piano, Ableton</li>
-                    <li>Current Mood: Feelin good</li>
-                    <br />
-                    <li>Proficient Software Fields
-                        <ul>
-                            <li>Spring Boot</li>
-                            <li>SQL ( PostgresQL / OracleDB / JDBC /  )</li>
-                            <li>AWS Services - EC2, RDBMS, Route 53, Lambda</li>
-                            <li>Docker + Kubernetes</li>
-                            <li>HTML 5 / CSS / JS</li>
-                            <li>Angular</li>
-                            <li>React JS / React Native</li>
-                            <li>Svelte</li>
-                            <li>Spotify API</li>
-                            <li>Google Developer API</li>
-                        </ul>
-                    </li>
-                </ul>
-			</div>
+				<div id="bio">
+					<img {src} alt="" on:click={randBio} />
+					<ul>
+						<li>Brandon Dcruz aka Captain Brando!</li>
+						<li>Age: 24</li>
+						<li>Origin: Altona Meadows, Australia</li>
+						<li>Occupation: Software Engineer</li>
+						<li>Education: B.A.S.c from RIT 2020</li>
+						<li>Musical Instruments: Drums, Guitar, Piano, Ableton</li>
+						<li>Current Mood: Feelin good</li>
+						<br />
+						<li>
+							Proficient Software Fields
+							<ul>
+								<li>Spring Boot</li>
+								<li>SQL ( PostgresQL / OracleDB / JDBC / )</li>
+								<li>AWS Services - EC2, RDBMS, Route 53, Lambda</li>
+								<li>Docker + Kubernetes</li>
+								<li>HTML 5 / CSS / JS</li>
+								<li>Angular</li>
+								<li>React JS / React Native</li>
+								<li>Svelte</li>
+								<li>Spotify API</li>
+								<li>Google Developer API</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
 			{/if}
 			<!-- <div id="vid">
 				<iframe
@@ -119,43 +115,42 @@
 		flex: 8;
 		border-top: solid;
 		border-bottom: solid;
-        display: flex;
-        overflow: hidden;
+		display: flex;
+		overflow: hidden;
 
-        div {
-            flex: 1;
-            transition: 0.8s;
-            z-index: 1;
-            overflow: hidden;
-            
+		div {
+			flex: 1;
+			transition: 0.8s;
+			z-index: 1;
+			overflow: hidden;
 
-            &:hover {
-                flex: 8;
+			&:hover {
+				flex: 8;
 			}
 
-            ul {
-                // overflow: hidden;
-                white-space: nowrap;
-            }
-        }
+			ul {
+				// overflow: hidden;
+				white-space: nowrap;
+			}
+		}
 
 		img {
 			width: 10rem;
 			height: 10rem;
-            float: left;
-            margin-right: 25px;
-            // overflow: hidden;
-            // white-space: nowrap;
+			float: left;
+			margin-right: 25px;
+			// overflow: hidden;
+			// white-space: nowrap;
 
-            &:hover {
+			&:hover {
 				cursor: pointer;
 			}
 		}
 	}
 
-    #bio {
-        display: inline-block;
-    }
+	#bio {
+		display: inline-block;
+	}
 
 	.bars {
 		flex: 1;

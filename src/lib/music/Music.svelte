@@ -35,8 +35,8 @@
 			handleQueryParam(song);
 		} else {
 			// loadRandomTrack();
-    trackNum = 0;
-		  track = songs[trackNum];
+			trackNum = 0;
+			track = songs[trackNum];
 		}
 
 		audioPlayer.load();
@@ -219,13 +219,7 @@
 </script>
 
 <div ref="box" id="musicBox" on:mousemove={(e) => onMousemove(e)}>
-	<Visualizer
-		{isPlaying}
-		audioElement={audioPlayer}
-		{scrollEvent}
-		{mousePos}
-		{isMobile}
-	/>
+	<Visualizer {isPlaying} audioElement={audioPlayer} {scrollEvent} {mousePos} {isMobile} />
 	<Controls on:message={handleCmd} {...AudioInfo} {isMobile} />
 </div>
 <audio

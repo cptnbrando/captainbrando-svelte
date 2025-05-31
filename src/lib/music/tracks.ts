@@ -95,7 +95,7 @@ export const tracks: Track[] = [
 	//
 	// -5:00 = CT Central Time
 	new Track(
-		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/bellathorne.mp3",
+		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/bellathorne2.mp3",
 		"bella thorne",
 		"🗣️",
 		"2025-05-28T11:07:00-05:00 to 2025-05-31T00:49:00-05:00",
@@ -116,7 +116,7 @@ export const tracks: Track[] = [
 		"🗣️",
 		"2025-04-14T13:52:00-05:00",
 		"New York Bagel Cafe on Yale + a week later in my apartment in my home city",
-  "sun-dried tomato bagel, toasted, with garlic herb cream cheese. best eaten in store, otherwise, much less crispy experience"
+		"sun-dried tomato bagel, toasted, with garlic herb cream cheese. best eaten in store, otherwise, much less crispy experience"
 	),
 	new Track("https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/sexy.mp3", "sexy", "🗣️"),
 	new Track("https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/break.mp3", "BREAK IT!", "🗣️"),

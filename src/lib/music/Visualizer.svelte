@@ -43,9 +43,9 @@
 		await beginInactive();
 	});
 
-    afterUpdate(() => {
-        isPlaying === true ? beginVisualizer() : "";
-    });
+	afterUpdate(() => {
+		isPlaying === true ? beginVisualizer() : "";
+	});
 
 	function beginInactive(): void {
 		// Stop any animations currently going on
@@ -56,12 +56,7 @@
 
 	function inactiveText(): void {
 		drawCtx.strokeStyle = makeColor(0, 0, 0, 255);
-		drawCtx.clearRect(
-			0,
-			0,
-			drawCtx.canvas.clientWidth,
-			drawCtx.canvas.clientHeight
-		);
+		drawCtx.clearRect(0, 0, drawCtx.canvas.clientWidth, drawCtx.canvas.clientHeight);
 		drawCtx.font = "48px serif";
 		const widthAdjust = isMobile ? 60 : 20;
 		drawCtx.strokeText("inactive", width / 2 - widthAdjust, height / 2 - 80);
@@ -114,12 +109,7 @@
 			setup = true;
 		}
 		if (audioElement && canvasElement && !isAnimating) {
-			drawCtx.clearRect(
-				0,
-				0,
-				drawCtx.canvas.clientWidth,
-				drawCtx.canvas.clientHeight
-			);
+			drawCtx.clearRect(0, 0, drawCtx.canvas.clientWidth, drawCtx.canvas.clientHeight);
 			isAnimating = true;
 			render();
 		}
@@ -136,7 +126,7 @@
 	}
 
 	function update(): void {
-		if(!onMusic) return;
+		if (!onMusic) return;
 		/*
         Nyquist Theorem
         http://whatis.techtarget.com/definition/Nyquist-Theorem
@@ -150,8 +140,8 @@
 		const halfH = height / 2;
 		const width = canvasElement.width;
 
-		const red = makeColor(255, 0, 0, 255);
-		const blue = makeColor(0, 0, 255, 255);
+		const red = makeColor(255, 140, 0, 255);
+		const blue = makeColor(0, 191, 255, 255);
 		const sun = makeColor(255, 111, 111, 1);
 
 		// const xRatio = mousePos.x / window.innerWidth;
@@ -168,7 +158,7 @@
 		waveSpace = (mousePos.x / window.innerWidth) * 8;
 		waveRange = (mousePos.y / window.innerHeight) * 255;
 
-		// viewPos = (mousePos.x / window.innerWidth) * 
+		// viewPos = (mousePos.x / window.innerWidth) *
 
 		// loop through the data and draw!
 		audioData.map((data, i) => {
@@ -212,7 +202,7 @@
 					break;
 			}
 
-			drawCtx.lineTo((i + 1) * (midpoint), highPoint);
+			drawCtx.lineTo((i + 1) * midpoint, highPoint);
 			drawCtx.stroke();
 			drawCtx.closePath();
 
@@ -236,12 +226,7 @@
 		});
 	}
 
-	function makeColor(
-		red: number,
-		green: number,
-		blue: number,
-		alpha: number
-	): string {
+	function makeColor(red: number, green: number, blue: number, alpha: number): string {
 		return `rgba(${red}, ${green}, ${blue}, ${alpha})`;
 	}
 
@@ -269,7 +254,7 @@
 	$: scrollEvent, onScroll();
 
 	function onScroll() {
-		if(isAnimating && !isPlaying) {
+		if (isAnimating && !isPlaying) {
 			beginInactive();
 		}
 
@@ -283,11 +268,7 @@
 </script>
 
 <svelte:window on:resize={onResize} />
-<canvas
-	bind:this={canvasElement}
-	{width}
-	{height}
-/>
+<canvas bind:this={canvasElement} {width} {height} />
 
 <style>
 	canvas {

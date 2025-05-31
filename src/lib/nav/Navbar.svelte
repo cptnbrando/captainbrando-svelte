@@ -1,7 +1,7 @@
 <script lang="ts">
-	import Typed from './Typed.svelte';
-	import { MusicIcon, MailIcon, MenuIcon, DribbbleIcon, RadioIcon, BookIcon } from 'svelte-feather-icons';
-	import { fly, fade } from 'svelte/transition';
+	import Typed from "./Typed.svelte";
+	import { MusicIcon, MailIcon, MenuIcon, DribbbleIcon, RadioIcon, BookIcon } from "svelte-feather-icons";
+	import { fly, fade } from "svelte/transition";
 
 	export let isMobile: boolean = false;
 	export let navHeight: any = 60;
@@ -9,36 +9,45 @@
 	let size: string = "2x";
 </script>
 
-<nav class="sticky" on:mouseenter={() => {if(!isMobile) show = true}} on:mouseleave={() => {if(!isMobile) show = false}} style="height: {navHeight}px;">
+<nav
+	class="sticky"
+	on:mouseenter={() => {
+		if (!isMobile) show = true;
+	}}
+	on:mouseleave={() => {
+		if (!isMobile) show = false;
+	}}
+	style="height: {navHeight}px;"
+>
 	<span>
 		{#if show}
-		<ul in:fly="{{ x: -600, duration: 400, delay: 200 }}" out:fly="{{ x: -600, duration: 400 }}" class="buttons">
-			<li>
-				<a href="#music">
-					<MusicIcon {size} />
-					{#if !isMobile}
-					<h4>Music</h4>
-					{/if}
-				</a>
-			</li>
-			<li>
-				<a href="#games">
-					<DribbbleIcon {size} />
-					{#if !isMobile}
-					<h4>Games</h4>
-					{/if}
-				</a>
-			</li>
-		</ul>
+			<ul in:fly={{ x: -600, duration: 400, delay: 200 }} out:fly={{ x: -600, duration: 400 }} class="buttons">
+				<li>
+					<a href="#music">
+						<MusicIcon {size} />
+						{#if !isMobile}
+							<h4>Music</h4>
+						{/if}
+					</a>
+				</li>
+				<li>
+					<a href="#games">
+						<DribbbleIcon {size} />
+						{#if !isMobile}
+							<h4>Games</h4>
+						{/if}
+					</a>
+				</li>
+			</ul>
 		{:else}
-		<span class="navBox">
-			<div id="typer" in:fade="{{ duration: 200, delay: 400 }}" out:fly="{{ x: -400, duration: 200 }}">
-				<Typed {isMobile} />
-			</div>
-		</span>
+			<span class="navBox">
+				<div id="typer" in:fade={{ duration: 200, delay: 400 }} out:fly={{ x: -400, duration: 200 }}>
+					<Typed {isMobile} />
+				</div>
+			</span>
 		{/if}
 		<!-- svelte-ignore a11y-click-events-have-key-events -->
-		<div on:click={() => show = !show} id="menuButt">
+		<div on:click={() => (show = !show)} id="menuButt">
 			<MenuIcon size="2x" />
 		</div>
 	</span>
@@ -61,7 +70,7 @@
 		border-bottom: solid;
 		height: 8vh;
 		z-index: 100;
-        overflow: hidden;
+		overflow: hidden;
 	}
 
 	span {
@@ -73,8 +82,8 @@
 
 	.buttons {
 		display: flex;
-        justify-content: flex-start;
-        overflow: hidden;
+		justify-content: flex-start;
+		overflow: hidden;
 		padding: 0;
 		width: 100%;
 	}
@@ -86,9 +95,8 @@
 		align-items: center;
 		justify-content: center;
 		text-align: center;
-		
 	}
-	
+
 	a {
 		text-decoration: none;
 		color: black;

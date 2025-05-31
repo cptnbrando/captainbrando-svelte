@@ -23,7 +23,7 @@
 	const speedBackspace = 100; //Backspace Speed
 
 	onMount(() => {
-		if(isMobile) {
+		if (isMobile) {
 			selectedHeads = heads.filter((el) => el.length < MOBILE_HEAD_MAX_LENGTH);
 		}
 		array = selectedHeads.copyWithin(0, 0);
@@ -83,17 +83,11 @@
 			if (eHeader.innerHTML.length > 0 || eParagraph.innerHTML.length > 0) {
 				// If paragraph still has text, continue erasing, otherwise switch to the header.
 				if (eParagraph.innerHTML.length > 0) {
-					eParagraph.innerHTML = eParagraph.innerHTML.substring(
-						0,
-						eParagraph.innerHTML.length - 1
-					);
+					eParagraph.innerHTML = eParagraph.innerHTML.substring(0, eParagraph.innerHTML.length - 1);
 				} else if (eHeader.innerHTML.length > 0) {
 					eParagraph.classList.remove("cursor");
 					eHeader.classList.add("cursor");
-					eHeader.innerHTML = eHeader.innerHTML.substring(
-						0,
-						eHeader.innerHTML.length - 1
-					);
+					eHeader.innerHTML = eHeader.innerHTML.substring(0, eHeader.innerHTML.length - 1);
 				}
 				setTimeout(() => {
 					typeWriter(ar);
@@ -105,7 +99,7 @@
 				i = 0;
 				isParagraph = false;
 				// New random word
-				if(ar.length < 3) ar = selectedHeads.copyWithin(0, 0);
+				if (ar.length < 3) ar = selectedHeads.copyWithin(0, 0);
 				ar.splice(a, 1);
 				a = Math.floor(Math.random() * (array.length - 1));
 				setTimeout(() => {
