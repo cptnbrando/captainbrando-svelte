@@ -1415,8 +1415,8 @@ function integrateWasmJS(n) {
       "i32u-rem": (function(a, b) {
           return (a >>> 0) % (b >>> 0) >>> 0
       }),
-      "debugger": (function() {
-          debugger
+       "bugger": (function() {
+           
       })
   };
   var i = {
