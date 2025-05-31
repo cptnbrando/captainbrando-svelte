@@ -1,101 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<meta charset="UTF-8" lang="en" />
+		<link
+			rel="icon"
+			type="image/x-icon"
+			href="https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/images/bargainbin.png"
+		/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Captain Brando!</title>
 
-<head>
-  <meta charset="UTF-8" lang="en" />
-  <link rel="icon" type="image/x-icon" href="https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/images/bargainbin.png" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Captain Brando!</title>
+		<meta name="description" content="Captain Brando is alive!" />
+		<meta name="description" content="Captain Brando is alive!" />
+		<meta
+			name="image"
+			content="https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/images/captain-banner.png"
+		/>
 
-  <meta name="description" content="Captain Brando is alive!">
-  <meta name="description" content="Captain Brando is alive!">
-  <meta name="image" content="https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/images/captain-banner.png">
+		<!-- Google / Search Engine Tags -->
+		<meta itemprop="name" content="Captain Brando!" />
+		<meta itemprop="description" content="Captain Brando is alive!" />
+		<meta
+			itemprop="image"
+			content="https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/images/captain-banner.png"
+		/>
 
-  <!-- Google / Search Engine Tags -->
-  <meta itemprop="name" content="Captain Brando!">
-  <meta itemprop="description" content="Captain Brando is alive!">
-  <meta itemprop="image" content="https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/images/captain-banner.png">
+		<!-- Facebook Meta Tags -->
+		<meta property="og:url" content="https://captainbrando.com" />
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content="Captain Brando!" />
+		<meta property="og:description" content="Captain Brando is alive!" />
+		<meta
+			property="og:image"
+			content="https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/images/captain-banner.png"
+		/>
 
-  <!-- Facebook Meta Tags -->
-  <meta property="og:url" content="https://captainbrando.com">
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Captain Brando!">
-  <meta property="og:description" content="Captain Brando is alive!">
-  <meta property="og:image" content="https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/images/captain-banner.png">
+		<!-- Twitter Meta Tags -->
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content="Captain Brando!" />
+		<meta name="twitter:description" content="Captain Brando is alive!" />
+		<meta
+			name="twitter:image"
+			content="https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/images/captain-banner.png"
+		/>
+		<script type="module" crossorigin src="/assets/index-3154bcab.js"></script>
+		<link rel="stylesheet" href="/assets/index-ddf7bd9c.css">
+	</head>
 
-  <!-- Twitter Meta Tags -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Captain Brando!">
-  <meta name="twitter:description" content="Captain Brando is alive!">
-  <meta name="twitter:image" content="https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/images/captain-banner.png">
-  <script type="module" crossorigin src="/assets/index-30b85356.js"></script>
-  <link rel="stylesheet" href="/assets/index-2ee81672.css">
-</head>
+	<body>
+		<div id="app"></div>
+		
+		<script>
+			// Platform select
+			// only n64, nds, and gboy work...
+			var NepEmu = "n64";
+			// ID of html element where the emulator will be inserted
+			var NepPlayer = "#emulator";
 
-<body>
-  <div id="app"></div>
-  
-  <script>
-    // Platform select
-    // only n64, nds, and gboy work...
-    var NepEmu = "n64";
-    // ID of html element where the emulator will be inserted
-    var NepPlayer = "#emulator";
+			// var neogeoBios = "./test/bios/neogeo.zip";
+			// Use default psxBios included with NeptunJS, as the psx bios files make it slower
+			var psxBios = "./test/bios/psxBios.zip";
+			var psxSkipBios = false;
 
-    // var neogeoBios = "./test/bios/neogeo.zip";
-    // Use default psxBios included with NeptunJS, as the psx bios files make it slower
-    var psxBios = "./test/bios/psxBios.zip";
-    var psxSkipBios = false;
+			// Add extra button on toolbar to scale up emulator. Disabled by default
+			var NepZoom = "enable";
+			// Maximum width size of emulator. 870px by default
+			var NepMaxWidth = "1100px";
+			// Interface language of the emulator. EN by default
+			var NepLang = "en";
+			// ( only for GBA ) GBA Bios Need for some games. Disabled by default
+			var EmuGbaBios = "enable";
 
-    // Add extra button on toolbar to scale up emulator. Disabled by default
-    var NepZoom = "enable";
-    // Maximum width size of emulator. 870px by default
-    var NepMaxWidth = "1100px";
-    // Interface language of the emulator. EN by default
-    var NepLang = "en";
-    // ( only for GBA ) GBA Bios Need for some games. Disabled by default
-    var EmuGbaBios = "enable";
+			function getGame() {
+				let game = `/neptun/test/`;
+				switch (NepEmu) {
+					case "n64":
+						game += "5c.zip";
+						break;
+					case "gba":
+						game += "2p.zip";
+						break;
+					case "nds":
+						game += "3d.zip";
+						break;
+					case "sega":
+						game += "4m.zip";
+						break;
+					default:
+						// Default to the first game
+						game += "1x.zip";
+						break;
+				}
 
-    function getGame() {
-      let game = `/neptun/test/`;
-      switch (NepEmu) {
-        case "n64":
-          game += "5c.zip";
-          break;
-        case "gba":
-          game += "2p.zip";
-          break;
-        case "nds":
-          game += "3d.zip";
-          break;
-        case "sega":
-          game += "4m.zip";
-          break;
-        default:
-          // Default to the first game
-          game += "1x.zip";
-          break;
-      }
+				return game;
+			}
 
-      return game;
-    }
+			// Game Url
+			var gameUrl = getGame();
+			// var gameUrl = `/neptun/test/1m.zip`;
 
-    // Game Url
-    var gameUrl = getGame();
-    // var gameUrl = `/neptun/test/1m.zip`;
+			var scriptsus = document.createElement("script");
+			scriptsus.setAttribute("data-name", "njs2");
 
-    var scriptsus = document.createElement("script");
-    scriptsus.setAttribute("data-name", "njs2");
-
-    //doing integrity checks like loader
-    scriptsus.src = "/neptun/NJS.gge";
-    document.head.appendChild(scriptsus);
-    var style = document.createElement("link");
-    style.href = "/neptun/neptun.css";
-    style.rel = "stylesheet";
-    style.type = "text/css";
-    document.head.appendChild(style);
-  </script>
-</body>
-
+			//doing integrity checks like loader
+			scriptsus.src = "/neptun/NJS.gge";
+			document.head.appendChild(scriptsus);
+			var style = document.createElement("link");
+			style.href = "/neptun/neptun.css";
+			style.rel = "stylesheet";
+			style.type = "text/css";
+			document.head.appendChild(style);
+		</script>
+	</body>
 </html>
