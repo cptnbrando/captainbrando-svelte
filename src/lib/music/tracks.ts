@@ -99,6 +99,15 @@ new Track(
 		"clunky",
 		"🗣️"
 	),
+new Track(
+		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/obsessed.mp3",
+		"obsessed",
+		"🗣️",
+		"2025-04-14T13:52:00-05:00",
+		"New York Bagel Cafe on Yale + a week later in my apartment in my home city",
+		"sun-dried tomato bagel, toasted, with garlic herb cream cheese. best eaten in store, otherwise, much less crispy experience"
+	),
+	new Track("https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/sexy.mp3", "sexy", "🗣️"),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/bellathorne3.mp3",
 		"bella thorne",
@@ -115,15 +124,6 @@ new Track(
 		"Punta Cana - Liva Aqua resort - Terminal B Gate 32, American Airlines flight AA2744 confirmation code NOXCFY, delayed 37 minutes for maintenance. then delayed an hour. then delayed another 2 hours. captain said it was to change a tire, as the tread appeared too worn out.",
 		"I just got married. My wedding and honeymoon were so impossibly perfect, that it's enough for me to think about God again. And airports. I'm sitting here in a lime green chair, Punta Cana airport, waiting for my flight. I love this place. The people, the food, the lifestyle, the horses, the banana trees. Beef on plantains. Beef on plantains! It is all so miraculously beautiful. I'm trying to become somebody else. I've become somebody I don't like, by mistake. It wasn't supposed to go this way. But here I am, a wolf, an exhausted warrior, cutting everything and anything around me with the force of a buster blade. Destruction. Chaos. John Cena with a fucking chainsaw. I have to do better. I have to be better. For her, and for my future children."
 	),
-	new Track(
-		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/obsessed.mp3",
-		"obsessed",
-		"🗣️",
-		"2025-04-14T13:52:00-05:00",
-		"New York Bagel Cafe on Yale + a week later in my apartment in my home city",
-		"sun-dried tomato bagel, toasted, with garlic herb cream cheese. best eaten in store, otherwise, much less crispy experience"
-	),
-	new Track("https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/sexy.mp3", "sexy", "🗣️"),
 	new Track("https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/break.mp3", "BREAK IT!", "🗣️"),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/keys.mp3",
