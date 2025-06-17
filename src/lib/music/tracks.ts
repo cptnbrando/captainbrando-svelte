@@ -94,6 +94,11 @@ export const tracks: Track[] = [
 	// ),
 	//
 	// -5:00 = CT Central Time
+new Track(
+		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/clunky.mp3",
+		"clunky",
+		"🗣️"
+	),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/bellathorne3.mp3",
 		"bella thorne",
