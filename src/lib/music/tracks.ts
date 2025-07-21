@@ -73,14 +73,14 @@ export let albums: Album[] = [
 	// ),
 	new Album("🗣️", "bark", "DOGS"),
 	new Album("hundred fifty", "hundred", "DOGS"),
-	new Album("covers, etc. (saul)", "saul", "brandon & theo"),
+	new Album("Cigs Inside Live", "cigs", "Cigs Inside"),
+	new Album("RIP", "rip", "Captain Brando!"),
 	new Album("2023", "yuh", "Captain Brando!"),
 	new Album("2022", "chase", "Captain Brando!"),
 	new Album("2021", "paint", "Captain Brando!"),
 	new Album("ily", "ily", "Captain Brando!"),
-	new Album("RIP", "rip", "Captain Brando!"),
 	new Album("Altona Meadows", "bbetc", "Altona Meadows"),
-	new Album("Cigs Inside Live", "cigs", "Cigs Inside"),
+	new Album("covers, etc. (saul)", "saul", "brandon & theo"),
 	new Album("Criss Cross Apple Sauwce", "dead", "brando & theo"),
 	new Album("3RR0R 404", "sailboat", "???"),
 ];
@@ -94,11 +94,7 @@ export const tracks: Track[] = [
 	// ),
 	//
 	// -5:00 = CT Central Time
-	new Track(
-		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/clunky.mp3",
-		"clunky",
-		"🗣️"
-	),
+	new Track("https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/clunky.mp3", "clunky", "🗣️"),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/obsessedNH.mp3",
 		"obsessed",
@@ -415,5 +411,5 @@ export const tracks: Track[] = [
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2022/ILLFINDHER.mp3",
 		"I'LL FIND HER",
 		"2021"
-	)
+	),
 ];
