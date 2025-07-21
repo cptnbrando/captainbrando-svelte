@@ -120,15 +120,14 @@ export const tracks: Track[] = [
 		"Punta Cana - Liva Aqua resort - Terminal B Gate 32, American Airlines flight AA2744 confirmation code NOXCFY, delayed 37 minutes for maintenance. then delayed an hour. then delayed another 2 hours. captain said it was to change a tire, as the tread appeared too worn out.",
 		"I just got married. My wedding and honeymoon were so impossibly perfect, that it's enough for me to think about God again. And airports. I'm sitting here in a lime green chair, Punta Cana airport, waiting for my flight. I love this place. The people, the food, the lifestyle, the horses, the banana trees. Beef on plantains. Beef on plantains! It is all so miraculously beautiful. I'm trying to become somebody else. I've become somebody I don't like, by mistake. It wasn't supposed to go this way. But here I am, a wolf, an exhausted warrior, cutting everything and anything around me with the force of a buster blade. Destruction. Chaos. John Cena with a fucking chainsaw. I have to do better. I have to be better. For her, and for my future children."
 	),
-	new Track("https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/break.mp3", "BREAK IT!", "🗣️"),
 	new Track(
-		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/keys.mp3",
-		"gimme the keys",
-		"🗣️"
+		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/whackamole3.mp3",
+		"whack a mole",
+		"hundred fifty"
 	),
 	new Track(
-		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/beowulf.mp3",
-		"beowulf",
+		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/LOUDASSINDIAN_final.mp3",
+		"LOUDASSINDIAN",
 		"hundred fifty"
 	),
 	new Track(
@@ -137,18 +136,13 @@ export const tracks: Track[] = [
 		"hundred fifty"
 	),
 	new Track(
-		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/whackamole3.mp3",
-		"whack a mole",
+		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/break.mp3",
+		"BREAK IT!",
 		"hundred fifty"
 	),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/DOGS1_cut.mp3",
 		"DOGS WON",
-		"hundred fifty"
-	),
-	new Track(
-		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/LOUDASSINDIAN_final.mp3",
-		"LOUDASSINDIAN",
 		"hundred fifty"
 	),
 	new Track(
@@ -164,11 +158,6 @@ export const tracks: Track[] = [
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/udnm.mp3",
 		"you dont need much",
-		"hundred fifty"
-	),
-	new Track(
-		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/vitamind.mp3",
-		"vitamin d",
 		"hundred fifty"
 	),
 	new Track(
@@ -365,6 +354,21 @@ export const tracks: Track[] = [
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/jump.mp3",
 		"jump",
+		"3RR0R 404"
+	),
+	new Track(
+		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/keys.mp3",
+		"gimme the keys",
+		"3RR0R 404"
+	),
+	new Track(
+		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/beowulf.mp3",
+		"beowulf",
+		"3RR0R 404"
+	),
+	new Track(
+		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/vitamind.mp3",
+		"vitamin d",
 		"3RR0R 404"
 	),
 	new Track(
