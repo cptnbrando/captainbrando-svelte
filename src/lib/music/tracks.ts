@@ -94,13 +94,13 @@ export const tracks: Track[] = [
 	// ),
 	//
 	// -5:00 = CT Central Time
-new Track(
+	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/clunky.mp3",
 		"clunky",
 		"🗣️"
 	),
-new Track(
-		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/obsessed.mp3",
+	new Track(
+		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/obsessedNH.mp3",
 		"obsessed",
 		"🗣️",
 		"2025-04-14T13:52:00-05:00",
@@ -141,11 +141,6 @@ new Track(
 		"hundred fifty"
 	),
 	new Track(
-		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/clunky.mp3",
-		"clunky",
-		"hundred fifty"
-	),
-	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/whackamole3.mp3",
 		"whack a mole",
 		"hundred fifty"
@@ -158,6 +153,11 @@ new Track(
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/LOUDASSINDIAN_final.mp3",
 		"LOUDASSINDIAN",
+		"hundred fifty"
+	),
+	new Track(
+		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2023/problems.mp3",
+		"FCKN PRBLMS by The Cut Ties",
 		"hundred fifty"
 	),
 	new Track(
@@ -174,26 +174,6 @@ new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/vitamind.mp3",
 		"vitamin d",
 		"hundred fifty"
-	),
-	new Track(
-		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/isthereanybodyoutthere.mp3",
-		"need2/creep (Pinegrove/Radiohead)",
-		"covers, etc. (saul)"
-	),
-	new Track(
-		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/rust/245AM.mp3",
-		"2:45 AM (Elliott Smith) (w/ theo)",
-		"covers, etc. (saul)"
-	),
-	new Track(
-		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/rust/bottleUPandEXPLODE.mp3",
-		"Bottle Up and Explode! (Elliott Smith) (w/ theo)",
-		"covers, etc. (saul)"
-	),
-	new Track(
-		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/rust/CHRISTIANBROTHERS.mp3",
-		"Christian Brothers (Elliott Smith) (w/ theo)",
-		"covers, etc. (saul)"
 	),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2023/2bedroomtoyota.mp3",
@@ -344,6 +324,18 @@ new Track(
 		"where you goin? (demo)",
 		"2023"
 	),
+	new Track("https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2022/life.mp3", "life.mp3", "2023"),
+	new Track(
+		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/4/shoulda%2C%20my%20addition%20to%20brandos%20ideamp3.mp3",
+		"shoulda",
+		"2023"
+	),
+	new Track(
+		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2023/drive.mp3",
+		"brightside",
+		"2023"
+	),
+	new Track("https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/newAYUP.mp3", "ayup.mp3", "2023"),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2022/error/kernalPanic.mp3",
 		"kernal PANIC !!!",
@@ -380,6 +372,26 @@ new Track(
 		"3RR0R 404"
 	),
 	new Track(
+		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/isthereanybodyoutthere.mp3",
+		"need2/creep (Pinegrove/Radiohead)",
+		"covers, etc. (saul)"
+	),
+	new Track(
+		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/rust/245AM.mp3",
+		"2:45 AM (Elliott Smith) (w/ theo)",
+		"covers, etc. (saul)"
+	),
+	new Track(
+		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/rust/bottleUPandEXPLODE.mp3",
+		"Bottle Up and Explode! (Elliott Smith) (w/ theo)",
+		"covers, etc. (saul)"
+	),
+	new Track(
+		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/rust/CHRISTIANBROTHERS.mp3",
+		"Christian Brothers (Elliott Smith) (w/ theo)",
+		"covers, etc. (saul)"
+	),
+	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/crossed/intro.mp3",
 		"intro",
 		"Criss Cross Apple Sauwce"
@@ -403,22 +415,5 @@ new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2022/ILLFINDHER.mp3",
 		"I'LL FIND HER",
 		"2021"
-	),
-	new Track("https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2022/life.mp3", "life.mp3", "2023"),
-	new Track(
-		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/4/shoulda%2C%20my%20addition%20to%20brandos%20ideamp3.mp3",
-		"shoulda",
-		"2023"
-	),
-	new Track(
-		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2023/problems.mp3",
-		"FCKN PRBLMS by The Cut Ties",
-		"hundred fifty"
-	),
-	new Track(
-		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2023/drive.mp3",
-		"brightside",
-		"2023"
-	),
-	new Track("https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/newAYUP.mp3", "ayup.mp3", "2023"),
+	)
 ];
