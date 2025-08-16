@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { createEventDispatcher } from "svelte";
+	import { createEventDispatcher, onMount } from "svelte";
 	import {
 		RepeatIcon,
 		ShuffleIcon,
@@ -66,6 +66,42 @@
 			track: track,
 		});
 	}
+
+	let slowUrRoll = false;
+
+	// Keyboard Controls!
+	onMount(() => {
+		window.addEventListener("keydown", (event) => {
+			event.preventDefault();
+			switch (event.code) {
+				case "Space":
+					command("playPause");
+					break;
+				// case "ArrowLeft":
+				// case "ArrowRight":
+				// 	if (!slowUrRoll) {
+				// 		const action = event.code === "ArrowLeft" ? "prev" : "next";
+				// 		command(action);
+				// 		slowUrRoll = true;
+				// 		setTimeout(() => {
+				// 			slowUrRoll = false;
+				// 		}, 696);
+				// 	}
+				// 	break;
+				// case "ArrowUp":
+				// case "ArrowDown":
+				// 	const amount = event.code === "ArrowUp" ? -50 : 50;
+				// 	window.scrollBy({
+				// 		top: amount,
+				// 		behavior: "smooth",
+				// 	});
+				// 	break;
+				case "F5":
+					window.location.reload();
+					break;
+			}
+		});
+	});
 
 	// Duration updates
 	export let duration;
@@ -174,6 +210,7 @@
 	}
 </script>
 
+<!-- svelte-ignore a11y-click-events-have-key-events -->
 <div ref="box" id="controlsBox">
 	<div id="boxie">
 		{#if list}
@@ -181,7 +218,6 @@
 				<div id="albums">
 					<ul>
 						{#each albums as album}
-							<!-- svelte-ignore a11y-click-events-have-key-events -->
 							<li
 								on:click={() => {
 									selected = album;
@@ -193,7 +229,6 @@
 								<span>{album.name}</span>
 							</li>
 						{/each}
-						<!-- svelte-ignore a11y-click-events-have-key-events -->
 						<li
 							on:click={() => {
 								stats = !stats;
@@ -234,7 +269,6 @@
 						</span>
 						<ol>
 							{#each selectedTracks as listTrack}
-								<!-- svelte-ignore a11y-click-events-have-key-events -->
 								<li
 									on:click={() => {
 										chooseTrack(listTrack.name);
@@ -251,7 +285,6 @@
 		{/if}
 	</div>
 	<div id="seeker">
-		<!-- svelte-ignore a11y-click-events-have-key-events -->
 		<div id="img" on:click={toggleList} class="clickable redHover">
 			<img src={track.img} alt="" />
 			{#if !list}
@@ -271,11 +304,9 @@
 			<div class="wide">
 				<span id="mobileControls" class="icons">
 					<span>
-						<!-- svelte-ignore a11y-click-events-have-key-events -->
 						<span class="button" on:click={() => command("prev")}>
 							<SkipBackIcon size="40" />
 						</span>
-						<!-- svelte-ignore a11y-click-events-have-key-events -->
 						<span class="button" on:click={() => command("playPause")}>
 							{#if isPlaying}
 								<PauseIcon size="40" />
@@ -283,7 +314,6 @@
 								<PlayIcon size="40" />
 							{/if}
 						</span>
-						<!-- svelte-ignore a11y-click-events-have-key-events -->
 						<span class="button" on:click={() => command("next")}>
 							<SkipForwardIcon size="40" />
 						</span>
@@ -310,15 +340,12 @@
 								}}
 							/>
 						</span> -->
-						<!-- svelte-ignore a11y-click-events-have-key-events -->
 						<span on:click={() => command("shuffle")} class={shuffle ? "active button" : "button"}>
 							<ShuffleIcon size="25" />
 						</span>
-						<!-- svelte-ignore a11y-click-events-have-key-events -->
 						<span on:click={() => command("loop")} class={loop ? "active button" : "button"}>
 							<RepeatIcon size="25" />
 						</span>
-						<!-- svelte-ignore a11y-click-events-have-key-events -->
 						<span
 							id="shareBtn"
 							class="button clickable redHover"
@@ -329,7 +356,6 @@
 						>
 							<Share2Icon size="25" />
 						</span>
-						<!-- svelte-ignore a11y-click-events-have-key-events -->
 						<span on:click={() => window.open(track.src, "_blank")} class="button">
 							<DownloadIcon size="25" />
 						</span>
@@ -337,7 +363,6 @@
 					<span class="ghost">copied to clip🛹!</span>
 				</span>
 			</div>
-			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			<div ref="box" class="clickable redHover" id="track" on:click={toggleList}>
 				{#if !isMobile}
 					{track.artist} -
