@@ -71,6 +71,7 @@ export let albums: Album[] = [
 	// 	'friends',
 	// 	'😁'
 	// ),
+	new Album("man", "man", "DOGS"),
 	new Album("🗣️", "bark", "DOGS"),
 	new Album("hundred fifty", "hundred", "DOGS"),
 	new Album("Cigs Inside Live", "cigs", "Cigs Inside"),
@@ -94,6 +95,22 @@ export const tracks: Track[] = [
 	// ),
 	//
 	// -5:00 = CT Central Time
+	new Track(
+		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/batman-saturday-august162025-224pm-good.mp3",
+		"bat man",
+		"man",
+		"2025-08-16T14:24:00-05:00",
+		"tulsa, home",
+		"Just driving around, nothing to see here yall"
+	),
+	new Track(
+		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/thatsasgoodasitgets-thursday-july312025-152pm.mp3",
+		"that's as good as it gets",
+		"man",
+		"2025-07-31T13:52:00-05:00",
+		"tulsa, home",
+		"Just driving around, nothing to see here yall"
+	),
 	new Track("https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/clunky.mp3", "clunky", "🗣️"),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/obsessedNH.mp3",
