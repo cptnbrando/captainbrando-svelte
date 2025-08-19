@@ -37,9 +37,27 @@
 		}
 
 		const networkRes = await fetch(track.src);
-		if (networkRes.ok) {
-			await myTreasure.put(track.src, networkRes.clone());
-		}
+		if (!networkRes.ok) return;
+
+		// Soooooo right now this gets a good 25 char hash for the audio file
+		// So if you need to update a track, you can just replace the file, and not edit the tracks data array
+		// That's assuming you move off of the gh hosting hocus pocus bullshit you're doing now
+		// because gh doesn't let you change the track file data and keep the same src
+		// so
+		// anyways the next piece of the puzzle is to store these hashes somewhere too, correlated to something in the track array?
+		// like you've got a dictionary of file hashes, and nothing to connect them to the tracks to.
+		// you'd need to prefix the hash with the src or track name, then check the track name when looking in the cache
+		// then compare file hashes to up to date ones
+		//
+		// for now this does not work
+
+		const buffer = await networkRes.arrayBuffer();
+		const fileHash = await crypto.subtle.digest("SHA-256", buffer);
+		const hashArray = Array.from(new Uint8Array(fileHash));
+		const hexHash = hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
+
+		const fileHashStr = hexHash.substring(0, 25);
+		await myTreasure.put(fileHashStr, networkRes.clone());
 
 		return networkRes;
 	};
