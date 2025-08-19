@@ -4,6 +4,8 @@
 	import { Track, defaultTracks, tracks } from "./tracks";
 	import Visualizer from "./Visualizer.svelte";
 
+	const TREASURE = "captainbrando-treasure";
+
 	const songs: Track[] = tracks;
 	let track: Track = songs[0];
 	let trackNum: number = 0;
@@ -22,6 +24,25 @@
 	let mousePos = { x: 500, y: 250 };
 
 	export let isMobile: boolean = false;
+
+	$: if (track) {
+		useCache(track);
+	}
+
+	const useCache = async (track) => {
+		const myTreasure = await caches.open(TREASURE);
+		const foundTrack = await myTreasure.match(track.src);
+		if (foundTrack) {
+			return foundTrack;
+		}
+
+		const networkRes = await fetch(track.src);
+		if (networkRes.ok) {
+			await myTreasure.put(track.src, networkRes.clone());
+		}
+
+		return networkRes;
+	};
 
 	/**
 	 * Random track on launch
