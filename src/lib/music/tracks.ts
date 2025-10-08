@@ -96,6 +96,22 @@ export const tracks: Track[] = [
 	//
 	// -5:00 = CT Central Time
 	new Track(
+		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/dastardly.mp3",
+		"dastardly",
+		"man",
+		"2025-10-07T20:17:00-05:00",
+		"tulsa, home",
+		"8=====D"
+	),
+	new Track(
+		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/lips2.mp3",
+		"Lips (tunnel vision by jt)",
+		"man",
+		"2025-10-07T20:17:00-05:00",
+		"tulsa, home",
+		"Back on meds. Yay."
+	),
+	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/GAMEOVER.mp3",
 		"GAMEOVER",
 		"man",
