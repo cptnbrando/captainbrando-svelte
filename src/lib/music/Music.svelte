@@ -61,6 +61,10 @@
 		}
 
 		audioPlayer.load();
+
+		audioPlayer.addEventListener("pause", () => {
+			isPlaying = false;
+		});
 	});
 
 	function loadRandomTrack() {
