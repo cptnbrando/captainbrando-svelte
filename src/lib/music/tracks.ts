@@ -104,7 +104,7 @@ export const tracks: Track[] = [
 		"8=====D"
 	),
 	new Track(
-		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/lips2.mp3",
+		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/lips3.mp3",
 		"Lips (tunnel vision by jt)",
 		"man",
 		"2025-10-07T20:17:00-05:00",
