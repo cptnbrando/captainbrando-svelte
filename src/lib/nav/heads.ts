@@ -1,4 +1,8 @@
 export const heads: string[] = [
+ "done",
+];
+
+export const heads2: string[] = [
 	"cool",
 	"smart",
 	"cute",
