@@ -52,7 +52,7 @@
     <Donations />
   </article> -->
 
-  <img src="https://media.istockphoto.com/id/2099668042/photo/a-white-flag-image.jpg?s=1024x1024&w=is&k=20&c=s4VTQvnoHZ07lv-4ydiF_dbjt4N1CpCjDVDRdwTkQ-8=" />
+  <img src="https://media.istockphoto.com/id/2099668042/photo/a-white-flag-image.jpg?s=1024x1024&w=is&k=20&c=s4VTQvnoHZ07lv-4ydiF_dbjt4N1CpCjDVDRdwTkQ-8=" id="fuck" />
 </main>
 
 <style lang="scss">
@@ -77,6 +77,11 @@
 		user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
 		-webkit-tap-highlight-color: transparent;
 	}
+
+#fuck {
+   width: 69vw;
+   height: 69vh;
+}
 
 	article {
 		scroll-snap-align: start;
