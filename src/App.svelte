@@ -39,18 +39,20 @@
 	}}
 >
 	<Navbar {isMobile} />
-	<article id="music">
+	<!-- <article id="music">
 		<Music {scrollEvent} {isMobile} />
 	</article>
 	<article id="games">
 		<Games {isMobile} />
-	</article>
+	</article> -->
 	<!-- <article id="notes">
     <Notes />
   </article>
   <article id="donations">
     <Donations />
   </article> -->
+
+  <img src="https://media.istockphoto.com/id/2099668042/photo/a-white-flag-image.jpg?s=1024x1024&w=is&k=20&c=s4VTQvnoHZ07lv-4ydiF_dbjt4N1CpCjDVDRdwTkQ-8=" />
 </main>
 
 <style lang="scss">
