@@ -7,6 +7,7 @@
 	import Notes from "./lib/notes/panel/Notes.svelte";
 	import Radio from "./lib/radio/Radio.svelte";
 	import Donations from "./lib/money/Donations.svelte";
+	import AINote from "./lib/notes/AINote.svelte";
 
 	let scrollEvent: any = null;
 	let scrollTimestamp: number = 0;
@@ -51,8 +52,14 @@
   <article id="donations">
     <Donations />
   </article> -->
+  <article>
+	  <img src="https://media.istockphoto.com/id/2099668042/photo/a-white-flag-image.jpg?s=1024x1024&w=is&k=20&c=s4VTQvnoHZ07lv-4ydiF_dbjt4N1CpCjDVDRdwTkQ-8=" id="fuck" />
+  </article>
 
-  <img src="https://media.istockphoto.com/id/2099668042/photo/a-white-flag-image.jpg?s=1024x1024&w=is&k=20&c=s4VTQvnoHZ07lv-4ydiF_dbjt4N1CpCjDVDRdwTkQ-8=" id="fuck" />
+  <article>
+	  <AINote />
+  </article>
+
 </main>
 
 <style lang="scss">
