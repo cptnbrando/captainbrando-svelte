@@ -33,22 +33,22 @@
 
     <ul>
         <li>
-            It must become illegal to edit source metadata. Content creation and upload timestamps across the internet must become accurate and immutable or face penalty.
+            It must become illegal to edit non-personal source metadata. Specifically, content creation and upload timestamps across the internet must become accurate and immutable or face penalty. Timestamp immutability is all that is needed. Data like author, location, devices used, who what where why anything personal can be changed. But for the sake of having some sense of truth, I need to know the when.
         </li>
         <li>
             We need all AI content to be labeled as AI generated. All social networks must use AI detection algorithms and penalize users that profit by reporting this content as human made. This must include content that features some AI parts- this must be reported too. I'm not asking for those annoying 'COVID misinformation' banners again, at the bottom of a pocketed description is more than fine.
         </li>
         <li>
-            AI generated content can be good, but the artists used to train the models must be compensated and publicly reported. Yes, this means millions of artists need to be paid immediately.
+            AI generated content can be good, but the artists used to train the models must be compensated and publicly reported. Yes, this means millions of artists need to be paid immediately by many companies. I don't care if this is infeasible or stifles innovation, these products wouldn't exist without the artists. Royalties are already abysmal, and now, artists are going extinct. I don't want to live in a world with exclusively AI content. Art is an expression of the human condition. With this content now becoming completely indistinguishable, I say the innovation is coming to a head. Time to pay the piper. At least 30% of AI product profits, split between the contributors. Yeah. Shut up, I don't wanna hear it.
         </li>
         <li>
             LLMs used for reports, studies, or any judicial objective must have their models, input prompts, and sources cited. Hopefully this can mitigate the already blossoming world where AI is citing AI generated articles as fact.
         </li>
         <li>
-            I don't get why this doesn't exist already, but now's the time for it. Recording people without consent for reasons other than security must become illegal. To avoid form and data hell, verbal consent should be fine.
+            I don't get why this doesn't exist already, but now's the time for it. Recording people without consent for reasons other than security must become illegal. To avoid form and data hell, verbal consent should be fine. I'll add stipulations for journalists in dangerous positions or if non-consenual recording is the only way to gain otherwise hidden insight, but y'all YouTubers can ask for permission it's not hard.
         </li>
         <li>
-            Any employee replaced by AI must be given at least 6 months of severance.
+            Any employee making over 60k/yr replaced by AI must be given severance, commission, or work for at least 6 months. A year for those making under 60k.
         </li>
         <li>
             AI features present in any machine must be explicitly reported to any and all users of the machine.
@@ -67,23 +67,23 @@
 
         <br /><br />
 
-EDIT 10/27/2025 11:34PM - I've thought of some additions and changes to my list of legislative suggestions. I added a point about those annoying banners on videos, and changed my greeting to ahoy, I am a captain after all. At this point, I often think about Robin Williams suggestion, that elected leaders should wear NASCAR jackets with patches of logos for the companies they represent. For the well runs incredibly deep. Nobody in any office in America can care about ordinary people- they won't get re-elected if they do. They must exclusively follow the needs of the companies that fund their re-election campaigns, or they lose their power, their rent money, their kids' tuitions. That's how this world works, make no mistake. And after my time on this planet, the nicer their words appear, the more pathos and emotional rhetoric they use, the more evil their programs are. While I understand the companies that control us lose profits if they allow these laws to pass, I must still list them, in the hopes that one day we can be free. One day.
+EDIT 10/27/2025 11:34PM - I've thought of some additions and changes to my list of legislative suggestions. I modified most points with more specifics, and I changed my greeting to ahoy. I am a captain after all. At this point, I often think about Robin Williams's suggestion, that elected leaders should wear NASCAR jackets with patches of logos for the companies they represent. For the well runs incredibly deep. Nobody in any office in America can care about ordinary people- they won't get re-elected if they do. They must exclusively follow the needs of the companies that fund their re-election campaigns, or they lose their power, their rent money, their kids' tuitions. That's how this world works, make no mistake. And after my time on this planet, the nicer their words appear, the more pathos and emotional rhetoric they use, the more evil their programs are. While I understand the companies that control us lose profits if they allow these laws to pass, I must still list them, in the hopes that one day we can be free. One day.
 </p>
 <ul>
 <li>
-Terms and Conditions for online services must only be allowed to change if a substantial portion of the users agree to the changes, which must be outlined and presented at least 3 months before any actual changes. I understand how a popular vote is infeasible for a lot of services. Can we at least have the 3 month warning, so that if we disagree with the changes, we can remove our data?
+Terms and Conditions for online services must only be allowed to change if a substantial portion of the users agree to the changes, which must be outlined and presented at least 3 months before any actual changes. I understand how a popular vote is infeasible for a lot of large services, but we need efforts to be made here. Can we at least have the 3 month warning, so that if we disagree with the changes, we can remove our data?
 </li>
 <li>
-Cookies must be overhauled across all browsers so that they are much more secure. Specifically, a company's online service must only be allowed to access its immediate company's cookies, and the access must only be allowed for the sake of the application's core functionality. The effects of cross-application cookie tracking has proven to be far more devastating than ever thought possible, and this needs to end immediately.
+Cookies must be overhauled across all browsers so that they are much more secure. Specifically, a company's online service must only be allowed to access its immediate corporation's or domain's cookies, and the access must only be allowed for the sake of the application's core functionality, security, or session management. The effects of cross-application cookie tracking has proven to be far more devastating than ever thought possible, and this needs to end immediately. Actually I'd prefer cookies to be entirely phased out of all browsers by the end of the decade. ASAP. We are not dogs.
 </li>
 <li>
-Most of y'all won't understand why this is necessary, but the few that will, by God we really need this. Any electronic product that contains software must offer a downloadable copy of the software to its customers, along with file hashes, and the product must have a way for a customer or a support team to flash it to the device. 
+Most of y'all won't understand why this is necessary, but the few that will, by God we really need this. Any electronic product that contains software must offer a downloadable copy of the software executable/binaries to its customers, along with file hashes, and the product must have a way for a customer or a support team to flash it to the device. Gemini is informing me that this introduces more security risk if unverified potentially faulty software versions can be run, but this is already the case, and it is impossible to undo by the consumer or support for most products. If we can send rocketships to Mars, by golly I betcha we can allow flashing and securely lock down a gosh dang smart fridge.
 </li>
 <li>
 All online products that feature a mandatory privacy policy or terms and conditions must offer a comparable product to those that decline the agreements. There is literally no point at all in a prompt for an agreement if declining is not an option. Services like LinkedIn, Google search, banking companies, we get penalized if we do not use these services. We deserve a way to use these services without allowing complete access and control of our data. I am so tired of reading giant agreements for services that do not allow me to decline. That is not an agreement between two parties, that is a mandate. That is a gun to my head. I do not have an option, especially if it's a service my school or job requires. And when <a href='https://www.forbes.com/sites/legalentertainment/2024/08/28/disneys-not-so-magical-lawsuit-could-have-major-implications-for-wrongful-death-victims/'>companies like Disney are using their streaming service agreements to warrant deaths in their amusement parks</a>, these documents give way too much power to corporations and us ordinary folk have no say at all.
 </li>
 <li>
-If an online service collects any data, deletion must be an option, and deletion must wipe the data in its entirety from any databases, logs, caches, edge servers, 3rd party services, and any services capable of retaining it. For the data to be considered deleted, the company and any connected entities must become incapable of retrieving it.
+If an online service collects any data, deletion must be an option, and deletion must wipe the data in its entirety from any databases, distributed systems, caches, CDNs, backups, edge servers, 3rd party services, and any services capable of retaining it within a year. For the data to be considered deleted, the company and any connected entities must become incapable of retrieving it. Minimum, necessary fractions of the data may be retained in logs and other publicly inaccessible data systems and services as long as it is solely used for security audits, fraud detection, archival purposes, or to satisfy regulatory record-keeping laws.
 </li>
 </ul>
 <p>
