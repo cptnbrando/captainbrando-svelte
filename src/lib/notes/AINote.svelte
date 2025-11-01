@@ -28,7 +28,7 @@
     </ul>
 
     <p>
-        I, Brandon Dcruz, call upon America's and the World's leaders to push for legislation to address these problems. These are my solutions:
+        I, Brando, call upon America's and the World's leaders to push for legislation to address these problems. These are my solutions:
     </p>
 
     <ul>
