@@ -40,12 +40,12 @@
 	}}
 >
 	<Navbar {isMobile} />
-	<!-- <article id="music">
+	<article id="music">
 		<Music {scrollEvent} {isMobile} />
 	</article>
 	<article id="games">
 		<Games {isMobile} />
-	</article> -->
+	</article>
 	<!-- <article id="notes">
     <Notes />
   </article>
