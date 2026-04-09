@@ -71,6 +71,7 @@ export let albums: Album[] = [
 	// 	'friends',
 	// 	'😁'
 	// ),
+	new Album("MIXTAPE", "meat", "DOGS"),
 	new Album("Shepherd", "man", "DOGS"),
 	new Album("🗣️", "bark", "DOGS"),
 	new Album("hundred fifty", "hundred", "DOGS"),
@@ -96,6 +97,14 @@ export const tracks: Track[] = [
 	//
 	// -5:00 = CT Central Time
 	new Track(
+		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2026/GRIEF.mp3",
+		"good grief (13 Years of Grief by Black Label Society)",
+		"MIXTAPE",
+		"2026-04-08T19:30:00-05:00",
+		"dallas, mom's place",
+		"fuck COPES"
+	),
+	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/dastardly.mp3",
 		"dastardly",
 		"Shepherd",
@@ -120,13 +129,13 @@ export const tracks: Track[] = [
 		"Got fired from a job I really like. I screamed at the front door, then somehow, a few hours later Charlie Kirk got assassinated. Man. I really liked that job. The hours were awesome. The people were kind. I burned the bridge on the way out I am very tired of pretending to be someone I am not. I am captain brando. For fuck's sake I can do anything. I frequently forget that. I forget a lot of things. For some reason my life feels like a string of many different lives, instead of a growth a cycle a single life that is progressing. I feel like I ain't progressing at shit. If anything I am getting worse, somedays I get better, other days worse, just a wave. Just a wave going on and on. Splashing in the ocean. Splash splash."
 	),
 	//new Track(
-		//"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/batman-saturday-august162025-224pm-good2.mp3",
+	//"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/batman-saturday-august162025-224pm-good2.mp3",
 	//	"bat man",
 	//	"Shepherd",
-//		"2025-08-16T14:24:00-05:00",
+	//		"2025-08-16T14:24:00-05:00",
 	//	"tulsa, home",
-//		"Just driving around, nothing to see here yall"
-//	),
+	//		"Just driving around, nothing to see here yall"
+	//	),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/thatsasgoodasitgets-thursday-july312025-152pm.mp3",
 		"that's as good as it gets",
