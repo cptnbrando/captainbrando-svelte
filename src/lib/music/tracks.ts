@@ -71,7 +71,7 @@ export let albums: Album[] = [
 	// 	'friends',
 	// 	'😁'
 	// ),
-	new Album("MIXTAPE", "meat", "DOGS"),
+	new Album("NO DOGS ALLOWED", "meat", "DOGS"),
 	new Album("Shepherd", "man", "DOGS"),
 	new Album("🗣️", "bark", "DOGS"),
 	new Album("hundred fifty", "hundred", "DOGS"),
@@ -97,9 +97,9 @@ export const tracks: Track[] = [
 	//
 	// -5:00 = CT Central Time
 	new Track(
-		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2026/GRIEF.mp3",
-		"good grief (13 Years of Grief by Black Label Society)",
-		"MIXTAPE",
+		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2026/GRIEF2.mp3",
+		"(13 Years of Grief by Black Label Society)",
+		"NO DOGS ALLOWED",
 		"2026-04-08T19:30:00-05:00",
 		"dallas, mom's place",
 		"fuck COPES"
