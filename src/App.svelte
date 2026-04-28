@@ -56,9 +56,9 @@
 	  <img src="https://media.istockphoto.com/id/2099668042/photo/a-white-flag-image.jpg?s=1024x1024&w=is&k=20&c=s4VTQvnoHZ07lv-4ydiF_dbjt4N1CpCjDVDRdwTkQ-8=" id="fuck" />
   </article> -->
 
-  <article>
+  <!-- <article>
 	  <AINote />
-  </article>
+  </article> -->
 
 </main>
 
