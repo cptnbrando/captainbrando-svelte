@@ -97,6 +97,14 @@ export const tracks: Track[] = [
 	//
 	// -5:00 = CT Central Time
 	new Track(
+		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2026/doughnuts.mp3",
+		"doughnuts",
+		"NO DOGS ALLOWED",
+		"2026-05-30T13:30:00-05:00",
+		"tulsa, with wife and dog",
+		"doughnuts are the best food in the world. i want to eat them all day every day. i want to be a doughnut. i want to be inside a doughnut, and eat the doughnut that i'm inside of, and then be inside the doughnut that i'm eating, and then eat that one, and then be inside that one, and then eat that one, and then be inside that one, and then eat that one, and then be inside that one, and then eat that one, and then be inside that one, and then eat that one, and then be inside that one, and then eat that one, and then be inside that one, and then eat that one, and then be inside that one, and then eat that one, and then be inside that one, and then eat that one, and then be inside that one, and then eat that one.. . . I pushed tab and a ai wrote that. so thats nice glad to see that ai is working correctly. damn. what the fuck is up world? the matrix world. the code pushers. the brick layers. the chief chefs. the pterodactyls. the gummy bears. yummy"
+	),
+	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2026/GRIEF2.mp3",
 		"(13 Years of Grief by Black Label Society)",
 		"NO DOGS ALLOWED",
