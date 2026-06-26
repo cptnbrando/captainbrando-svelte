@@ -333,6 +333,16 @@
 						<span on:click={() => window.open(track.src, "_blank")} class="button">
 							<DownloadIcon size="25" />
 						</span>
+						<!-- svelte-ignore a11y-click-events-have-key-events -->
+						<span class="button">
+							<a href="https://wearedogs.net" target="_blank">
+								<img 
+									src="/dogs.webp" 
+									alt="Dogs Icon"
+									class="dogs-icon"
+								/>
+							</a>
+						</span>
 					</span>
 					<span class="ghost">copied to clip🛹!</span>
 				</span>
@@ -368,6 +378,13 @@
 
 <style lang="scss">
 	$red: #e62020;
+
+	.dogs-icon {
+		width: 25px;
+		height: 25px;
+		margin: 0;
+		border: none;
+	}
 
 	.ghost {
 		visibility: hidden;
