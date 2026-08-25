@@ -228,7 +228,41 @@
 		}
 	}
 
-	export let scrollEvent: any;
+	/**
+	 * Keyboard controls: space = play/pause, arrows = prev/next, s = shuffle, r = repeat
+	 */
+	function onKeydown(e: KeyboardEvent) {
+		// Let focused inputs and the seek slider keep their own key behavior
+		const target = e.target;
+		if (
+			target instanceof HTMLElement &&
+			(target.tagName === "INPUT" ||
+				target.tagName === "TEXTAREA" ||
+				target.isContentEditable ||
+				target.getAttribute("role") === "slider")
+		) {
+			return;
+		}
+
+		switch (e.code) {
+			case "Space":
+				e.preventDefault(); // stop the page from scrolling
+				playPause();
+				break;
+			case "ArrowRight":
+				changeTrack(1);
+				break;
+			case "ArrowLeft":
+				changeTrack(-1);
+				break;
+			case "KeyS":
+				shuffle = !shuffle;
+				break;
+			case "KeyR":
+				loop = !loop;
+				break;
+		}
+	}
 
 	$: AudioInfo = {
 		audioPlayer: audioPlayer,
@@ -243,8 +277,9 @@
 	};
 </script>
 
-<div ref="box" id="musicBox" on:mousemove={(e) => onMousemove(e)}>
-	<Visualizer {isPlaying} audioElement={audioPlayer} {scrollEvent} {mousePos} {isMobile} />
+<svelte:window on:keydown={onKeydown} />
+<div id="musicBox" class="relative h-full w-full" on:mousemove={(e) => onMousemove(e)}>
+	<Visualizer {isPlaying} audioElement={audioPlayer} {mousePos} {isMobile} />
 	<Controls on:message={handleCmd} {...AudioInfo} {isMobile} />
 </div>
 <audio
@@ -260,12 +295,3 @@
 >
 	<source src={track.src} type="audio/mp3" />
 </audio>
-
-<style>
-	:global([ref="box"]) {
-		width: 100%;
-		height: 100%;
-		display: flex;
-		justify-content: center;
-	}
-</style>

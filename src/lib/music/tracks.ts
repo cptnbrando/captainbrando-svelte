@@ -160,7 +160,7 @@ export const tracks: Track[] = [
 		"tulsa, home",
 		"Just driving around, nothing to see here yall"
 	),
-	new Track("https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/clunky.mp3", "clunky", "🗣️"),
+	new Track("https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/clunky.mp3", "clunky", "🗣️", "2025-01-14T20:07:12-08:00"),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/obsessedNH.mp3",
 		"obsessed",
@@ -169,7 +169,7 @@ export const tracks: Track[] = [
 		"New York Bagel Cafe on Yale + a week later in my apartment in my home city",
 		"sun-dried tomato bagel, toasted, with garlic herb cream cheese. best eaten in store, otherwise, much less crispy experience"
 	),
-	new Track("https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/sexy.mp3", "sexy", "🗣️"),
+	new Track("https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/sexy.mp3", "sexy", "🗣️", "2025-01-31T15:16:16-08:00"),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/bellathorne3.mp3",
 		"bella thorne",
@@ -189,297 +189,354 @@ export const tracks: Track[] = [
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/whackamole3.mp3",
 		"whack a mole",
-		"hundred fifty"
+		"hundred fifty",
+		"2024-12-08T21:11:26-08:00"
 	),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/LOUDASSINDIAN_final.mp3",
 		"LOUDASSINDIAN",
-		"hundred fifty"
+		"hundred fifty",
+		"2024-12-08T21:11:26-08:00"
 	),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/ninja.mp3",
 		"ninja",
-		"hundred fifty"
+		"hundred fifty",
+		"2025-01-14T20:07:12-08:00"
 	),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/break.mp3",
 		"BREAK IT!",
-		"hundred fifty"
+		"hundred fifty",
+		"2025-03-16T12:45:24-05:00"
 	),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/DOGS1_cut.mp3",
 		"DOGS WON",
-		"hundred fifty"
+		"hundred fifty",
+		"2025-01-27T00:21:40-06:00"
 	),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2023/problems.mp3",
 		"FCKN PRBLMS by The Cut Ties",
-		"hundred fifty"
+		"hundred fifty",
+		"2023-05-31T14:51:27-05:00"
 	),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/badsong2.mp3",
 		"bad_song_2",
-		"hundred fifty"
+		"hundred fifty",
+		"2023-07-17T23:27:10-05:00"
 	),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/udnm.mp3",
 		"you dont need much",
-		"hundred fifty"
+		"hundred fifty",
+		"2024-05-05T23:13:47-05:00"
 	),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2023/2bedroomtoyota.mp3",
 		"2 Bedroom Toyota",
-		"2022"
+		"2022",
+		"2023-05-31T14:51:27-05:00"
 	),
-	new Track("https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2023/BEGIN.mp3", "BEGIN!", "2022"),
+	new Track("https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2023/BEGIN.mp3", "BEGIN!", "2022", "2023-05-31T14:51:27-05:00"),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2023/Lamborghini.mp3",
 		"Lamborghini",
-		"2022"
+		"2022",
+		"2023-05-31T14:51:27-05:00"
 	),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2023/eyes.mp3",
 		"eyesss.mp3",
-		"2022"
+		"2022",
+		"2023-05-31T14:51:27-05:00"
 	),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2023/spanish.mp3",
 		"spanish!",
-		"2022"
+		"2022",
+		"2023-05-31T14:51:27-05:00"
 	),
-	new Track("https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2023/velvet.mp3", "Velvet", "2022"),
-	new Track("https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/IDKOK.mp3", "IDKOK", "ily"),
-	new Track("https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/Instagram.mp3", "Instagram", "ily"),
-	new Track("https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/him.mp3", "him", "ily"),
+	new Track("https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2023/velvet.mp3", "Velvet", "2022", "2023-05-31T14:51:27-05:00"),
+	new Track("https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/IDKOK.mp3", "IDKOK", "ily", "2021-01-15T13:36:31-06:00"),
+	new Track("https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/Instagram.mp3", "Instagram", "ily", "2021-01-15T13:36:31-06:00"),
+	new Track("https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/him.mp3", "him", "ily", "2020-06-06T17:16:16-05:00"),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/october13.mp3",
 		"October 13th",
-		"ily"
+		"ily",
+		"2021-01-15T13:36:31-06:00"
 	),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/him(demo).mp3",
 		"him (demo)",
-		"ily"
+		"ily",
+		"2021-01-15T13:36:31-06:00"
 	),
-	new Track("https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/down3-2.mp3", "down3-2", "RIP"),
+	new Track("https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/down3-2.mp3", "down3-2", "RIP", "2021-01-15T13:36:31-06:00"),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/paralyzed.mp3",
 		"Paralyzed Paraplegic",
-		"RIP"
+		"RIP",
+		"2020-06-06T17:16:16-05:00"
 	),
-	new Track("https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/GiveIn.mp3", "GiveIn_444", "RIP"),
+	new Track("https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/GiveIn.mp3", "GiveIn_444", "RIP", "2021-01-15T13:36:31-06:00"),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/mental.mp3",
 		"mental health disorders",
-		"RIP"
+		"RIP",
+		"2021-01-15T13:36:31-06:00"
 	),
-	new Track("https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/stab.mp3", "stab.wav", "RIP"),
+	new Track("https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/stab.mp3", "stab.wav", "RIP", "2021-01-15T13:36:31-06:00"),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/WAITAMINUTE.mp3",
 		"WAITAMINUTE",
-		"RIP"
+		"RIP",
+		"2021-01-15T13:36:31-06:00"
 	),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/old/better44.mp3",
 		"better44.mp3",
-		"RIP"
+		"RIP",
+		"2022-05-13T15:28:01-05:00"
 	),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/bargainbin.mp3",
 		"Bargain Bin",
-		"Altona Meadows"
+		"Altona Meadows",
+		"2020-06-06T17:16:16-05:00"
 	),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/bbetc.mp3",
 		"Better Better, etc.",
-		"Altona Meadows"
+		"Altona Meadows",
+		"2020-06-06T17:16:16-05:00"
 	),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/old/bullshit.mp3",
 		"bullshit.mp3",
-		"Altona Meadows"
+		"Altona Meadows",
+		"2022-05-13T15:28:01-05:00"
 	),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/old/jam2.mp3",
 		"jam2.mp3",
-		"Altona Meadows"
+		"Altona Meadows",
+		"2022-05-13T15:28:01-05:00"
 	),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/old/feel.mp3",
 		"Feel It Still (remix)",
-		"Altona Meadows"
+		"Altona Meadows",
+		"2022-05-13T15:28:01-05:00"
 	),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/old/passion.mp3",
 		"Passionfruit (remix)",
-		"Altona Meadows"
+		"Altona Meadows",
+		"2022-05-13T15:28:01-05:00"
 	),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/old/assignment8.mp3",
 		"assignment8.mp3",
-		"Altona Meadows"
+		"Altona Meadows",
+		"2022-05-13T15:28:01-05:00"
 	),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/old/panama.mp3",
 		"The Panama Papers",
-		"Altona Meadows"
+		"Altona Meadows",
+		"2022-05-13T15:28:01-05:00"
 	),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/old/kenny.mp3",
 		"kenny.mp3",
-		"Altona Meadows"
+		"Altona Meadows",
+		"2022-05-13T15:28:01-05:00"
 	),
-	new Track("https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/bulkhead.mp3", "BULKHEAD", "2021"),
+	new Track("https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/bulkhead.mp3", "BULKHEAD", "2021", "2021-01-18T14:21:46-06:00"),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/cigs/alone.mp3",
 		"Alone (Mac DeMarco Cover)",
-		"Cigs Inside Live"
+		"Cigs Inside Live",
+		"2021-08-31T14:51:41-05:00"
 	),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/cigs/how.mp3",
 		"How?",
-		"Cigs Inside Live"
+		"Cigs Inside Live",
+		"2021-08-31T14:51:41-05:00"
 	),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/cigs/work.mp3",
 		"Work This Time (King Gizzard Cover)",
-		"Cigs Inside Live"
+		"Cigs Inside Live",
+		"2021-08-31T14:51:41-05:00"
 	),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/cigs/liquor.mp3",
 		"Liquor Laced & Lucid",
-		"Cigs Inside Live"
+		"Cigs Inside Live",
+		"2022-05-13T12:23:30-05:00"
 	),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/cigs/sleepwalk.mp3",
 		"Sleepwalk With Me",
-		"Cigs Inside Live"
+		"Cigs Inside Live",
+		"2022-05-13T12:23:30-05:00"
 	),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2022/drrrrrumerrrrrrr.mp3",
 		"drrrrrumerrrrrrr.mp3",
-		"2021"
+		"2021",
+		"2022-05-13T12:23:30-05:00"
 	),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2022/somewhere.mp3",
 		"somewhere.mp3",
-		"2021"
+		"2021",
+		"2022-05-13T12:23:30-05:00"
 	),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2022/comeback.mp3",
 		"(dont call it a) comeback!",
-		"2021"
+		"2021",
+		"2022-05-13T12:23:30-05:00"
 	),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2022/whereyougoin.mp3",
 		"where you goin? (demo)",
-		"2023"
+		"2023",
+		"2022-05-13T12:23:30-05:00"
 	),
-	new Track("https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2022/life.mp3", "life.mp3", "2023"),
+	new Track("https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2022/life.mp3", "life.mp3", "2023", "2022-07-13T12:38:23-05:00"),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/4/shoulda%2C%20my%20addition%20to%20brandos%20ideamp3.mp3",
 		"shoulda",
-		"2023"
+		"2023",
+		"2023-07-14T03:45:52-05:00"
 	),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2023/drive.mp3",
 		"brightside",
-		"2023"
+		"2023",
+		"2023-05-31T14:51:27-05:00"
 	),
-	new Track("https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/newAYUP.mp3", "ayup.mp3", "2023"),
+	new Track("https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/newAYUP.mp3", "ayup.mp3", "2023", "2023-07-13T23:50:25-05:00"),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2022/error/kernalPanic.mp3",
 		"kernal PANIC !!!",
-		"3RR0R 404"
+		"3RR0R 404",
+		"2022-05-24T16:23:00-05:00"
 	),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2022/error/paralyzedIn.mp3",
 		"Paralyzed (instrumental)",
-		"3RR0R 404"
+		"3RR0R 404",
+		"2022-05-24T16:23:00-05:00"
 	),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2022/error/PARALLEL.mp3",
 		"PARALLEL",
-		"3RR0R 404"
+		"3RR0R 404",
+		"2022-05-24T16:23:00-05:00"
 	),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2022/AVATAR1.mp3",
 		"AVATAR1.mp3",
-		"3RR0R 404"
+		"3RR0R 404",
+		"2022-05-24T14:33:52-05:00"
 	),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2022/error/playground.mp3",
 		"playground.mp3",
-		"3RR0R 404"
+		"3RR0R 404",
+		"2022-07-13T12:43:57-05:00"
 	),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2022/error/kenny2.mp3",
 		"kenny2.mp3",
-		"3RR0R 404"
+		"3RR0R 404",
+		"2022-07-13T12:43:57-05:00"
 	),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/jump.mp3",
 		"jump",
-		"3RR0R 404"
+		"3RR0R 404",
+		"2025-02-23T15:19:51-06:00"
 	),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/keys.mp3",
 		"gimme the keys",
-		"3RR0R 404"
+		"3RR0R 404",
+		"2025-03-16T12:45:24-05:00"
 	),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/beowulf.mp3",
 		"beowulf",
-		"3RR0R 404"
+		"3RR0R 404",
+		"2025-01-31T15:16:16-08:00"
 	),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/vitamind.mp3",
 		"vitamin d",
-		"3RR0R 404"
+		"3RR0R 404",
+		"2024-10-21T08:55:21-07:00"
 	),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/isthereanybodyoutthere.mp3",
 		"need2/creep (Pinegrove/Radiohead)",
-		"covers, etc. (saul)"
+		"covers, etc. (saul)",
+		"2023-07-17T11:14:06-05:00"
 	),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/rust/245AM.mp3",
 		"2:45 AM (Elliott Smith) (w/ theo)",
-		"covers, etc. (saul)"
+		"covers, etc. (saul)",
+		"2023-07-24T10:19:01-05:00"
 	),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/rust/bottleUPandEXPLODE.mp3",
 		"Bottle Up and Explode! (Elliott Smith) (w/ theo)",
-		"covers, etc. (saul)"
+		"covers, etc. (saul)",
+		"2023-07-24T10:19:01-05:00"
 	),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/rust/CHRISTIANBROTHERS.mp3",
 		"Christian Brothers (Elliott Smith) (w/ theo)",
-		"covers, etc. (saul)"
+		"covers, etc. (saul)",
+		"2023-07-24T10:19:01-05:00"
 	),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/crossed/intro.mp3",
 		"intro",
-		"Criss Cross Apple Sauwce"
+		"Criss Cross Apple Sauwce",
+		"2022-05-13T14:17:09-05:00"
 	),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/crossed/uponme.mp3",
 		"up on me",
-		"Criss Cross Apple Sauwce"
+		"Criss Cross Apple Sauwce",
+		"2022-05-13T14:17:09-05:00"
 	),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/crossed/what.mp3",
 		"..what?",
-		"Criss Cross Apple Sauwce"
+		"Criss Cross Apple Sauwce",
+		"2022-05-13T14:17:09-05:00"
 	),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/crossed/recess.mp3",
 		"recess",
-		"Criss Cross Apple Sauwce"
+		"Criss Cross Apple Sauwce",
+		"2022-05-13T14:17:09-05:00"
 	),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2022/ILLFINDHER.mp3",
 		"I'LL FIND HER",
-		"2021"
+		"2021",
+		"2022-07-13T12:43:57-05:00"
 	),
 ];
