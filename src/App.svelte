@@ -15,7 +15,7 @@
 </script>
 
 <svelte:window on:resize={onResize} />
-<main class="flex h-[100dvh] flex-col overflow-hidden font-sans">
+<main class="flex h-[100dvh] flex-col overflow-hidden bg-white font-sans">
 	<Navbar {isMobile} />
 	<article id="music" class="relative min-h-0 flex-1">
 		<Music {isMobile} />

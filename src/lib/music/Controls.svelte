@@ -23,6 +23,7 @@
 
 	export let track: Track;
 	export let isPlaying: boolean;
+	export let fullscreen: boolean = false;
 
 	export let shuffle: boolean;
 	export let loop: boolean;
@@ -311,8 +312,13 @@
 </script>
 
 <div id="controlsBox" class="absolute inset-0 z-10 flex flex-col">
-	<!-- The gates: album + track list overlay -->
-	<div class="min-h-0 flex-1 overflow-hidden">
+	<!-- The gates: album + track list overlay. Double-tap the open water to go fullscreen -->
+	<div
+		class="min-h-0 flex-1 touch-manipulation overflow-hidden"
+		on:dblclick={() => {
+			if (!list) command("fullscreen");
+		}}
+	>
 		{#if list}
 			<div
 				id="list"
@@ -488,38 +494,49 @@
 	<div id="seeker" class="flex items-end gap-3 border-t-[3px] border-black p-3">
 		<div class="flex shrink-0 flex-col items-center">
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
-			<div class="group relative w-fit cursor-pointer" on:click={toggleList}>
-				<img src={track.img} alt="album art" class="block h-[90px] w-[90px] border-[3px] border-black" />
-				<span
-					class="pointer-events-none absolute inset-0 flex items-center justify-center transition-colors group-hover:text-brand {list
-						? 'text-brand'
-						: 'text-black'}"
-				>
-					{#if !list}
-						<ChevronUpIcon size="40" />
-					{:else}
-						<ChevronDownIcon size="40" />
-					{/if}
-				</span>
-			</div>
-			<!-- svelte-ignore a11y-click-events-have-key-events -->
-			<h3
-				class="m-0 w-fit cursor-pointer pt-1 text-sm font-bold hover:underline {list ? 'text-brand' : 'text-black'}"
-				on:click={toggleList}
+			<div
+				class="group relative w-fit {fullscreen ? '' : 'cursor-pointer'}"
+				on:click={() => {
+					if (!fullscreen) toggleList();
+				}}
 			>
-				{list ? "ah close em!" : "openthegates"}
-			</h3>
+				<img src={track.img} alt="album art" class="block h-[90px] w-[90px] border-[3px] border-black" />
+				{#if !fullscreen}
+					<span
+						class="pointer-events-none absolute inset-0 flex items-center justify-center transition-colors group-hover:text-brand {list
+							? 'text-brand'
+							: 'text-black'}"
+					>
+						{#if !list}
+							<ChevronUpIcon size="40" />
+						{:else}
+							<ChevronDownIcon size="40" />
+						{/if}
+					</span>
+				{/if}
+			</div>
+			{#if !fullscreen}
+				<!-- svelte-ignore a11y-click-events-have-key-events -->
+				<h3
+					class="m-0 w-fit cursor-pointer pt-1 text-sm font-bold hover:underline {list ? 'text-brand' : 'text-black'}"
+					on:click={toggleList}
+				>
+					{list ? "ah close em!" : "openthegates"}
+				</h3>
+			{/if}
 		</div>
 		<div class="flex min-w-0 flex-1 flex-col items-center">
 			<div class="flex flex-col items-center pt-1">
 				<span class="flex items-center">
-					<!-- svelte-ignore a11y-click-events-have-key-events -->
-					<span
-						class="cursor-pointer p-1.5 transition hover:scale-125 hover:text-neutral-500 active:text-brand"
-						on:click={() => command("prev")}
-					>
-						<SkipBackIcon size="40" />
-					</span>
+					{#if !fullscreen}
+						<!-- svelte-ignore a11y-click-events-have-key-events -->
+						<span
+							class="cursor-pointer p-1.5 transition hover:scale-125 hover:text-neutral-500 active:text-brand"
+							on:click={() => command("prev")}
+						>
+							<SkipBackIcon size="40" />
+						</span>
+					{/if}
 					<!-- svelte-ignore a11y-click-events-have-key-events -->
 					<span
 						class="cursor-pointer p-1.5 transition hover:scale-125 hover:text-neutral-500 active:text-brand"
@@ -531,15 +548,17 @@
 							<PlayIcon size="40" />
 						{/if}
 					</span>
-					<!-- svelte-ignore a11y-click-events-have-key-events -->
-					<span
-						class="cursor-pointer p-1.5 transition hover:scale-125 hover:text-neutral-500 active:text-brand"
-						on:click={() => command("next")}
-					>
-						<SkipForwardIcon size="40" />
-					</span>
+					{#if !fullscreen}
+						<!-- svelte-ignore a11y-click-events-have-key-events -->
+						<span
+							class="cursor-pointer p-1.5 transition hover:scale-125 hover:text-neutral-500 active:text-brand"
+							on:click={() => command("next")}
+						>
+							<SkipForwardIcon size="40" />
+						</span>
+					{/if}
 				</span>
-				<span class="flex items-center">
+				<span class="flex items-center {fullscreen ? 'hidden' : ''}">
 					<!-- svelte-ignore a11y-click-events-have-key-events -->
 					<span
 						on:click={() => command("shuffle")}
@@ -583,14 +602,16 @@
 				</span>
 				<span class="ghost invisible text-sm">{COPY_MSG}</span>
 			</div>
-			<!-- svelte-ignore a11y-click-events-have-key-events -->
-			<span class="w-fit cursor-pointer transition-colors hover:text-brand hover:underline" on:click={toggleList}>
-				{#if !isMobile}
-					{track.artist} -
-				{/if}
-				{track.name}
-			</span>
-			<div class="flex w-full items-center gap-2 px-2">
+			{#if !fullscreen}
+				<!-- svelte-ignore a11y-click-events-have-key-events -->
+				<span class="w-fit cursor-pointer transition-colors hover:text-brand hover:underline" on:click={toggleList}>
+					{#if !isMobile}
+						{track.artist} -
+					{/if}
+					{track.name}
+				</span>
+			{/if}
+			<div class="flex w-full items-center gap-2 px-2 {fullscreen ? 'hidden' : ''}">
 				<span class="text-sm tabular-nums">{_time}</span>
 				<div class="min-w-0 flex-1">
 					<RangeSlider
