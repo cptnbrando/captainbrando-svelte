@@ -233,8 +233,8 @@
 	function resizeCanvas(): void {
 		const viz = document.querySelector("#musicBox");
 		if (viz) {
-			width = viz.clientWidth + 4;
-			height = viz.clientHeight + 4;
+			width = viz.clientWidth;
+			height = viz.clientHeight;
 		}
 		if (canvasElement) {
 			canvasElement.width = width;
@@ -248,33 +248,12 @@
 
 	function onResize() {
 		resizeCanvas();
-	}
-
-	export let scrollEvent: any;
-	$: scrollEvent, onScroll();
-
-	function onScroll() {
-		if (isAnimating && !isPlaying) {
+		// Resizing wipes the canvas, so repaint the idle state if nothing's playing
+		if (drawCtx && !isPlaying) {
 			beginInactive();
 		}
-
-		// if(scrollEvent) {
-		// 	console.log(scrollEvent);
-		// 	console.log(scrollEvent.target.offsetHeight);
-		// }
-
-		// console.log({isPlaying, isAnimating});
 	}
 </script>
 
 <svelte:window on:resize={onResize} />
-<canvas bind:this={canvasElement} {width} {height} />
-
-<style>
-	canvas {
-		border-top: solid;
-		border-bottom: solid;
-		width: 100%;
-		height: 100%;
-	}
-</style>
+<canvas bind:this={canvasElement} {width} {height} class="absolute inset-0 block h-full w-full" />

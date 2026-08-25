@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+// Global bits that don't belong to any one component
+html,
+body {
+	height: 100%;
+	overscroll-behavior: none;
+}
+
+body {
+	// Paint it explicitly — otherwise dark-mode browsers put black behind the page
+	@apply bg-white text-black;
+	color-scheme: light;
+
+	// Disable text highlighting site-wide (stories opt back in)
+	user-select: none;
+	-webkit-user-select: none;
+	-webkit-touch-callout: none;
+	-webkit-tap-highlight-color: transparent;
+}
