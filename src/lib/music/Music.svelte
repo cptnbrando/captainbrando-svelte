@@ -65,7 +65,32 @@
 		audioPlayer.addEventListener("pause", () => {
 			isPlaying = false;
 		});
+
+		// Keep fullscreen state synced even when the user exits with Esc
+		const onFsChange = () => {
+			isFullscreen = !!(document.fullscreenElement || (document as any).webkitFullscreenElement);
+		};
+		document.addEventListener("fullscreenchange", onFsChange);
+		document.addEventListener("webkitfullscreenchange", onFsChange);
 	});
+
+	let isFullscreen: boolean = false;
+
+	/**
+	 * Fullscreen the whole page (nav + visualizer) or exit if already in it
+	 */
+	function toggleFullscreen(): void {
+		if (document.fullscreenElement || (document as any).webkitFullscreenElement) {
+			const doc = document as any;
+			if (doc.exitFullscreen) doc.exitFullscreen();
+			else if (doc.webkitExitFullscreen) doc.webkitExitFullscreen();
+			return;
+		}
+		const el = document.querySelector("main") as any;
+		if (!el) return;
+		if (el.requestFullscreen) el.requestFullscreen().catch(() => {});
+		else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+	}
 
 	function loadRandomTrack() {
 		// trackNum = defaultTracks[Math.floor(Math.random() * defaultTracks.length)];
@@ -213,6 +238,9 @@
 			case "download":
 				gimme();
 				break;
+			case "fullscreen":
+				toggleFullscreen();
+				break;
 			default:
 				const str = event.detail.cmd;
 				if (str.includes("volume=")) {
@@ -274,6 +302,7 @@
 		ended: ended,
 		volume: volume,
 		isPlaying: isPlaying,
+		fullscreen: isFullscreen,
 	};
 </script>
 
