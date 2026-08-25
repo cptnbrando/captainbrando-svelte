@@ -97,6 +97,14 @@ export const tracks: Track[] = [
 	//
 	// -5:00 = CT Central Time
 	new Track(
+		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2026/echo.mp3",
+		"echo",
+		"NO DOGS ALLOWED",
+		"2026-08-25T13:20:00-05:00",
+		"tulsa, with ex wife. dog getting flu shots.",
+		"couldn't make it work. unemployable now. trying to fail forward but so far i'm just racking up debt."
+	),
+	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2026/doughnuts.mp3",
 		"doughnuts",
 		"NO DOGS ALLOWED",
