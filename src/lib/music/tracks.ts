@@ -619,12 +619,6 @@ export const tracks: Track[] = [
 		"2023-05-31T14:51:27-05:00"
 	),
 	new Track(
-		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/october13.mp3",
-		"springtime",
-		MIXTAPE_ALBUM,
-		"2021-01-15T13:36:31-06:00"
-	),
-	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/thatsasgoodasitgets-thursday-july312025-152pm.mp3",
 		"that's as good as it gets",
 		MIXTAPE_ALBUM,
