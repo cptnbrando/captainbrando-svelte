@@ -13,7 +13,7 @@
 		Share2Icon,
 	} from "svelte-feather-icons";
 	import { fly, slide } from "svelte/transition";
-	import { type Track, type Album, tracks } from "./tracks";
+	import { type Track, type Album, tracks, MIXTAPE_ALBUM } from "./tracks";
 	import { albums } from "./tracks";
 	import RangeSlider from "svelte-range-slider-pips";
 
@@ -26,7 +26,8 @@
 	export let fullscreen: boolean = false;
 
 	export let shuffle: boolean;
-	export let loop: boolean;
+	// 0 = off, 1 = repeat album, 2 = repeat one, 3 = ◆ show performance mode (stop when the song ends)
+	export let repeatMode: number;
 
 	export let volume: number;
 
@@ -136,6 +137,8 @@
 	}
 
 	// --- Stats ---
+	// The mixtape is reissues of songs already on board, so keep it out of the numbers
+	const statTracks = tracks.filter((t) => t.album !== MIXTAPE_ALBUM);
 	const WEEKDAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 	const DAY_MS = 86400000;
 
@@ -143,7 +146,7 @@
 		return t.when ? parseStamp(t.when.split(" to ")[0]) : null;
 	}
 
-	const oldest = tracks.reduce(
+	const oldest = statTracks.reduce(
 		(best, t) => {
 			const s = firstStamp(t);
 			if (!s) return best;
@@ -176,7 +179,7 @@
 		return diff <= 6 ? `this ${weekday}` : `next ${weekday}`;
 	}
 
-	const birthdays = tracks
+	const birthdays = statTracks
 		.map((t) => ({ track: t, stamp: firstStamp(t) }))
 		.filter((b) => b.stamp)
 		.map((b) => ({ ...b, diff: birthdayDiff(b.stamp) }))
@@ -206,9 +209,10 @@
 		});
 	}
 
-	function chooseTrack(track: string) {
+	function chooseTrack(track: Track) {
+		// Send the index so duplicate names/srcs (mixtape reissues) pick the exact entry
 		dispatch("message", {
-			track: track,
+			trackIdx: tracks.indexOf(track),
 		});
 	}
 
@@ -362,7 +366,7 @@
 						<div class="mx-auto max-w-prose pt-4 text-sm leading-relaxed">
 							<div class="mb-4 border-[3px] border-black bg-white/60 p-3">
 								<h3 class="m-0 mb-2 text-base font-bold">the numbers</h3>
-								<p class="my-1"><span class="font-bold">{tracks.length}</span> songs on board</p>
+								<p class="my-1"><span class="font-bold">{statTracks.length}</span> songs on board</p>
 								{#if oldest}
 									<p class="my-1">
 										the oldest: <span class="font-bold">{oldest.track.name}</span>
@@ -378,7 +382,7 @@
 											<!-- svelte-ignore a11y-click-events-have-key-events -->
 											<span
 												class="cursor-pointer underline hover:text-black"
-												on:click={() => chooseTrack(b.track.name)}>{b.track.name}</span
+												on:click={() => chooseTrack(b.track)}>{b.track.name}</span
 											>
 											<span class="font-mono text-xs">({b.stamp.month} {b.stamp.day}, {b.stamp.year})</span
 											>{i < releasedToday.length - 1 ? "," : ""}
@@ -395,7 +399,7 @@
 												<!-- svelte-ignore a11y-click-events-have-key-events -->
 												<span
 													class="cursor-pointer font-bold transition-colors hover:text-brand hover:underline"
-													on:click={() => chooseTrack(b.track.name)}>{b.track.name}</span
+													on:click={() => chooseTrack(b.track)}>{b.track.name}</span
 												>
 												— {relLabel(b.diff)}
 												<span class="font-mono text-xs text-neutral-500"
@@ -437,13 +441,13 @@
 						</div>
 						<ol class="m-0 flex list-decimal flex-col gap-1 pl-6 pr-1">
 							{#each selectedTracks as listTrack (listTrack.src)}
-								<li class={track.name === listTrack.name ? "font-bold text-brand" : ""}>
+								<li class={track === listTrack ? "font-bold text-brand" : ""}>
 									<div class="flex flex-wrap items-center justify-between gap-x-2.5 gap-y-1">
 										<!-- svelte-ignore a11y-click-events-have-key-events -->
 										<span
 											class="cursor-pointer transition-colors hover:text-brand hover:underline"
 											on:click={() => {
-												chooseTrack(listTrack.name);
+												chooseTrack(listTrack);
 											}}
 										>
 											{listTrack.name}
@@ -571,11 +575,36 @@
 					<!-- svelte-ignore a11y-click-events-have-key-events -->
 					<span
 						on:click={() => command("loop")}
-						class="cursor-pointer p-1.5 transition hover:scale-125 {loop
+						title={repeatMode === 1
+							? "repeat: album"
+							: repeatMode === 2
+								? "repeat: one"
+								: repeatMode === 3
+									? "show performance mode: stop when the song ends"
+									: "repeat: off"}
+						class="cursor-pointer p-1.5 transition hover:scale-125 {repeatMode > 0
 							? 'text-brand'
 							: 'hover:text-neutral-500 active:text-brand'}"
 					>
-						<RepeatIcon size="25" />
+						{#if repeatMode === 3}
+							<svg
+								width="25"
+								height="25"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"><path d="M12 2.5 21.5 12 12 21.5 2.5 12z" /></svg
+							>
+						{:else}
+							<span class="relative flex">
+								<RepeatIcon size="25" />
+								{#if repeatMode === 2}
+									<span class="absolute inset-0 flex items-center justify-center text-[11px] font-bold leading-none">1</span>
+								{/if}
+							</span>
+						{/if}
 					</span>
 					<!-- svelte-ignore a11y-click-events-have-key-events -->
 					<span
