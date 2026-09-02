@@ -613,6 +613,12 @@ export const tracks: Track[] = [
 		"2022-05-24T16:23:00-05:00"
 	),
 	new Track(
+		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2022/whereyougoin.mp3",
+		"where you goin? (demo)",
+		MIXTAPE_ALBUM,
+		"2022-05-13T12:23:30-05:00"
+	),
+	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2023/velvet.mp3",
 		"Velvet",
 		MIXTAPE_ALBUM,
@@ -635,6 +641,12 @@ export const tracks: Track[] = [
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/old/passion.mp3",
 		"Passionfruit (remix)",
+		MIXTAPE_ALBUM,
+		"2022-05-13T15:28:01-05:00"
+	),
+	new Track(
+		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/old/feel.mp3",
+		"Feel It Still (remix)",
 		MIXTAPE_ALBUM,
 		"2022-05-13T15:28:01-05:00"
 	),
