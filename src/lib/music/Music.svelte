@@ -16,7 +16,10 @@
 	let audioPlayer: HTMLAudioElement;
 	let time: number = 0;
 	let duration: number = 0;
+	// repeatMode: 0 = off, 1 = repeat album, 2 = repeat one, 3 = ◆ show performance mode (stop when the song ends)
+	let repeatMode: number = 0;
 	let loop: boolean = false;
+	$: loop = repeatMode === 2;
 	let shuffle: boolean = false;
 	let volume: number = 0.82;
 	let ended: boolean = false;
@@ -188,15 +191,13 @@
 		audioPlayer.volume = volume;
 	}
 
-	function chooseTrack(trackName: string): void {
+	function chooseTrack(idx: number): void {
 		// Pause the track if it's playing, then push the track num to the array
 		if (isPlaying) playPause();
 
 		lastTrackArray.push(trackNum);
 
-		trackNum = songs.findIndex((track) => {
-			return track.name === trackName;
-		});
+		trackNum = idx;
 		track = songs[trackNum];
 		audioPlayer.load();
 		if (!isPlaying) playPause();
@@ -204,6 +205,39 @@
 
 	function gimme(): void {
 		window.open(track.src, "_blank");
+	}
+
+	/**
+	 * Next track within the current album, wrapping back to its first song
+	 * (random within the album when shuffle is on)
+	 */
+	function nextInAlbum(): number {
+		const albumIdxs = songs.map((t, i) => i).filter((i) => songs[i].album === track.album);
+		if (albumIdxs.length <= 1) return trackNum;
+		if (shuffle) {
+			let pick = trackNum;
+			while (pick === trackNum) pick = albumIdxs[Math.floor(Math.random() * albumIdxs.length)];
+			return pick;
+		}
+		return albumIdxs[(albumIdxs.indexOf(trackNum) + 1) % albumIdxs.length];
+	}
+
+	/**
+	 * repeat album keeps spinning the current album;
+	 * ◆ show performance mode holds the silence when the song ends —
+	 * play restarts it from the top, prev/next/picking a track behave as usual
+	 */
+	function onEnded(): void {
+		if (repeatMode === 3) {
+			isPlaying = false;
+			audioPlayer.currentTime = 0;
+			return;
+		}
+		if (repeatMode === 1) {
+			chooseTrack(nextInAlbum());
+			return;
+		}
+		changeTrack(1);
 	}
 
 	/**
@@ -215,8 +249,8 @@
 	 * @param event the message
 	 */
 	function handleCmd(event): void {
-		if (event.detail.track) {
-			chooseTrack(event.detail.track);
+		if (event.detail.trackIdx !== undefined) {
+			chooseTrack(event.detail.trackIdx);
 			return;
 		}
 		switch (event.detail.cmd) {
@@ -233,7 +267,7 @@
 				shuffle = !shuffle;
 				break;
 			case "loop":
-				loop = !loop;
+				repeatMode = (repeatMode + 1) % 4;
 				break;
 			case "download":
 				gimme();
@@ -287,7 +321,7 @@
 				shuffle = !shuffle;
 				break;
 			case "KeyR":
-				loop = !loop;
+				repeatMode = (repeatMode + 1) % 4;
 				break;
 		}
 	}
@@ -298,7 +332,7 @@
 		duration: duration,
 		time: time,
 		shuffle: shuffle,
-		loop: loop,
+		repeatMode: repeatMode,
 		ended: ended,
 		volume: volume,
 		isPlaying: isPlaying,
@@ -320,7 +354,7 @@
 	bind:duration
 	bind:ended
 	bind:currentTime={time}
-	on:ended={() => changeTrack(1)}
+	on:ended={onEnded}
 >
 	<source src={track.src} type="audio/mp3" />
 </audio>
