@@ -571,12 +571,6 @@ export const tracks: Track[] = [
 		"2021-01-15T13:36:31-06:00"
 	),
 	new Track(
-		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/old/panama.mp3",
-		"The Panama Papers",
-		MIXTAPE_ALBUM,
-		"2022-05-13T15:28:01-05:00"
-	),
-	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2022/error/kernalPanic.mp3",
 		"kernal PANIC !!!",
 		MIXTAPE_ALBUM,
