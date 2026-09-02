@@ -13,7 +13,7 @@
 		Share2Icon,
 	} from "svelte-feather-icons";
 	import { fly, slide } from "svelte/transition";
-	import { type Track, type Album, tracks, MIXTAPE_ALBUM } from "./tracks";
+	import { type Track, type Album, tracks, MIXTAPE_ALBUM, DOGS_MIXTAPE_ALBUM } from "./tracks";
 	import { albums } from "./tracks";
 	import RangeSlider from "svelte-range-slider-pips";
 
@@ -137,8 +137,8 @@
 	}
 
 	// --- Stats ---
-	// The mixtape is reissues of songs already on board, so keep it out of the numbers
-	const statTracks = tracks.filter((t) => t.album !== MIXTAPE_ALBUM);
+	// The mixtapes are reissues of songs already on board, so keep them out of the numbers
+	const statTracks = tracks.filter((t) => t.album !== MIXTAPE_ALBUM && t.album !== DOGS_MIXTAPE_ALBUM);
 	const WEEKDAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 	const DAY_MS = 86400000;
 

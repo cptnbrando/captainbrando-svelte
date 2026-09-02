@@ -64,8 +64,9 @@ export class Album {
 	}
 }
 
-// Curated from the captainBrandoMixtape flags in music-catalog.dog (dcruz-assets root)
+// Curated from the captainBrandoMixtape / dogsMixtape flags in music-catalog.dog (dcruz-assets root)
 export const MIXTAPE_ALBUM = "Captain Brando! Mixtape";
+export const DOGS_MIXTAPE_ALBUM = "DOGS Mixtape";
 
 export let albums: Album[] = [
 	// Duplicate this to add new album
@@ -75,6 +76,7 @@ export let albums: Album[] = [
 	// 	'😁'
 	// ),
 	new Album(MIXTAPE_ALBUM, "sailboat", "Captain Brando!"),
+	new Album(DOGS_MIXTAPE_ALBUM, "goats", "DOGS"),
 	new Album("NO DOGS ALLOWED", "meat", "DOGS"),
 	new Album("Shepherd", "man", "DOGS"),
 	new Album("🗣️", "bark", "DOGS"),
@@ -176,7 +178,7 @@ export const tracks: Track[] = [
 	new Track("https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/sexy.mp3", "sexy", "🗣️", "2025-01-31T15:16:16-08:00"),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/bellathorne3.mp3",
-		"bella thorne",
+		"oh fuck",
 		"🗣️",
 		"2025-05-28T11:07:00-05:00 to 2025-05-31T00:49:00-05:00",
 		"Tulsa, apt, mailman lost my sufjan stevens vinyl again. the 10th anniversary of carrie and lowell. damnit. i'm so confused how he could have given me the wrong key for the package box, when the key for the package box sits on the lock for the package box. all he had to do was take it and put it in my mailbox. instead he puts a different key in there one that doesn't fit any of the package lockers. i just want my record damnit, does the fucking mail deliver on saturdays? i think it's trapped in the box that's locked that i don't got the key for. i'm gonna remember this feeling of not being able to get something when it's right next to me.",
@@ -269,7 +271,7 @@ export const tracks: Track[] = [
 	new Track("https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/him.mp3", "him", "ily", "2020-06-06T17:16:16-05:00"),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/october13.mp3",
-		"October 13th",
+		"springtime",
 		"ily",
 		"2021-01-15T13:36:31-06:00"
 	),
@@ -546,38 +548,27 @@ export const tracks: Track[] = [
 
 	// --- Captain Brando! Mixtape ---
 	// Reissues of tracks flagged captainBrandoMixtape in music-catalog.dog,
-	// sequenced 2020 -> 2025: opens with BEGIN!, closes with that's as good as it gets.
-	// (kenny2 + need2/creep are flagged "maybe" in the .dog and were left off)
+	// dealt into random order (Get-Random -Shuffle, which still opened with BEGIN!)
+	// (kenny2 + need2/creep are flagged "maybe" in the .dog and were left off;
+	// life.mp3 + stab.wav ride along by special request even though their flags are False)
 	new Track("https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2023/BEGIN.mp3", "BEGIN!", MIXTAPE_ALBUM, "2023-05-31T14:51:27-05:00"),
 	new Track(
-		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/bbetc.mp3",
-		"Better Better, etc.",
+		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2022/error/playground.mp3",
+		"playground.mp3",
 		MIXTAPE_ALBUM,
-		"2020-06-06T17:16:16-05:00"
+		"2022-07-13T12:43:57-05:00"
 	),
 	new Track(
-		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/october13.mp3",
-		"springtime",
+		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/4/shoulda%2C%20my%20addition%20to%20brandos%20ideamp3.mp3",
+		"shoulda",
 		MIXTAPE_ALBUM,
-		"2021-01-15T13:36:31-06:00"
+		"2023-07-14T03:45:52-05:00"
 	),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/down3-2.mp3",
 		"down3-2",
 		MIXTAPE_ALBUM,
 		"2021-01-15T13:36:31-06:00"
-	),
-	new Track(
-		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/old/better44.mp3",
-		"better44.mp3",
-		MIXTAPE_ALBUM,
-		"2022-05-13T15:28:01-05:00"
-	),
-	new Track(
-		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/old/passion.mp3",
-		"Passionfruit (remix)",
-		MIXTAPE_ALBUM,
-		"2022-05-13T15:28:01-05:00"
 	),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/old/panama.mp3",
@@ -592,28 +583,22 @@ export const tracks: Track[] = [
 		"2022-05-24T16:23:00-05:00"
 	),
 	new Track(
-		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2022/error/paralyzedIn.mp3",
-		"Paralyzed (instrumental)",
+		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/old/better44.mp3",
+		"better44.mp3",
 		MIXTAPE_ALBUM,
-		"2022-05-24T16:23:00-05:00"
+		"2022-05-13T15:28:01-05:00"
 	),
 	new Track(
-		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2022/error/playground.mp3",
-		"playground.mp3",
+		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/stab.mp3",
+		"stab.wav",
 		MIXTAPE_ALBUM,
-		"2022-07-13T12:43:57-05:00"
+		"2021-01-15T13:36:31-06:00"
 	),
 	new Track(
-		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2023/2bedroomtoyota.mp3",
-		"2 Bedroom Toyota",
+		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2022/life.mp3",
+		"life.mp3",
 		MIXTAPE_ALBUM,
-		"2023-05-31T14:51:27-05:00"
-	),
-	new Track(
-		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2023/velvet.mp3",
-		"Velvet",
-		MIXTAPE_ALBUM,
-		"2023-05-31T14:51:27-05:00"
+		"2022-07-13T12:38:23-05:00"
 	),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/newAYUP.mp3",
@@ -622,10 +607,28 @@ export const tracks: Track[] = [
 		"2023-07-13T23:50:25-05:00"
 	),
 	new Track(
-		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/4/shoulda%2C%20my%20addition%20to%20brandos%20ideamp3.mp3",
-		"shoulda",
+		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/bbetc.mp3",
+		"Better Better, etc.",
 		MIXTAPE_ALBUM,
-		"2023-07-14T03:45:52-05:00"
+		"2020-06-06T17:16:16-05:00"
+	),
+	new Track(
+		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2022/error/paralyzedIn.mp3",
+		"Paralyzed (instrumental)",
+		MIXTAPE_ALBUM,
+		"2022-05-24T16:23:00-05:00"
+	),
+	new Track(
+		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2023/velvet.mp3",
+		"Velvet",
+		MIXTAPE_ALBUM,
+		"2023-05-31T14:51:27-05:00"
+	),
+	new Track(
+		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/october13.mp3",
+		"springtime",
+		MIXTAPE_ALBUM,
+		"2021-01-15T13:36:31-06:00"
 	),
 	new Track(
 		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/thatsasgoodasitgets-thursday-july312025-152pm.mp3",
@@ -634,5 +637,107 @@ export const tracks: Track[] = [
 		"2025-07-31T13:52:00-05:00",
 		"tulsa, home",
 		"Just driving around, nothing to see here yall"
+	),
+	new Track(
+		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2023/2bedroomtoyota.mp3",
+		"2 Bedroom Toyota",
+		MIXTAPE_ALBUM,
+		"2023-05-31T14:51:27-05:00"
+	),
+	new Track(
+		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/old/passion.mp3",
+		"Passionfruit (remix)",
+		MIXTAPE_ALBUM,
+		"2022-05-13T15:28:01-05:00"
+	),
+
+	// --- DOGS Mixtape ---
+	// Reissues of tracks flagged dogsMixtape in music-catalog.dog, dealt into random order
+	// (whack a mole opens by decree; alone + how ride along by special request; jump got cut)
+	new Track(
+		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/whackamole3.mp3",
+		"whack a mole",
+		DOGS_MIXTAPE_ALBUM,
+		"2024-12-08T21:11:26-08:00"
+	),
+	new Track(
+		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/cigs/alone.mp3",
+		"Alone (Mac DeMarco Cover)",
+		DOGS_MIXTAPE_ALBUM,
+		"2021-08-31T14:51:41-05:00"
+	),
+	new Track(
+		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2023/problems.mp3",
+		"FCKN PRBLMS by The Cut Ties",
+		DOGS_MIXTAPE_ALBUM,
+		"2023-05-31T14:51:27-05:00"
+	),
+	new Track(
+		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/bellathorne3.mp3",
+		"oh fuck",
+		DOGS_MIXTAPE_ALBUM,
+		"2025-05-28T11:07:00-05:00 to 2025-05-31T00:49:00-05:00",
+		"",
+		"bella thorne is SO hot!"
+	),
+	new Track(
+		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/WAITAMINUTE.mp3",
+		"WAITAMINUTE",
+		DOGS_MIXTAPE_ALBUM,
+		"2021-01-15T13:36:31-06:00"
+	),
+	new Track(
+		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/obsessedNH.mp3",
+		"obsessed",
+		DOGS_MIXTAPE_ALBUM,
+		"2025-04-14T13:52:00-05:00",
+		"New York Bagel Cafe on Yale + a week later in my apartment in my home city",
+		"sun-dried tomato bagel, toasted, with garlic herb cream cheese. best eaten in store, otherwise, much less crispy experience"
+	),
+	new Track(
+		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2022/error/PARALLEL.mp3",
+		"PARALLEL",
+		DOGS_MIXTAPE_ALBUM,
+		"2022-05-24T16:23:00-05:00"
+	),
+	new Track(
+		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2026/GRIEF2.mp3",
+		"(13 Years of Grief by Black Label Society)",
+		DOGS_MIXTAPE_ALBUM,
+		"2026-04-08T19:30:00-05:00",
+		"dallas, mom's place",
+		"fuck COPES"
+	),
+	new Track(
+		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/cigs/how.mp3",
+		"How?",
+		DOGS_MIXTAPE_ALBUM,
+		"2021-08-31T14:51:41-05:00"
+	),
+	new Track(
+		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/clunky.mp3",
+		"clunky",
+		DOGS_MIXTAPE_ALBUM,
+		"2025-01-14T20:07:12-08:00"
+	),
+	new Track(
+		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/2025/lips3.mp3",
+		"Lips (tunnel vision by jt)",
+		DOGS_MIXTAPE_ALBUM,
+		"2025-10-07T20:17:00-05:00",
+		"tulsa, home",
+		"Back on meds. Yay."
+	),
+	new Track(
+		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/old/kenny.mp3",
+		"kenny.mp3",
+		DOGS_MIXTAPE_ALBUM,
+		"2022-05-13T15:28:01-05:00"
+	),
+	new Track(
+		"https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/music/LOUDASSINDIAN_final.mp3",
+		"LOUDASSINDIAN",
+		DOGS_MIXTAPE_ALBUM,
+		"2024-12-08T21:11:26-08:00"
 	),
 ];
