@@ -13,7 +13,7 @@
 		Share2Icon,
 	} from "svelte-feather-icons";
 	import { fly, slide } from "svelte/transition";
-	import { type Track, type Album, tracks, MIXTAPE_ALBUM, DOGS_MIXTAPE_ALBUM } from "./tracks";
+	import { type Track, type Album, tracks, isMixtape, MIXTAPE_SUFFIX } from "./tracks";
 	import { albums } from "./tracks";
 	import RangeSlider from "svelte-range-slider-pips";
 
@@ -138,7 +138,7 @@
 
 	// --- Stats ---
 	// The mixtapes are reissues of songs already on board, so keep them out of the numbers
-	const statTracks = tracks.filter((t) => t.album !== MIXTAPE_ALBUM && t.album !== DOGS_MIXTAPE_ALBUM);
+	const statTracks = tracks.filter((t) => !isMixtape(t.album));
 	const WEEKDAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 	const DAY_MS = 86400000;
 
@@ -263,7 +263,8 @@
 		const trackSrcArr = track.src.split("/");
 		const baseUrl = window.location.origin; // Get the base URL (e.g., https://captainbrando.com or http://localhost:3000)
 		const lastFieldOfTrackURL = trackSrcArr[trackSrcArr.length - 1]; // Get the last item in the url 'github.com/blah/track.mp3 trackSrcArr
-		const fullUrl = `${baseUrl}/?song=${lastFieldOfTrackURL}`; // Construct the URL with the song query param
+		// Mixtape reissues share the same .mp3 as the original, so tag the link: ?song=BEGIN.mp3-mixtape
+		const fullUrl = `${baseUrl}/?song=${lastFieldOfTrackURL}${isMixtape(track.album) ? MIXTAPE_SUFFIX : ""}`;
 		const msg = document.querySelector(".ghost") as HTMLElement;
 		if (navigator.clipboard) {
 			navigator.clipboard.writeText(fullUrl).then(() => {

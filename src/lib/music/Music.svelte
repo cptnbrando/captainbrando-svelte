@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from "svelte";
 	import Controls from "./Controls.svelte";
-	import { Track, defaultTracks, tracks } from "./tracks";
+	import { Track, defaultTracks, tracks, isMixtape, MIXTAPE_SUFFIX } from "./tracks";
 	import Visualizer from "./Visualizer.svelte";
 
 	const TREASURE = "captainbrando-treasure";
@@ -101,9 +101,17 @@
 		track = songs[trackNum];
 	}
 
-	function handleQueryParam(song) {
+	/**
+	 * Load the shared track. A mixtape reissue shares its .mp3 with the original album,
+	 * so ?song=BEGIN.mp3-mixtape picks the mixtape copy; plain ?song=BEGIN.mp3 lands on
+	 * the original album copy
+	 */
+	function handleQueryParam(song: string) {
 		console.log(`handleQueryParam ${song}`);
-		trackNum = songs.findIndex((el) => el.src.includes(song));
+		const wantTape = song.endsWith(MIXTAPE_SUFFIX);
+		const file = wantTape ? song.slice(0, -MIXTAPE_SUFFIX.length) : song;
+		const matches = songs.map((el, i) => i).filter((i) => songs[i].src.includes(file));
+		trackNum = matches.find((i) => isMixtape(songs[i].album) === wantTape) ?? matches[0] ?? -1;
 		// DEFAULT TO WHACK A MOLE
 		if (trackNum == -1) handleQueryParam("whackamole3.mp3");
 		else track = songs[trackNum];
