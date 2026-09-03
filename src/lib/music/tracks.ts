@@ -59,6 +59,16 @@ export class Album {
 export const MIXTAPE_ALBUM = "Captain Brando! Mixtape";
 export const DOGS_MIXTAPE_ALBUM = "DOGS Mixtape";
 
+// Mixtape tracks are reissues of songs that also live on their original albums, so a
+// plain ?song=file.mp3 link would land on the original. Share links for mixtape tracks
+// read ?song=file.mp3-mixtape so the listener gets the mixtape, not the original.
+// (No song is on both mixtapes, so one suffix covers both.)
+export const MIXTAPE_SUFFIX = "-mixtape";
+
+export function isMixtape(album: string): boolean {
+	return album === MIXTAPE_ALBUM || album === DOGS_MIXTAPE_ALBUM;
+}
+
 export let albums: Album[] = [
 	// Duplicate this to add new album
 	// new Album(
