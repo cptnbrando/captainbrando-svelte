@@ -578,12 +578,6 @@ export const tracks: Track[] = [
 		"2022-05-24T16:23:00-05:00"
 	),
 	new Track(
-		"https://data.wearedogs.net/music/captainbrando/old/better44.mp3",
-		"better44.mp3",
-		MIXTAPE_ALBUM,
-		"2022-05-13T15:28:01-05:00"
-	),
-	new Track(
 		"https://data.wearedogs.net/music/captainbrando/stab.mp3",
 		"stab.wav",
 		MIXTAPE_ALBUM,
@@ -688,12 +682,6 @@ export const tracks: Track[] = [
 		"2025-04-14T13:52:00-05:00",
 		"New York Bagel Cafe on Yale + a week later in my apartment in my home city",
 		"sun-dried tomato bagel, toasted, with garlic herb cream cheese. best eaten in store, otherwise, much less crispy experience"
-	),
-	new Track(
-		"https://data.wearedogs.net/music/captainbrando/2022/error/PARALLEL.mp3",
-		"PARALLEL",
-		DOGS_MIXTAPE_ALBUM,
-		"2022-05-24T16:23:00-05:00"
 	),
 	new Track(
 		"https://data.wearedogs.net/music/captainbrando/2026/GRIEF2.mp3",
