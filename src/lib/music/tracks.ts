@@ -105,7 +105,7 @@ export const tracks: Track[] = [
 	// -5:00 = CT Central Time
 	new Track(
 		"https://data.wearedogs.net/music/captainbrando/2026/echo.mp3",
-		"echo",
+		"echoes by jamie woon",
 		"NO DOGS ALLOWED",
 		"2026-08-25T13:20:00-05:00",
 		"tulsa, with [redacted]. dog getting flu shots.",
