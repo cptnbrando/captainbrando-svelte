@@ -88,9 +88,9 @@ export let albums: Album[] = [
 	// 	'friends',
 	// 	'😁'
 	// ),
-	new Album(MIXTAPE_ALBUM, "sailboat", "Captain Brando!"),
-	new Album(DOGS_MIXTAPE_ALBUM, "goats", "DOGS"),
 	new Album("NO DOGS ALLOWED", "meat", "DOGS"),
+	new Album(DOGS_MIXTAPE_ALBUM, "goats", "DOGS"),
+	new Album(MIXTAPE_ALBUM, "sailboat", "Captain Brando!"),
 	new Album("Shepherd", "man", "DOGS"),
 	new Album("🗣️", "bark", "DOGS"),
 	new Album("hundred fifty", "hundred", "DOGS"),
