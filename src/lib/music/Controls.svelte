@@ -439,6 +439,11 @@
 						<div class="flex items-center gap-3 py-2">
 							<img src={selected.src} alt="" class="h-20 w-20 border-[3px] border-black" />
 							<h3 class="m-0 text-base font-bold md:text-lg">{selected.name} by {selected.artist}</h3>
+							{#if albumYears(selected.name)}
+								<span class="shrink-0 self-start border-2 border-black px-1 font-mono text-[10px] leading-4 text-neutral-700"
+									>{albumYears(selected.name)}</span
+								>
+							{/if}
 						</div>
 						<ol class="m-0 flex list-decimal flex-col gap-1 pl-6 pr-1">
 							{#each selectedTracks as listTrack (listTrack.src)}
@@ -506,12 +511,6 @@
 				}}
 			>
 				<img src={track.img} alt="album art" class="block h-[90px] w-[90px] border-[3px] border-black" />
-				{#if albumYears(track.album)}
-					<span
-						class="pointer-events-none absolute bottom-0 right-0 border-[2px] border-black bg-parchment px-1 font-mono text-[10px] leading-4 text-black"
-						>{albumYears(track.album)}</span
-					>
-				{/if}
 				{#if !fullscreen}
 					<span
 						class="pointer-events-none absolute inset-0 flex items-center justify-center transition-colors group-hover:text-brand {list
