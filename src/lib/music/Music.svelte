@@ -7,11 +7,15 @@
 
 	const TREASURE = "captainbrando-treasure";
 	// With the screen off there's nobody to press play on a dead track, so the
-	// player skips past it — but only this many in a row. Past that the network is
-	// gone, not the track, and it stops instead of burning through the library.
-	const MAX_HIDDEN_SKIPS = 3;
+	// player skips past it and never gives up. The first few skips are instant;
+	// past that the network is probably gone (tunnel, dead zone), so it waits a
+	// little longer before each try instead of racing through the library.
+	const FREE_HIDDEN_SKIPS = 3;
+	const SKIP_WAIT_MS = 5000;
+	const MAX_SKIP_WAIT_MS = 30000;
 	let guard: StreamGuard;
 	let hiddenSkips = 0;
+	let skipTimer: ReturnType<typeof setTimeout>;
 
 	const songs: Track[] = tracks;
 	let track: Track = songs[0];
@@ -203,6 +207,7 @@
 	 * (Re)load the current track into the player, with a fresh retry budget
 	 */
 	function loadTrack(): void {
+		clearTimeout(skipTimer);
 		guard?.reset();
 		audioPlayer.load();
 	}
@@ -229,16 +234,24 @@
 	/**
 	 * The stream is gone for good (StreamGuard ran out of retries). On screen,
 	 * stop so the listener sees it. With the screen off nobody can press play,
-	 * so move on to the next song instead of going silent.
+	 * so keep moving on to the next song, forever, instead of going silent.
 	 */
 	function onDeadTrack(): void {
 		if (!isPlaying) return;
-		if (document.visibilityState !== "hidden" || hiddenSkips >= MAX_HIDDEN_SKIPS) {
+		if (document.visibilityState !== "hidden") {
 			playPause();
 			return;
 		}
 		hiddenSkips++;
-		chooseTrack(repeatMode === 1 ? nextInAlbum() : shuffle ? randomTrack() : (trackNum + 1) % songs.length);
+		const next = repeatMode === 1 ? nextInAlbum() : shuffle ? randomTrack() : (trackNum + 1) % songs.length;
+		if (hiddenSkips <= FREE_HIDDEN_SKIPS) {
+			chooseTrack(next);
+			return;
+		}
+		const wait = Math.min(MAX_SKIP_WAIT_MS, SKIP_WAIT_MS * Math.pow(2, hiddenSkips - FREE_HIDDEN_SKIPS - 1));
+		clearTimeout(skipTimer);
+		// Pausing in the meantime (lock screen, headphones) cancels the skip
+		skipTimer = setTimeout(() => isPlaying && chooseTrack(next), wait);
 	}
 
 	/**
