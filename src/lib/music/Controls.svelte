@@ -29,8 +29,6 @@
 	// 0 = off, 1 = repeat album, 2 = repeat one, 3 = ◆ show performance mode (stop when the song ends)
 	export let repeatMode: number;
 
-	export let volume: number;
-
 	let isSeeking: boolean = false;
 
 	let list: boolean = false;
