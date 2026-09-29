@@ -14,7 +14,7 @@
 	} from "svelte-feather-icons";
 	import { fly, slide } from "svelte/transition";
 	import { type Track, type Album, tracks, isMixtape, MIXTAPE_SUFFIX } from "./tracks";
-	import { albums } from "./tracks";
+	import { albums, albumYears } from "./tracks";
 	import RangeSlider from "svelte-range-slider-pips";
 
 	const COPY_MSG = "copied to clip🛹!";
@@ -347,6 +347,11 @@
 							>
 								<img src={album.src} alt="" class="h-6 w-6 shrink-0" />
 								<span class="min-w-0 break-words text-sm">{album.name}</span>
+								{#if albumYears(album.name)}
+									<span class="ml-auto shrink-0 border border-black px-1 font-mono text-[10px] leading-4 text-neutral-600"
+										>{albumYears(album.name)}</span
+									>
+								{/if}
 							</li>
 						{/each}
 						<!-- svelte-ignore a11y-click-events-have-key-events -->
