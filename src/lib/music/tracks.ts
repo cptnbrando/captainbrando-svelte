@@ -232,6 +232,12 @@ export const tracks: Track[] = [
 		DOGS_MIXTAPE_ALBUM,
 		"2024-12-08T21:11:26-08:00"
 	),
+	new Track(
+		"https://data.wearedogs.net/music/captainbrando/old/passion.mp3",
+		"Passionfruit (remix)",
+		DOGS_MIXTAPE_ALBUM,
+		"2022-05-13T15:28:01-05:00"
+	),
 
 	// --- Captain Brando! Mixtape ---
 	// Reissues of tracks flagged captainBrandoMixtape in music-catalog.dog,
@@ -312,12 +318,6 @@ export const tracks: Track[] = [
 		"2 Bedroom Toyota",
 		MIXTAPE_ALBUM,
 		"2023-05-31T14:51:27-05:00"
-	),
-	new Track(
-		"https://data.wearedogs.net/music/captainbrando/old/passion.mp3",
-		"Passionfruit (remix)",
-		MIXTAPE_ALBUM,
-		"2022-05-13T15:28:01-05:00"
 	),
 	new Track(
 		"https://data.wearedogs.net/music/captainbrando/old/feel.mp3",
