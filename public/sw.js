@@ -44,8 +44,9 @@ async function song(event, req) {
 
 	// Ask for the whole file; a 200 is a valid answer to "bytes=0-", and the
 	// player streams it as it arrives while the other half fills the cache
-	const res = await fetch(req.url, { mode: "cors", credentials: "omit" });
-	if (res.status !== 200) return res;
+	const res = await fetch(req.url, { mode: "cors", credentials: "omit" }).catch(() => null);
+	// Anything unexpected: send the player's own request, exactly as it was
+	if (!res || res.status !== 200) return fetch(req);
 	event.waitUntil(
 		cache
 			.put(req.url, res.clone())
