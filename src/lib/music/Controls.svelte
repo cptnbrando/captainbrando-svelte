@@ -15,6 +15,7 @@
 	import { fly, slide } from "svelte/transition";
 	import { type Track, type Album, tracks, isMixtape, MIXTAPE_SUFFIX } from "./tracks";
 	import { albums, albumYears } from "./tracks";
+	import { saved, saveAlbum, songKey } from "./offline";
 	import RangeSlider from "svelte-range-slider-pips";
 
 	const COPY_MSG = "copied to clip🛹!";
@@ -40,6 +41,25 @@
 	$: selected, onSelect();
 
 	let stats: boolean = false;
+
+	// --- Offline: save a whole album to the device ---
+	// album name -> songs saved so far, while that album is downloading
+	let saving: Record<string, number> = {};
+	$: savedInAlbum = selectedTracks.filter((t) => $saved.has(songKey(t.src))).length;
+	$: albumSaved = selectedTracks.length > 0 && savedInAlbum === selectedTracks.length;
+
+	async function cacheAlbum(album: Album, albumTracks: Track[]) {
+		if (saving[album.name] !== undefined) return;
+		saving[album.name] = 0;
+		// the cover too: the service worker keeps every image it sees
+		fetch(album.src, { mode: "no-cors" }).catch(() => {});
+		await saveAlbum(
+			albumTracks.map((t) => t.src),
+			(done) => (saving[album.name] = done)
+		);
+		delete saving[album.name];
+		saving = saving;
+	}
 
 	function onSelect() {
 		selectedTracks = tracks.filter((track) => {
@@ -438,26 +458,54 @@
 							<img src={selected.src} alt="" class="h-20 w-20 shrink-0 border-[3px] border-black" />
 							<div class="flex min-w-0 flex-col items-start gap-1.5">
 								<h3 class="m-0 text-base font-bold md:text-lg">{selected.name} by {selected.artist}</h3>
-								{#if albumYears(selected.name)}
-									<span
-										class="whitespace-nowrap rounded-full border border-brand px-2 font-mono text-[11px] font-normal leading-5 text-brand"
-										>{albumYears(selected.name)}</span
+								<div class="flex flex-wrap items-center gap-1.5">
+									{#if albumYears(selected.name)}
+										<span
+											class="whitespace-nowrap rounded-full border border-brand px-2 font-mono text-[11px] font-normal leading-5 text-brand"
+											>{albumYears(selected.name)}</span
+										>
+									{/if}
+									<!-- Saves every song on the album to this device, for no-signal listening -->
+									<button
+										class="whitespace-nowrap rounded-full border px-2 font-mono text-[11px] font-normal leading-5 transition-colors {albumSaved
+											? 'border-brand bg-brand text-white'
+											: 'border-black text-black hover:bg-black hover:text-white'}"
+										title={albumSaved ? "every song on this album is saved on this device" : "save this album to listen offline"}
+										disabled={saving[selected.name] !== undefined}
+										on:click={() => cacheAlbum(selected, selectedTracks)}
 									>
-								{/if}
+										{#if saving[selected.name] !== undefined}
+											caching {saving[selected.name]}/{selectedTracks.length}
+										{:else if albumSaved}
+											cached
+										{:else}
+											cache{savedInAlbum > 0 ? ` (${savedInAlbum}/${selectedTracks.length})` : ""}
+										{/if}
+									</button>
+								</div>
 							</div>
 						</div>
 						<ol class="m-0 flex list-decimal flex-col gap-1 pl-6 pr-1">
 							{#each selectedTracks as listTrack (listTrack.src)}
 								<li class={track === listTrack ? "font-bold text-brand" : ""}>
 									<div class="flex flex-wrap items-center justify-between gap-x-2.5 gap-y-1">
-										<!-- svelte-ignore a11y-click-events-have-key-events -->
-										<span
-											class="cursor-pointer transition-colors hover:text-brand hover:underline"
-											on:click={() => {
-												chooseTrack(listTrack);
-											}}
-										>
-											{listTrack.name}
+										<span class="flex min-w-0 items-center gap-1.5">
+											<!-- grey = streams from the internet, red = saved on this device -->
+											<span
+												class="inline-block h-2 w-2 shrink-0 rounded-full {$saved.has(songKey(listTrack.src))
+													? 'bg-brand'
+													: 'bg-neutral-400'}"
+												title={$saved.has(songKey(listTrack.src)) ? "saved for offline" : "not saved yet"}
+											/>
+											<!-- svelte-ignore a11y-click-events-have-key-events -->
+											<span
+												class="cursor-pointer transition-colors hover:text-brand hover:underline"
+												on:click={() => {
+													chooseTrack(listTrack);
+												}}
+											>
+												{listTrack.name}
+											</span>
 										</span>
 										{#if hasDetails(listTrack)}
 											<!-- svelte-ignore a11y-click-events-have-key-events -->
