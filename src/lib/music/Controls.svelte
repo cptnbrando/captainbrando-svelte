@@ -347,11 +347,6 @@
 							>
 								<img src={album.src} alt="" class="h-6 w-6 shrink-0" />
 								<span class="min-w-0 break-words text-sm">{album.name}</span>
-								{#if albumYears(album.name)}
-									<span class="ml-auto shrink-0 border border-black px-1 font-mono text-[10px] leading-4 text-neutral-600"
-										>{albumYears(album.name)}</span
-									>
-								{/if}
 							</li>
 						{/each}
 						<!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -511,6 +506,12 @@
 				}}
 			>
 				<img src={track.img} alt="album art" class="block h-[90px] w-[90px] border-[3px] border-black" />
+				{#if albumYears(track.album)}
+					<span
+						class="pointer-events-none absolute bottom-0 right-0 border-[2px] border-black bg-parchment px-1 font-mono text-[10px] leading-4 text-black"
+						>{albumYears(track.album)}</span
+					>
+				{/if}
 				{#if !fullscreen}
 					<span
 						class="pointer-events-none absolute inset-0 flex items-center justify-center transition-colors group-hover:text-brand {list
