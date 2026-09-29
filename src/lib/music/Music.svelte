@@ -3,8 +3,15 @@
 	import Controls from "./Controls.svelte";
 	import { Track, defaultTracks, tracks, isMixtape, MIXTAPE_SUFFIX } from "./tracks";
 	import Visualizer from "./Visualizer.svelte";
+	import { StreamGuard } from "./streamGuard";
 
 	const TREASURE = "captainbrando-treasure";
+	// With the screen off there's nobody to press play on a dead track, so the
+	// player skips past it — but only this many in a row. Past that the network is
+	// gone, not the track, and it stops instead of burning through the library.
+	const MAX_HIDDEN_SKIPS = 3;
+	let guard: StreamGuard;
+	let hiddenSkips = 0;
 
 	const songs: Track[] = tracks;
 	let track: Track = songs[0];
@@ -33,6 +40,10 @@
 	}
 
 	const useCache = async (track) => {
+		// This downloads the whole mp3 a second time next to the <audio> stream.
+		// With the screen off that doubles the traffic right when the next song is
+		// trying to start on a throttled connection, so only do it on screen.
+		if (document.visibilityState === "hidden") return;
 		const myTreasure = await caches.open(TREASURE);
 		const foundTrack = await myTreasure.match(track.src);
 		if (foundTrack) {
@@ -63,10 +74,23 @@
 			track = songs[trackNum];
 		}
 
-		audioPlayer.load();
+		guard = new StreamGuard(audioPlayer, () => isPlaying, onDeadTrack);
+		loadTrack();
 
 		audioPlayer.addEventListener("pause", () => {
 			isPlaying = false;
+		});
+		// Sound is coming out again, so the skip streak is over
+		audioPlayer.addEventListener("playing", () => {
+			hiddenSkips = 0;
+		});
+		setupMediaSession();
+
+		// Headphones / car / bluetooth speaker plugged in or pulled out: stop, so a
+		// dropped connection doesn't blast the song out of the phone speaker and a
+		// new one doesn't start mid-song without asking
+		navigator.mediaDevices?.addEventListener("devicechange", () => {
+			if (isPlaying) playPause();
 		});
 
 		// Keep fullscreen state synced even when the user exits with Esc
@@ -152,7 +176,7 @@
 		// Pause the track if it's playing, then push the track num to the array
 		if (isPlaying) playPause();
 		if (loop) {
-			audioPlayer.load();
+			loadTrack();
 			playPause();
 			return;
 		}
@@ -171,17 +195,79 @@
 		// Set the new trackNum, load and play if not playing
 		trackNum = nextNum;
 		track = songs[trackNum];
-		audioPlayer.load();
+		loadTrack();
 		if (!isPlaying) playPause();
+	}
+
+	/**
+	 * (Re)load the current track into the player, with a fresh retry budget
+	 */
+	function loadTrack(): void {
+		guard?.reset();
+		audioPlayer.load();
 	}
 
 	/**
 	 * Toggles isPlaying after calling pause() or play() on audioPlayer
 	 */
 	function playPause(): void {
-		isPlaying ? audioPlayer.pause() : audioPlayer.play();
-		isPlaying = !isPlaying;
+		if (isPlaying) {
+			audioPlayer.pause();
+			isPlaying = false;
+			return;
+		}
+		// A stream that died stays dead until it's loaded again
+		if (audioPlayer.error || audioPlayer.networkState === HTMLMediaElement.NETWORK_NO_SOURCE) loadTrack();
+		audioPlayer.play().catch((e) => {
+			// The browser refused to start sound (autoplay rules): don't show a
+			// playing UI over silence. AbortError is just a newer load() winning.
+			if (e?.name === "NotAllowedError") isPlaying = false;
+		});
+		isPlaying = true;
 	}
+
+	/**
+	 * The stream is gone for good (StreamGuard ran out of retries). On screen,
+	 * stop so the listener sees it. With the screen off nobody can press play,
+	 * so move on to the next song instead of going silent.
+	 */
+	function onDeadTrack(): void {
+		if (!isPlaying) return;
+		if (document.visibilityState !== "hidden" || hiddenSkips >= MAX_HIDDEN_SKIPS) {
+			playPause();
+			return;
+		}
+		hiddenSkips++;
+		chooseTrack(repeatMode === 1 ? nextInAlbum() : shuffle ? randomTrack() : (trackNum + 1) % songs.length);
+	}
+
+	/**
+	 * Lock screen / headphone / car controls, and the now-playing card. Also tells
+	 * the OS this page is a real media session, not a background tab making noise
+	 */
+	function setupMediaSession(): void {
+		if (!("mediaSession" in navigator)) return;
+		const ms = navigator.mediaSession;
+		ms.setActionHandler("play", () => !isPlaying && playPause());
+		ms.setActionHandler("pause", () => isPlaying && playPause());
+		ms.setActionHandler("nexttrack", () => changeTrack(1));
+		ms.setActionHandler("previoustrack", () => changeTrack(-1));
+		try {
+			ms.setActionHandler("seekto", (details) => seek(details.seekTime));
+		} catch (e) {
+			// older browsers don't know seekto
+		}
+	}
+
+	$: if ("mediaSession" in navigator && track) {
+		navigator.mediaSession.metadata = new MediaMetadata({
+			title: track.name,
+			artist: track.artist,
+			album: track.album,
+			artwork: [{ src: track.img, type: "image/webp" }],
+		});
+	}
+	$: if ("mediaSession" in navigator) navigator.mediaSession.playbackState = isPlaying ? "playing" : "paused";
 
 	/**
 	 * Change time of track
@@ -207,7 +293,7 @@
 
 		trackNum = idx;
 		track = songs[trackNum];
-		audioPlayer.load();
+		loadTrack();
 		if (!isPlaying) playPause();
 	}
 
@@ -363,5 +449,6 @@
 	bind:currentTime={time}
 	on:ended={onEnded}
 >
-	<source src={track.src} type="audio/mp3" />
+	<!-- A track that fails to load errors on the <source>, not the <audio> -->
+	<source src={track.src} type="audio/mp3" on:error={() => guard?.handleError()} />
 </audio>
