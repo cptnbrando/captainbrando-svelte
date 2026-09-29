@@ -342,7 +342,6 @@
 		shuffle: shuffle,
 		repeatMode: repeatMode,
 		ended: ended,
-		volume: volume,
 		isPlaying: isPlaying,
 		fullscreen: isFullscreen,
 	};

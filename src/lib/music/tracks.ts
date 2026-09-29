@@ -69,6 +69,18 @@ export function isMixtape(album: string): boolean {
 	return album === MIXTAPE_ALBUM || album === DOGS_MIXTAPE_ALBUM;
 }
 
+// Year chip text for an album, read off its tracks' `when` stamps: "2023", or "2020–2025" for a span
+export function albumYears(album: string): string {
+	const years = tracks
+		.filter((t) => t.album === album && t.when)
+		.map((t) => parseInt(t.when.slice(0, 4), 10))
+		.filter((y) => !isNaN(y));
+	if (years.length === 0) return "";
+	const first = Math.min(...years);
+	const last = Math.max(...years);
+	return first === last ? String(first) : first + "–" + last;
+}
+
 export let albums: Album[] = [
 	// Duplicate this to add new album
 	// new Album(
@@ -76,9 +88,9 @@ export let albums: Album[] = [
 	// 	'friends',
 	// 	'😁'
 	// ),
-	new Album(MIXTAPE_ALBUM, "sailboat", "Captain Brando!"),
-	new Album(DOGS_MIXTAPE_ALBUM, "goats", "DOGS"),
 	new Album("NO DOGS ALLOWED", "meat", "DOGS"),
+	new Album(DOGS_MIXTAPE_ALBUM, "goats", "DOGS"),
+	new Album(MIXTAPE_ALBUM, "sailboat", "Captain Brando!"),
 	new Album("Shepherd", "man", "DOGS"),
 	new Album("🗣️", "bark", "DOGS"),
 	new Album("hundred fifty", "hundred", "DOGS"),
@@ -104,6 +116,12 @@ export const tracks: Track[] = [
 	//
 	// -5:00 = CT Central Time
 	new Track(
+		"https://data.wearedogs.net/music/2026/batarang-ins.mp3",
+		"batarang",
+		"NO DOGS ALLOWED",
+		"2026-09-29T00:05:00-05:00"
+	),
+	new Track(
 		"https://data.wearedogs.net/music/captainbrando/2026/echo.mp3",
 		"echoes by jamie woon",
 		"NO DOGS ALLOWED",
@@ -127,6 +145,187 @@ export const tracks: Track[] = [
 		"dallas, mom's place",
 		"fuck COPES"
 	),
+	// --- DOGS Mixtape ---
+	// Reissues of tracks flagged dogsMixtape in music-catalog.dog, dealt into random order
+	// (whack a mole opens by decree; alone + how ride along by special request; jump got cut)
+	new Track(
+		"https://data.wearedogs.net/music/captainbrando/whackamole3.mp3",
+		"whack a mole",
+		DOGS_MIXTAPE_ALBUM,
+		"2024-12-08T21:11:26-08:00"
+	),
+	new Track(
+		"https://data.wearedogs.net/music/captainbrando/cigs/alone.mp3",
+		"Alone (Mac DeMarco Cover)",
+		DOGS_MIXTAPE_ALBUM,
+		"2021-08-31T14:51:41-05:00"
+	),
+	new Track(
+		"https://data.wearedogs.net/music/captainbrando/2023/problems.mp3",
+		"FCKN PRBLMS by The Cut Ties",
+		DOGS_MIXTAPE_ALBUM,
+		"2023-05-31T14:51:27-05:00"
+	),
+	new Track(
+		"https://data.wearedogs.net/music/captainbrando/2025/bellathorne3.mp3",
+		"oh fuck",
+		DOGS_MIXTAPE_ALBUM,
+		"2025-05-28T11:07:00-05:00 to 2025-05-31T00:49:00-05:00",
+		"",
+		"bella thorne is SO hot!"
+	),
+	new Track(
+		"https://data.wearedogs.net/music/captainbrando/WAITAMINUTE.mp3",
+		"WAITAMINUTE",
+		DOGS_MIXTAPE_ALBUM,
+		"2021-01-15T13:36:31-06:00"
+	),
+	new Track(
+		"https://data.wearedogs.net/music/captainbrando/2025/obsessedNH.mp3",
+		"obsessed",
+		DOGS_MIXTAPE_ALBUM,
+		"2025-04-14T13:52:00-05:00",
+		"New York Bagel Cafe on Yale + a week later in my apartment in my home city",
+		"sun-dried tomato bagel, toasted, with garlic herb cream cheese. best eaten in store, otherwise, much less crispy experience"
+	),
+	new Track(
+		"https://data.wearedogs.net/music/captainbrando/cigs/how.mp3",
+		"How?",
+		DOGS_MIXTAPE_ALBUM,
+		"2021-08-31T14:51:41-05:00"
+	),
+	new Track(
+		"https://data.wearedogs.net/music/captainbrando/2025/clunky.mp3",
+		"clunky",
+		DOGS_MIXTAPE_ALBUM,
+		"2025-01-14T20:07:12-08:00"
+	),
+	new Track(
+		"https://data.wearedogs.net/music/captainbrando/2025/lips3.mp3",
+		"Lips (tunnel vision by jt)",
+		DOGS_MIXTAPE_ALBUM,
+		"2025-10-07T20:17:00-05:00",
+		"tulsa, home",
+		"Back on meds. Yay."
+	),
+	new Track(
+		"https://data.wearedogs.net/music/captainbrando/2025/sexy.mp3",
+		"sexy",
+		DOGS_MIXTAPE_ALBUM,
+		"2025-01-31T15:16:16-08:00"
+	),
+	new Track(
+		"https://data.wearedogs.net/music/captainbrando/old/kenny.mp3",
+		"tall",
+		DOGS_MIXTAPE_ALBUM,
+		"2022-05-13T15:28:01-05:00"
+	),
+	new Track(
+		"https://data.wearedogs.net/music/2026/batarang-ins.mp3",
+		"batarang",
+		DOGS_MIXTAPE_ALBUM,
+		"2026-09-29T00:05:00-05:00"
+	),
+	new Track(
+		"https://data.wearedogs.net/music/captainbrando/old/passion.mp3",
+		"Passionfruit (remix)",
+		DOGS_MIXTAPE_ALBUM,
+		"2022-05-13T15:28:01-05:00"
+	),
+	new Track(
+		"https://data.wearedogs.net/music/captainbrando/LOUDASSINDIAN_final.mp3",
+		"LOUDASSINDIAN",
+		DOGS_MIXTAPE_ALBUM,
+		"2024-12-08T21:11:26-08:00"
+	),
+
+	// --- Captain Brando! Mixtape ---
+	// Reissues of tracks flagged captainBrandoMixtape in music-catalog.dog,
+	// dealt into random order (Get-Random -Shuffle, which still opened with BEGIN!)
+	// (kenny2 + need2/creep are flagged "maybe" in the .dog and were left off;
+	// life.mp3 + stab.wav ride along by special request even though their flags are False)
+	new Track("https://data.wearedogs.net/music/captainbrando/2023/BEGIN.mp3", "BEGIN!", MIXTAPE_ALBUM, "2023-05-31T14:51:27-05:00"),
+	new Track(
+		"https://data.wearedogs.net/music/captainbrando/2022/error/playground.mp3",
+		"playground.mp3",
+		MIXTAPE_ALBUM,
+		"2022-07-13T12:43:57-05:00"
+	),
+	new Track(
+		"https://data.wearedogs.net/music/captainbrando/4/shoulda%2C%20my%20addition%20to%20brandos%20ideamp3.mp3",
+		"shoulda",
+		MIXTAPE_ALBUM,
+		"2023-07-14T03:45:52-05:00"
+	),
+	new Track(
+		"https://data.wearedogs.net/music/captainbrando/down3-2.mp3",
+		"down3-2",
+		MIXTAPE_ALBUM,
+		"2021-01-15T13:36:31-06:00"
+	),
+	new Track(
+		"https://data.wearedogs.net/music/captainbrando/2022/error/kernalPanic.mp3",
+		"kernal PANIC !!!",
+		MIXTAPE_ALBUM,
+		"2022-05-24T16:23:00-05:00"
+	),
+	new Track(
+		"https://data.wearedogs.net/music/captainbrando/stab.mp3",
+		"stab.wav",
+		MIXTAPE_ALBUM,
+		"2021-01-15T13:36:31-06:00"
+	),
+	new Track(
+		"https://data.wearedogs.net/music/captainbrando/2022/life.mp3",
+		"life.mp3",
+		MIXTAPE_ALBUM,
+		"2022-07-13T12:38:23-05:00"
+	),
+	new Track(
+		"https://data.wearedogs.net/music/captainbrando/newAYUP.mp3",
+		"ayup.mp3",
+		MIXTAPE_ALBUM,
+		"2023-07-13T23:50:25-05:00"
+	),
+	new Track(
+		"https://data.wearedogs.net/music/captainbrando/bbetc.mp3",
+		"Better Better, etc.",
+		MIXTAPE_ALBUM,
+		"2020-06-06T17:16:16-05:00"
+	),
+	new Track(
+		"https://data.wearedogs.net/music/captainbrando/2022/error/paralyzedIn.mp3",
+		"Paralyzed (instrumental)",
+		MIXTAPE_ALBUM,
+		"2022-05-24T16:23:00-05:00"
+	),
+	new Track(
+		"https://data.wearedogs.net/music/captainbrando/2022/whereyougoin.mp3",
+		"where you goin? (demo)",
+		MIXTAPE_ALBUM,
+		"2022-05-13T12:23:30-05:00"
+	),
+	new Track(
+		"https://data.wearedogs.net/music/captainbrando/2025/thatsasgoodasitgets-thursday-july312025-152pm.mp3",
+		"that's as good as it gets",
+		MIXTAPE_ALBUM,
+		"2025-07-31T13:52:00-05:00",
+		"tulsa, home",
+		"Just driving around, nothing to see here yall"
+	),
+	new Track(
+		"https://data.wearedogs.net/music/captainbrando/2023/2bedroomtoyota.mp3",
+		"2 Bedroom Toyota",
+		MIXTAPE_ALBUM,
+		"2023-05-31T14:51:27-05:00"
+	),
+	new Track(
+		"https://data.wearedogs.net/music/captainbrando/old/feel.mp3",
+		"Feel It Still (remix)",
+		MIXTAPE_ALBUM,
+		"2022-05-13T15:28:01-05:00"
+	),
+
 	new Track(
 		"https://data.wearedogs.net/music/captainbrando/2025/dastardly.mp3",
 		"dastardly",
@@ -359,7 +558,7 @@ export const tracks: Track[] = [
 	),
 	new Track(
 		"https://data.wearedogs.net/music/captainbrando/old/kenny.mp3",
-		"kenny.mp3",
+		"tall",
 		"Altona Meadows",
 		"2022-05-13T15:28:01-05:00"
 	),
@@ -545,194 +744,5 @@ export const tracks: Track[] = [
 		"I'LL FIND HER",
 		"2021",
 		"2022-07-13T12:43:57-05:00"
-	),
-
-	// --- Captain Brando! Mixtape ---
-	// Reissues of tracks flagged captainBrandoMixtape in music-catalog.dog,
-	// dealt into random order (Get-Random -Shuffle, which still opened with BEGIN!)
-	// (kenny2 + need2/creep are flagged "maybe" in the .dog and were left off;
-	// life.mp3 + stab.wav ride along by special request even though their flags are False)
-	new Track("https://data.wearedogs.net/music/captainbrando/2023/BEGIN.mp3", "BEGIN!", MIXTAPE_ALBUM, "2023-05-31T14:51:27-05:00"),
-	new Track(
-		"https://data.wearedogs.net/music/captainbrando/2022/error/playground.mp3",
-		"playground.mp3",
-		MIXTAPE_ALBUM,
-		"2022-07-13T12:43:57-05:00"
-	),
-	new Track(
-		"https://data.wearedogs.net/music/captainbrando/4/shoulda%2C%20my%20addition%20to%20brandos%20ideamp3.mp3",
-		"shoulda",
-		MIXTAPE_ALBUM,
-		"2023-07-14T03:45:52-05:00"
-	),
-	new Track(
-		"https://data.wearedogs.net/music/captainbrando/down3-2.mp3",
-		"down3-2",
-		MIXTAPE_ALBUM,
-		"2021-01-15T13:36:31-06:00"
-	),
-	new Track(
-		"https://data.wearedogs.net/music/captainbrando/2022/error/kernalPanic.mp3",
-		"kernal PANIC !!!",
-		MIXTAPE_ALBUM,
-		"2022-05-24T16:23:00-05:00"
-	),
-	new Track(
-		"https://data.wearedogs.net/music/captainbrando/old/better44.mp3",
-		"better44.mp3",
-		MIXTAPE_ALBUM,
-		"2022-05-13T15:28:01-05:00"
-	),
-	new Track(
-		"https://data.wearedogs.net/music/captainbrando/stab.mp3",
-		"stab.wav",
-		MIXTAPE_ALBUM,
-		"2021-01-15T13:36:31-06:00"
-	),
-	new Track(
-		"https://data.wearedogs.net/music/captainbrando/2022/life.mp3",
-		"life.mp3",
-		MIXTAPE_ALBUM,
-		"2022-07-13T12:38:23-05:00"
-	),
-	new Track(
-		"https://data.wearedogs.net/music/captainbrando/newAYUP.mp3",
-		"ayup.mp3",
-		MIXTAPE_ALBUM,
-		"2023-07-13T23:50:25-05:00"
-	),
-	new Track(
-		"https://data.wearedogs.net/music/captainbrando/bbetc.mp3",
-		"Better Better, etc.",
-		MIXTAPE_ALBUM,
-		"2020-06-06T17:16:16-05:00"
-	),
-	new Track(
-		"https://data.wearedogs.net/music/captainbrando/2022/error/paralyzedIn.mp3",
-		"Paralyzed (instrumental)",
-		MIXTAPE_ALBUM,
-		"2022-05-24T16:23:00-05:00"
-	),
-	new Track(
-		"https://data.wearedogs.net/music/captainbrando/2022/whereyougoin.mp3",
-		"where you goin? (demo)",
-		MIXTAPE_ALBUM,
-		"2022-05-13T12:23:30-05:00"
-	),
-	new Track(
-		"https://data.wearedogs.net/music/captainbrando/2025/thatsasgoodasitgets-thursday-july312025-152pm.mp3",
-		"that's as good as it gets",
-		MIXTAPE_ALBUM,
-		"2025-07-31T13:52:00-05:00",
-		"tulsa, home",
-		"Just driving around, nothing to see here yall"
-	),
-	new Track(
-		"https://data.wearedogs.net/music/captainbrando/2023/2bedroomtoyota.mp3",
-		"2 Bedroom Toyota",
-		MIXTAPE_ALBUM,
-		"2023-05-31T14:51:27-05:00"
-	),
-	new Track(
-		"https://data.wearedogs.net/music/captainbrando/old/passion.mp3",
-		"Passionfruit (remix)",
-		MIXTAPE_ALBUM,
-		"2022-05-13T15:28:01-05:00"
-	),
-	new Track(
-		"https://data.wearedogs.net/music/captainbrando/old/feel.mp3",
-		"Feel It Still (remix)",
-		MIXTAPE_ALBUM,
-		"2022-05-13T15:28:01-05:00"
-	),
-
-	// --- DOGS Mixtape ---
-	// Reissues of tracks flagged dogsMixtape in music-catalog.dog, dealt into random order
-	// (whack a mole opens by decree; alone + how ride along by special request; jump got cut)
-	new Track(
-		"https://data.wearedogs.net/music/captainbrando/whackamole3.mp3",
-		"whack a mole",
-		DOGS_MIXTAPE_ALBUM,
-		"2024-12-08T21:11:26-08:00"
-	),
-	new Track(
-		"https://data.wearedogs.net/music/captainbrando/cigs/alone.mp3",
-		"Alone (Mac DeMarco Cover)",
-		DOGS_MIXTAPE_ALBUM,
-		"2021-08-31T14:51:41-05:00"
-	),
-	new Track(
-		"https://data.wearedogs.net/music/captainbrando/2023/problems.mp3",
-		"FCKN PRBLMS by The Cut Ties",
-		DOGS_MIXTAPE_ALBUM,
-		"2023-05-31T14:51:27-05:00"
-	),
-	new Track(
-		"https://data.wearedogs.net/music/captainbrando/2025/bellathorne3.mp3",
-		"oh fuck",
-		DOGS_MIXTAPE_ALBUM,
-		"2025-05-28T11:07:00-05:00 to 2025-05-31T00:49:00-05:00",
-		"",
-		"bella thorne is SO hot!"
-	),
-	new Track(
-		"https://data.wearedogs.net/music/captainbrando/WAITAMINUTE.mp3",
-		"WAITAMINUTE",
-		DOGS_MIXTAPE_ALBUM,
-		"2021-01-15T13:36:31-06:00"
-	),
-	new Track(
-		"https://data.wearedogs.net/music/captainbrando/2025/obsessedNH.mp3",
-		"obsessed",
-		DOGS_MIXTAPE_ALBUM,
-		"2025-04-14T13:52:00-05:00",
-		"New York Bagel Cafe on Yale + a week later in my apartment in my home city",
-		"sun-dried tomato bagel, toasted, with garlic herb cream cheese. best eaten in store, otherwise, much less crispy experience"
-	),
-	new Track(
-		"https://data.wearedogs.net/music/captainbrando/2022/error/PARALLEL.mp3",
-		"PARALLEL",
-		DOGS_MIXTAPE_ALBUM,
-		"2022-05-24T16:23:00-05:00"
-	),
-	new Track(
-		"https://data.wearedogs.net/music/captainbrando/2026/GRIEF2.mp3",
-		"(13 Years of Grief by Black Label Society)",
-		DOGS_MIXTAPE_ALBUM,
-		"2026-04-08T19:30:00-05:00",
-		"dallas, mom's place",
-		"fuck COPES"
-	),
-	new Track(
-		"https://data.wearedogs.net/music/captainbrando/cigs/how.mp3",
-		"How?",
-		DOGS_MIXTAPE_ALBUM,
-		"2021-08-31T14:51:41-05:00"
-	),
-	new Track(
-		"https://data.wearedogs.net/music/captainbrando/2025/clunky.mp3",
-		"clunky",
-		DOGS_MIXTAPE_ALBUM,
-		"2025-01-14T20:07:12-08:00"
-	),
-	new Track(
-		"https://data.wearedogs.net/music/captainbrando/2025/lips3.mp3",
-		"Lips (tunnel vision by jt)",
-		DOGS_MIXTAPE_ALBUM,
-		"2025-10-07T20:17:00-05:00",
-		"tulsa, home",
-		"Back on meds. Yay."
-	),
-	new Track(
-		"https://data.wearedogs.net/music/captainbrando/old/kenny.mp3",
-		"kenny.mp3",
-		DOGS_MIXTAPE_ALBUM,
-		"2022-05-13T15:28:01-05:00"
-	),
-	new Track(
-		"https://data.wearedogs.net/music/captainbrando/LOUDASSINDIAN_final.mp3",
-		"LOUDASSINDIAN",
-		DOGS_MIXTAPE_ALBUM,
-		"2024-12-08T21:11:26-08:00"
 	),
 ];
