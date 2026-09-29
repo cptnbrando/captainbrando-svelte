@@ -439,13 +439,13 @@
 						<div class="flex items-center gap-3 py-2">
 							<img src={selected.src} alt="" class="h-20 w-20 shrink-0 border-[3px] border-black" />
 							<div class="flex min-w-0 flex-col items-start gap-1.5">
+								<h3 class="m-0 text-base font-bold md:text-lg">{selected.name} by {selected.artist}</h3>
 								{#if albumYears(selected.name)}
 									<span
 										class="whitespace-nowrap rounded-full border border-brand px-2 font-mono text-[11px] font-normal leading-5 text-brand"
 										>{albumYears(selected.name)}</span
 									>
 								{/if}
-								<h3 class="m-0 text-base font-bold md:text-lg">{selected.name} by {selected.artist}</h3>
 							</div>
 						</div>
 						<ol class="m-0 flex list-decimal flex-col gap-1 pl-6 pr-1">
