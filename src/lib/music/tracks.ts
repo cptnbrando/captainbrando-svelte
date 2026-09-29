@@ -227,16 +227,16 @@ export const tracks: Track[] = [
 		"2026-09-29T00:05:00-05:00"
 	),
 	new Track(
-		"https://data.wearedogs.net/music/captainbrando/LOUDASSINDIAN_final.mp3",
-		"LOUDASSINDIAN",
-		DOGS_MIXTAPE_ALBUM,
-		"2024-12-08T21:11:26-08:00"
-	),
-	new Track(
 		"https://data.wearedogs.net/music/captainbrando/old/passion.mp3",
 		"Passionfruit (remix)",
 		DOGS_MIXTAPE_ALBUM,
 		"2022-05-13T15:28:01-05:00"
+	),
+	new Track(
+		"https://data.wearedogs.net/music/captainbrando/LOUDASSINDIAN_final.mp3",
+		"LOUDASSINDIAN",
+		DOGS_MIXTAPE_ALBUM,
+		"2024-12-08T21:11:26-08:00"
 	),
 
 	// --- Captain Brando! Mixtape ---
