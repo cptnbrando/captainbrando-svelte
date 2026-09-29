@@ -216,7 +216,7 @@ export const tracks: Track[] = [
 	),
 	new Track(
 		"https://data.wearedogs.net/music/captainbrando/old/kenny.mp3",
-		"kenny.mp3",
+		"tall",
 		DOGS_MIXTAPE_ALBUM,
 		"2022-05-13T15:28:01-05:00"
 	),
@@ -558,7 +558,7 @@ export const tracks: Track[] = [
 	),
 	new Track(
 		"https://data.wearedogs.net/music/captainbrando/old/kenny.mp3",
-		"kenny.mp3",
+		"tall",
 		"Altona Meadows",
 		"2022-05-13T15:28:01-05:00"
 	),
