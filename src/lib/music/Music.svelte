@@ -4,8 +4,7 @@
 	import { Track, defaultTracks, tracks, isMixtape, MIXTAPE_SUFFIX } from "./tracks";
 	import Visualizer from "./Visualizer.svelte";
 	import { StreamGuard } from "./streamGuard";
-
-	const TREASURE = "captainbrando-treasure";
+	import { setupOffline, saveAfterPlay } from "./offline";
 	// With the screen off there's nobody to press play on a dead track, so the
 	// player skips past it and never gives up. The first few skips are instant;
 	// past that the network is probably gone (tunnel, dead zone), so it waits a
@@ -39,28 +38,17 @@
 
 	export let isMobile: boolean = false;
 
-	$: if (track) {
-		useCache(track);
+	// The song that has actually made sound since it was loaded
+	let playedSrc: string = null;
+
+	/**
+	 * Leaving a song that played: make sure it ends up saved for offline.
+	 * (Usually the service worker already saved it while it streamed.)
+	 */
+	function donePlaying(): void {
+		if (playedSrc) saveAfterPlay(playedSrc);
+		playedSrc = null;
 	}
-
-	const useCache = async (track) => {
-		// This downloads the whole mp3 a second time next to the <audio> stream.
-		// With the screen off that doubles the traffic right when the next song is
-		// trying to start on a throttled connection, so only do it on screen.
-		if (document.visibilityState === "hidden") return;
-		const myTreasure = await caches.open(TREASURE);
-		const foundTrack = await myTreasure.match(track.src);
-		if (foundTrack) {
-			return foundTrack;
-		}
-
-		const networkRes = await fetch(track.src);
-		if (networkRes.ok) {
-			await myTreasure.put(track.src, networkRes.clone());
-		}
-
-		return networkRes;
-	};
 
 	/**
 	 * Random track on launch
@@ -87,8 +75,10 @@
 		// Sound is coming out again, so the skip streak is over
 		audioPlayer.addEventListener("playing", () => {
 			hiddenSkips = 0;
+			playedSrc = track.src;
 		});
 		setupMediaSession();
+		setupOffline();
 
 		// Headphones / car / bluetooth speaker plugged in or pulled out: stop, so a
 		// dropped connection doesn't blast the song out of the phone speaker and a
@@ -207,6 +197,7 @@
 	 * (Re)load the current track into the player, with a fresh retry budget
 	 */
 	function loadTrack(): void {
+		donePlaying();
 		clearTimeout(skipTimer);
 		guard?.reset();
 		audioPlayer.load();
@@ -335,6 +326,7 @@
 	 * play restarts it from the top, prev/next/picking a track behave as usual
 	 */
 	function onEnded(): void {
+		donePlaying();
 		if (repeatMode === 3) {
 			isPlaying = false;
 			audioPlayer.currentTime = 0;
