@@ -116,7 +116,7 @@ export const tracks: Track[] = [
 	//
 	// -5:00 = CT Central Time
 	new Track(
-		"https://data.wearedogs.net/music/2026/batarang-ins.mp3",
+		"https://data.wearedogs.net/music/2026/batarang2.mp3",
 		"batarang",
 		"NO DOGS ALLOWED",
 		"2026-09-29T00:05:00-05:00"
@@ -221,7 +221,7 @@ export const tracks: Track[] = [
 		"2022-05-13T15:28:01-05:00"
 	),
 	new Track(
-		"https://data.wearedogs.net/music/2026/batarang-ins.mp3",
+		"https://data.wearedogs.net/music/2026/batarang2.mp3",
 		"batarang",
 		DOGS_MIXTAPE_ALBUM,
 		"2026-09-29T00:05:00-05:00"
