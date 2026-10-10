@@ -1,4 +1,4 @@
-export const defaultTracks: number[] = [0, 5, 6, 7, 8, 13, 15, 19, 20, 21, 22, 25, 27, 28, 29, 30, 31, 35];
+export const defaultTracks: number[] = [0, 6, 7, 8, 9, 14, 16, 20, 21, 22, 23, 26, 28, 29, 30, 31, 32, 36];
 
 // To add tracks, first create a new Album in the albums array below
 // Then, copy and paste a track in the tracks array
@@ -128,6 +128,12 @@ export const tracks: Track[] = [
 		"2026-08-25T13:20:00-05:00",
 		"tulsa, with [redacted]. dog getting flu shots.",
 		"couldn't make it work. unemployable now. trying to fail forward but so far i'm just racking up debt."
+	),
+	new Track(
+		"https://data.wearedogs.net/music/2026/waddle.mp3",
+		"waddle by club penguin",
+		"NO DOGS ALLOWED",
+		"2026-10-09T16:17:00-05:00"
 	),
 	new Track(
 		"https://data.wearedogs.net/music/captainbrando/2026/doughnuts.mp3",
