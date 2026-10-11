@@ -224,7 +224,12 @@
 	function play(): void {
 		wantPlay = true;
 		isPlaying = true;
-		if (status === "can't load songs right now") status = "";
+		if (status === "can't load songs right now") {
+			// The listener is asking again: start counting failures from scratch
+			status = "";
+			fails = 0;
+			badFiles = 0;
+		}
 		// A failed load needs a fresh one before it can play
 		if (audioPlayer.error) audioPlayer.src = track.src;
 		updatePlaybackState();
