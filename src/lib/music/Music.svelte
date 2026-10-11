@@ -12,6 +12,20 @@
 	let lastTrackArray: number[] = [];
 
 	let isPlaying: boolean = false;
+	// What the listener asked for. Survives the gaps between tracks and network hiccups,
+	// so auto-advance and recovery know whether to keep the music going
+	let wantPlay: boolean = false;
+
+	// Network recovery: a stream that stops moving for STALL_MS counts as failed.
+	// A mid-song failure retries the same spot once, otherwise skip ahead; after
+	// MAX_SKIPS dead tracks in a row (or offline) wait for the network and pick back up
+	const STALL_MS = 15000;
+	const RETRY_MS = 10000;
+	const MAX_SKIPS = 5;
+	let failStreak: number = 0;
+	let retriedHere: boolean = false;
+	let stallTimer: ReturnType<typeof setTimeout> = null;
+	let retryTimer: ReturnType<typeof setTimeout> = null;
 
 	let audioPlayer: HTMLAudioElement;
 	let time: number = 0;
@@ -33,18 +47,22 @@
 	}
 
 	const useCache = async (track) => {
-		const myTreasure = await caches.open(TREASURE);
-		const foundTrack = await myTreasure.match(track.src);
-		if (foundTrack) {
-			return foundTrack;
-		}
+		try {
+			const myTreasure = await caches.open(TREASURE);
+			const foundTrack = await myTreasure.match(track.src);
+			if (foundTrack) {
+				return foundTrack;
+			}
 
-		const networkRes = await fetch(track.src);
-		if (networkRes.ok) {
-			await myTreasure.put(track.src, networkRes.clone());
-		}
+			const networkRes = await fetch(track.src);
+			if (networkRes.ok) {
+				await myTreasure.put(track.src, networkRes.clone());
+			}
 
-		return networkRes;
+			return networkRes;
+		} catch {
+			// offline or blocked; the player handles its own recovery
+		}
 	};
 
 	/**
@@ -63,11 +81,34 @@
 			track = songs[trackNum];
 		}
 
-		audioPlayer.load();
+		loadTrack();
 
 		audioPlayer.addEventListener("pause", () => {
 			isPlaying = false;
+			// The OS / a headset paused us (our own pauses before a track swap never reach here,
+			// loading the next src drops them). The end of a song isn't the listener stopping
+			if (!audioPlayer.ended) wantPlay = false;
+			updatePlaybackState();
 		});
+		audioPlayer.addEventListener("play", () => {
+			isPlaying = true;
+			wantPlay = true;
+			updatePlaybackState();
+		});
+		audioPlayer.addEventListener("playing", () => {
+			clearStall();
+			failStreak = 0;
+			retriedHere = false;
+		});
+		audioPlayer.addEventListener("timeupdate", clearStall);
+		audioPlayer.addEventListener("waiting", armStall);
+		audioPlayer.addEventListener("stalled", armStall);
+		audioPlayer.addEventListener("error", recover);
+		for (const ev of ["durationchange", "seeked", "ratechange"]) {
+			audioPlayer.addEventListener(ev, updatePositionState);
+		}
+
+		setupMediaSession();
 
 		// Keep fullscreen state synced even when the user exits with Esc
 		const onFsChange = () => {
@@ -137,7 +178,7 @@
 	 * New random track, no duplicates
 	 */
 	function randomTrack(): number {
-		let newRand = Math.floor(Math.random() * (songs.length - 1));
+		let newRand = Math.floor(Math.random() * songs.length);
 		if (newRand === trackNum) {
 			return randomTrack();
 		}
@@ -147,15 +188,16 @@
 	/**
 	 * Change the track
 	 * @param num -1 to prev, 1 to next
+	 * @param skipLoop move on even in repeat one (the current track won't load)
 	 */
-	function changeTrack(num: number) {
-		// Pause the track if it's playing, then push the track num to the array
-		if (isPlaying) playPause();
-		if (loop) {
-			audioPlayer.load();
-			playPause();
+	function changeTrack(num: number, skipLoop: boolean = false) {
+		if (loop && !skipLoop) {
+			audioPlayer.currentTime = 0;
+			if (!isPlaying) play();
 			return;
 		}
+		// Pause the track if it's playing, then push the track num to the array
+		if (isPlaying) playPause();
 		if (num > 0) lastTrackArray.push(trackNum);
 
 		// If skipping, check shuffle and get a random track or go to the next one
@@ -171,16 +213,153 @@
 		// Set the new trackNum, load and play if not playing
 		trackNum = nextNum;
 		track = songs[trackNum];
-		audioPlayer.load();
+		loadTrack();
 		if (!isPlaying) playPause();
 	}
 
 	/**
-	 * Toggles isPlaying after calling pause() or play() on audioPlayer
+	 * Point the player at the current track. Set src straight on the element (not through a
+	 * <source> child) so a dead link fires "error" on the player itself
+	 */
+	function loadTrack(): void {
+		clearStall();
+		retriedHere = false;
+		audioPlayer.src = track.src;
+	}
+
+	function play(): void {
+		wantPlay = true;
+		isPlaying = true;
+		// A failed load needs a fresh one before it can play
+		if (audioPlayer.error) audioPlayer.src = track.src;
+		// play() rejects when blocked or cut off by a quick skip, so trust the element over the guess
+		audioPlayer.play()?.catch(() => (isPlaying = !audioPlayer.paused));
+	}
+
+	function pause(): void {
+		wantPlay = false;
+		isPlaying = false;
+		audioPlayer.pause();
+	}
+
+	/**
+	 * Toggles between play() and pause()
 	 */
 	function playPause(): void {
-		isPlaying ? audioPlayer.pause() : audioPlayer.play();
-		isPlaying = !isPlaying;
+		isPlaying ? pause() : play();
+	}
+
+	function armStall(): void {
+		if (!wantPlay || stallTimer) return;
+		stallTimer = setTimeout(() => {
+			stallTimer = null;
+			recover();
+		}, STALL_MS);
+	}
+
+	function clearStall(): void {
+		clearTimeout(stallTimer);
+		stallTimer = null;
+	}
+
+	/**
+	 * The current track won't load or stopped streaming. Keep the music going:
+	 * retry a mid-song drop once from the same spot, otherwise skip to what's next.
+	 * Offline or a run of dead tracks → wait for the network, then pick back up
+	 */
+	function recover(): void {
+		clearStall();
+		if (!wantPlay) return;
+		if (!navigator.onLine) return waitForNetwork();
+
+		const at = audioPlayer.currentTime;
+		if (at > 0 && !retriedHere) {
+			retriedHere = true;
+			audioPlayer.src = track.src;
+			audioPlayer.currentTime = at;
+			play();
+			return;
+		}
+
+		if (++failStreak > MAX_SKIPS) return waitForNetwork();
+		if (repeatMode === 1) chooseTrack(nextInAlbum());
+		else changeTrack(1, true);
+	}
+
+	function waitForNetwork(): void {
+		clearTimeout(retryTimer);
+		window.addEventListener("online", retryAfterOutage);
+		retryTimer = setTimeout(retryAfterOutage, RETRY_MS);
+	}
+
+	function retryAfterOutage(): void {
+		window.removeEventListener("online", retryAfterOutage);
+		clearTimeout(retryTimer);
+		if (!wantPlay) return;
+		failStreak = 0;
+		const at = audioPlayer.currentTime;
+		loadTrack();
+		audioPlayer.currentTime = at;
+		play();
+	}
+
+	/**
+	 * Media Session: lock screen, notification shade, bluetooth headsets and car stereos.
+	 * Only seekto is wired (no seekbackward/seekforward) so iOS shows prev/next instead of ±10s
+	 */
+	function setupMediaSession(): void {
+		if (!("mediaSession" in navigator)) return;
+		// iOS 17+: keep audio going with the screen off
+		const audioSession = (navigator as any).audioSession;
+		if (audioSession) audioSession.type = "playback";
+
+		const handlers: [MediaSessionAction, MediaSessionActionHandler | null][] = [
+			["play", () => !isPlaying && play()],
+			["pause", () => isPlaying && pause()],
+			["stop", () => isPlaying && pause()],
+			["previoustrack", () => changeTrack(-1)],
+			["nexttrack", () => changeTrack(1)],
+			["seekto", (d) => d.seekTime !== undefined && seek(d.seekTime)],
+			["seekbackward", null],
+			["seekforward", null],
+		];
+		for (const [action, handler] of handlers) {
+			try {
+				navigator.mediaSession.setActionHandler(action, handler);
+			} catch {
+				// action not supported by this browser
+			}
+		}
+	}
+
+	$: if (track && typeof navigator !== "undefined" && "mediaSession" in navigator) {
+		navigator.mediaSession.metadata = new MediaMetadata({
+			title: track.name,
+			artist: track.artist,
+			album: track.album,
+			artwork: [{ src: track.img, sizes: "512x512", type: "image/webp" }],
+		});
+	}
+
+	function updatePlaybackState(): void {
+		if (!("mediaSession" in navigator)) return;
+		navigator.mediaSession.playbackState = isPlaying ? "playing" : "paused";
+		updatePositionState();
+	}
+
+	function updatePositionState(): void {
+		if (!("mediaSession" in navigator) || !navigator.mediaSession.setPositionState) return;
+		const dur = audioPlayer.duration;
+		if (!isFinite(dur) || dur <= 0) return;
+		try {
+			navigator.mediaSession.setPositionState({
+				duration: dur,
+				playbackRate: audioPlayer.playbackRate || 1,
+				position: Math.min(audioPlayer.currentTime, dur),
+			});
+		} catch {
+			// out-of-range values while a new track loads
+		}
 	}
 
 	/**
@@ -189,6 +368,7 @@
 	 */
 	function seek(time: number): void {
 		audioPlayer.currentTime = time;
+		updatePositionState();
 	}
 
 	/**
@@ -207,7 +387,7 @@
 
 		trackNum = idx;
 		track = songs[trackNum];
-		audioPlayer.load();
+		loadTrack();
 		if (!isPlaying) playPause();
 	}
 
@@ -238,6 +418,7 @@
 	function onEnded(): void {
 		if (repeatMode === 3) {
 			isPlaying = false;
+			wantPlay = false;
 			audioPlayer.currentTime = 0;
 			return;
 		}
@@ -360,8 +541,6 @@
 	bind:this={audioPlayer}
 	bind:duration
 	bind:ended
-	bind:currentTime={time}
+	on:timeupdate={() => (time = audioPlayer.currentTime)}
 	on:ended={onEnded}
->
-	<source src={track.src} type="audio/mp3" />
-</audio>
+/>

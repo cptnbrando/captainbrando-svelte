@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { afterUpdate, onMount } from "svelte";
+	import { afterUpdate, onDestroy, onMount } from "svelte";
 
 	// Typed array to hold the audio frequency data
 	const NUM_SAMPLES = 256;
@@ -21,7 +21,10 @@
 
 	export let audioElement: HTMLMediaElement;
 	let audioCtx!: AudioContext;
-	let sourceNode!: MediaElementAudioSourceNode;
+	let sourceNode!: AudioNode;
+	// true = we only listen in on a copy of the stream (captureStream) and the <audio> element
+	// still plays on its own, so the screen going off / on can't touch what you hear
+	let tapped: boolean = false;
 	let analyserNode!: AnalyserNode;
 	let gainNode!: GainNode;
 
@@ -68,8 +71,6 @@
 		const AudioContext = window.AudioContext;
 		audioCtx = new AudioContext();
 
-		// 3 - create an a source node that points at the <audio> element
-		sourceNode = audioCtx.createMediaElementSource(audioElement);
 		// 4 - create an analyser node
 		analyserNode = audioCtx.createAnalyser();
 
@@ -90,10 +91,59 @@
 		gainNode.gain.value = 1;
 
 		// 6 - connect the nodes - we now have an audio graph
-		sourceNode.connect(analyserNode);
 		analyserNode.connect(gainNode);
 		gainNode.connect(audioCtx.destination);
+
+		const capture = (audioElement as any).captureStream;
+		if (typeof capture === "function") {
+			// Chrome / Android: tap a copy of the stream. The analyser feeds a muted gain so it keeps
+			// getting pulled, and the music itself never goes through Web Audio
+			tapped = true;
+			gainNode.gain.value = 0;
+			const stream: MediaStream = capture.call(audioElement);
+			const attach = () => {
+				const live = stream.getAudioTracks().filter((t) => t.readyState === "live");
+				if (!live.length) return;
+				sourceNode?.disconnect();
+				// Each new track gets a fresh audio track on the stream, so follow the newest one
+				sourceNode = audioCtx.createMediaStreamSource(new MediaStream([live[live.length - 1]]));
+				sourceNode.connect(analyserNode);
+			};
+			stream.addEventListener("addtrack", attach);
+			attach();
+		} else {
+			// Safari / Firefox: no captureStream, so the music has to run through the graph.
+			// Keep the context alive or the music goes silent with the screen off
+			sourceNode = audioCtx.createMediaElementSource(audioElement);
+			sourceNode.connect(analyserNode);
+			audioCtx.addEventListener("statechange", keepAlive);
+		}
+
+		document.addEventListener("visibilitychange", onVisibility);
 	}
+
+	function keepAlive(): void {
+		if (audioCtx && audioCtx.state !== "running" && !audioElement.paused) audioCtx.resume().catch(() => {});
+	}
+
+	/**
+	 * Hidden: a tapped visualizer has nothing to draw, so park the context (the music keeps going).
+	 * Visible again: wake it straight back up
+	 */
+	function onVisibility(): void {
+		if (!audioCtx) return;
+		if (document.hidden) {
+			if (tapped) audioCtx.suspend().catch(() => {});
+		} else {
+			audioCtx.resume().catch(() => {});
+		}
+	}
+
+	onDestroy(() => {
+		document.removeEventListener("visibilitychange", onVisibility);
+		stopVisualizer();
+		audioCtx?.close().catch(() => {});
+	});
 
 	function setupCanvas(): void {
 		drawCtx = <CanvasRenderingContext2D>canvasElement.getContext("2d");
@@ -108,6 +158,7 @@
 			setupWebaudio();
 			setup = true;
 		}
+		if (!document.hidden) audioCtx?.resume().catch(() => {});
 		if (audioElement && canvasElement && !isAnimating) {
 			drawCtx.clearRect(0, 0, drawCtx.canvas.clientWidth, drawCtx.canvas.clientHeight);
 			isAnimating = true;
