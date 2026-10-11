@@ -25,6 +25,8 @@
 	export let track: Track;
 	export let isPlaying: boolean;
 	export let fullscreen: boolean = false;
+	// Network trouble, shown under the song name ("waiting for connection…" etc.)
+	export let status: string = "";
 
 	export let shuffle: boolean;
 	// 0 = off, 1 = repeat album, 2 = repeat one, 3 = ◆ show performance mode (stop when the song ends)
@@ -652,6 +654,9 @@
 					{/if}
 					{track.name}
 				</span>
+			{/if}
+			{#if status}
+				<span id="playerStatus" class="text-xs italic text-neutral-500">{status}</span>
 			{/if}
 			<div class="flex w-full items-center gap-2 px-2 {fullscreen ? 'hidden' : ''}">
 				<span class="text-sm tabular-nums">{_time}</span>

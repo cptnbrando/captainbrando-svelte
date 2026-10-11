@@ -15,16 +15,26 @@
 	// so auto-advance and recovery know whether to keep the music going
 	let wantPlay: boolean = false;
 
-	// Network recovery: a stream that stops moving for STALL_MS counts as failed.
-	// A mid-song failure retries the same spot once, otherwise skip ahead; after
-	// MAX_SKIPS dead tracks in a row (or offline) wait for the network and pick back up
+	// Network recovery. When a song won't load or its stream stops moving for STALL_MS,
+	// first ask the server about that one file:
+	//  - no answer (offline / server down) → it's the connection, never skip for that.
+	//    Play saved songs meanwhile, otherwise hold this song and retry with backoff
+	//  - the server says the file is missing or broken → skip just that song, and give up
+	//    after MAX_BAD_FILES in a row instead of running through the whole list
 	const STALL_MS = 15000;
-	const RETRY_MS = 10000;
-	const MAX_SKIPS = 5;
-	let failStreak: number = 0;
+	const PROBE_MS = 8000;
+	const RETRY_MS = [10000, 20000, 40000, 60000];
+	const MAX_BAD_FILES = 3;
+	const MAX_SAVED_HOPS = 3;
+	let fails: number = 0; // failures since music last actually played
+	let badFiles: number = 0;
+	let retries: number = 0;
 	let retriedHere: boolean = false;
+	let recovering: boolean = false;
 	let stallTimer: ReturnType<typeof setTimeout> = null;
 	let retryTimer: ReturnType<typeof setTimeout> = null;
+	// "" | "waiting for connection…" | "can't load songs right now"
+	let status: string = "";
 
 	let audioPlayer: HTMLAudioElement;
 	let time: number = 0;
@@ -63,8 +73,9 @@
 		audioPlayer.addEventListener("pause", () => {
 			isPlaying = false;
 			// The OS / a headset paused us (our own pauses before a track swap never reach here,
-			// loading the next src drops them). The end of a song isn't the listener stopping
-			if (!audioPlayer.ended) wantPlay = false;
+			// loading the next src drops them). The end of a song isn't the listener stopping, and
+			// neither is the pause Chrome fires right after a song fails to load
+			if (!audioPlayer.ended && !audioPlayer.error && !recovering) wantPlay = false;
 			updatePlaybackState();
 		});
 		audioPlayer.addEventListener("play", () => {
@@ -74,8 +85,12 @@
 		});
 		audioPlayer.addEventListener("playing", () => {
 			clearStall();
-			failStreak = 0;
+			cancelRetry();
+			fails = 0;
+			badFiles = 0;
+			retries = 0;
 			retriedHere = false;
+			status = "";
 			// Heard it, so keep it forever
 			keepForever(track.src);
 		});
@@ -172,11 +187,9 @@
 	function changeTrack(num: number, skipLoop: boolean = false) {
 		if (loop && !skipLoop) {
 			audioPlayer.currentTime = 0;
-			if (!isPlaying) play();
+			play();
 			return;
 		}
-		// Pause the track if it's playing, then push the track num to the array
-		if (isPlaying) playPause();
 		if (num > 0) lastTrackArray.push(trackNum);
 
 		// If skipping, check shuffle and get a random track or go to the next one
@@ -189,11 +202,11 @@
 		if (nextNum >= songs.length) nextNum = 0;
 		if (nextNum < 0) nextNum = songs.length - 1;
 
-		// Set the new trackNum, load and play if not playing
+		// Set the new trackNum, load and play
 		trackNum = nextNum;
 		track = songs[trackNum];
 		loadTrack();
-		if (!isPlaying) playPause();
+		play();
 	}
 
 	/**
@@ -202,30 +215,43 @@
 	 */
 	function loadTrack(): void {
 		clearStall();
+		cancelRetry();
 		retriedHere = false;
+		status = "";
 		audioPlayer.src = track.src;
 	}
 
 	function play(): void {
 		wantPlay = true;
 		isPlaying = true;
+		if (status === "can't load songs right now") status = "";
 		// A failed load needs a fresh one before it can play
 		if (audioPlayer.error) audioPlayer.src = track.src;
-		// play() rejects when blocked or cut off by a quick skip, so trust the element over the guess
-		audioPlayer.play()?.catch(() => (isPlaying = !audioPlayer.paused));
+		updatePlaybackState();
+		audioPlayer.play()?.catch((e) => {
+			// Cut off by a quick skip (AbortError) is fine. Blocked (NotAllowedError, e.g. the phone
+			// refused to start audio in the background) means stop cleanly so the lock screen's play works
+			if (e?.name === "NotAllowedError") wantPlay = false;
+			isPlaying = !audioPlayer.paused;
+			updatePlaybackState();
+		});
 	}
 
 	function pause(): void {
 		wantPlay = false;
 		isPlaying = false;
+		cancelRetry();
+		if (status === "waiting for connection…") status = "";
 		audioPlayer.pause();
+		updatePlaybackState();
 	}
 
 	/**
-	 * Toggles between play() and pause()
+	 * Toggles between play() and pause(). Goes by what the listener asked for, so pressing pause
+	 * while waiting out a dead connection stops the waiting too
 	 */
 	function playPause(): void {
-		isPlaying ? pause() : play();
+		wantPlay ? pause() : play();
 	}
 
 	function armStall(): void {
@@ -242,31 +268,79 @@
 	}
 
 	/**
-	 * The current track won't load or stopped streaming. Keep the music going:
-	 * retry a mid-song drop once from the same spot, otherwise skip to what's next.
-	 * Offline or a run of dead tracks → wait for the network, then pick back up
+	 * The current song won't load or its stream stopped moving. Work out whether it's the
+	 * connection or the file before doing anything, so a dead connection never turns into
+	 * skipping through song after song
 	 */
-	function recover(): void {
+	async function recover(): Promise<void> {
 		clearStall();
-		if (!wantPlay) return;
-
+		if (!wantPlay || recovering) return;
+		recovering = true;
+		const src = track.src;
 		const at = audioPlayer.currentTime;
-		if (navigator.onLine && at > 0 && !retriedHere) {
-			retriedHere = true;
-			audioPlayer.src = track.src;
-			audioPlayer.currentTime = at;
-			play();
-			return;
+		try {
+			fails++;
+			const verdict = await probe(src);			// The listener moved on (or paused) while we were asking
+			if (!wantPlay || track.src !== src) return;
+
+			if (verdict === "connection") {
+				// Saved songs need no network, so keep the music going with those
+				const savedNext = canPlaySaved() && fails <= MAX_SAVED_HOPS ? nextSaved() : -1;
+				if (savedNext !== -1) return chooseTrack(savedNext);
+				// Nothing saved to fall back on: hold this song (and its spot) until the connection is back
+				status = "waiting for connection…";
+				isPlaying = false;
+				updatePlaybackState();
+				return waitForNetwork();
+			}
+
+			// The server has the file. A mid-song drop gets one more go from the same spot
+			if (verdict === "ok" && at > 0 && !retriedHere) {
+				retriedHere = true;
+				audioPlayer.src = src;
+				audioPlayer.currentTime = at;
+				play();
+				return;
+			}
+
+			// This file is missing or broken: skip just this one, but never run through the list
+			if (++badFiles > MAX_BAD_FILES) {
+				status = "can't load songs right now";
+				wantPlay = false;
+				isPlaying = false;
+				audioPlayer.pause();
+				updatePlaybackState();
+				return;
+			}
+			if (repeatMode === 1) chooseTrack(nextInAlbum());
+			else changeTrack(1, true);
+		} finally {
+			recovering = false;
 		}
+	}
 
-		// Saved songs play with no network at all, so fall back to those first
-		failStreak++;
-		const savedNext = nextSaved();
-		if (savedNext !== -1 && failStreak <= songs.length) return chooseTrack(savedNext);
+	/**
+	 * Ask the server about one song: "connection" (no answer / server down / offline),
+	 * "missing" (the server says it's not there) or "ok" (it's there, the stream just broke)
+	 */
+	async function probe(src: string): Promise<"connection" | "missing" | "ok"> {
+		if (!navigator.onLine) return "connection";
+		const ctrl = new AbortController();
+		const timer = setTimeout(() => ctrl.abort(), PROBE_MS);
+		try {
+			const res = await fetch(src, { method: "HEAD", cache: "no-store", signal: ctrl.signal });
+			if (res.ok) return "ok";
+			return res.status >= 500 || res.status === 408 || res.status === 429 ? "connection" : "missing";
+		} catch {
+			return "connection";
+		} finally {
+			clearTimeout(timer);
+		}
+	}
 
-		if (!navigator.onLine || failStreak > MAX_SKIPS) return waitForNetwork();
-		if (repeatMode === 1) chooseTrack(nextInAlbum());
-		else changeTrack(1, true);
+	// Only lean on saved songs when the service worker is actually there to serve them
+	function canPlaySaved(): boolean {
+		return "serviceWorker" in navigator && !!navigator.serviceWorker.controller;
 	}
 
 	/**
@@ -286,20 +360,27 @@
 		return ok.find((i) => i > trackNum) ?? ok[0];
 	}
 
+	/** Try again when the phone says it's back online, or on a slowing timer (10s → 1 min) */
 	function waitForNetwork(): void {
-		clearTimeout(retryTimer);
+		cancelRetry();
 		window.addEventListener("online", retryAfterOutage);
-		retryTimer = setTimeout(retryAfterOutage, RETRY_MS);
+		retryTimer = setTimeout(retryAfterOutage, RETRY_MS[Math.min(retries, RETRY_MS.length - 1)]);
+		retries++;
+	}
+
+	function cancelRetry(): void {
+		window.removeEventListener("online", retryAfterOutage);
+		clearTimeout(retryTimer);
+		retryTimer = null;
 	}
 
 	function retryAfterOutage(): void {
-		window.removeEventListener("online", retryAfterOutage);
-		clearTimeout(retryTimer);
+		cancelRetry();
 		if (!wantPlay) return;
-		failStreak = 0;
+		// Same song, same spot
 		const at = audioPlayer.currentTime;
-		loadTrack();
-		audioPlayer.currentTime = at;
+		audioPlayer.src = track.src;
+		if (at > 0) audioPlayer.currentTime = at;
 		play();
 	}
 
@@ -314,9 +395,9 @@
 		if (audioSession) audioSession.type = "playback";
 
 		const handlers: [MediaSessionAction, MediaSessionActionHandler | null][] = [
-			["play", () => !isPlaying && play()],
-			["pause", () => isPlaying && pause()],
-			["stop", () => isPlaying && pause()],
+			["play", () => play()],
+			["pause", () => pause()],
+			["stop", () => pause()],
 			["previoustrack", () => changeTrack(-1)],
 			["nexttrack", () => changeTrack(1)],
 			["seekto", (d) => d.seekTime !== undefined && seek(d.seekTime)],
@@ -343,7 +424,8 @@
 
 	function updatePlaybackState(): void {
 		if (!("mediaSession" in navigator)) return;
-		navigator.mediaSession.playbackState = isPlaying ? "playing" : "paused";
+		const on = isPlaying || status === "waiting for connection…";
+		navigator.mediaSession.playbackState = on ? "playing" : "paused";
 		updatePositionState();
 	}
 
@@ -380,15 +462,12 @@
 	}
 
 	function chooseTrack(idx: number): void {
-		// Pause the track if it's playing, then push the track num to the array
-		if (isPlaying) playPause();
-
 		lastTrackArray.push(trackNum);
 
 		trackNum = idx;
 		track = songs[trackNum];
 		loadTrack();
-		if (!isPlaying) playPause();
+		play();
 	}
 
 	function gimme(): void {
@@ -420,6 +499,7 @@
 			isPlaying = false;
 			wantPlay = false;
 			audioPlayer.currentTime = 0;
+			updatePlaybackState();
 			return;
 		}
 		if (repeatMode === 1) {
@@ -523,8 +603,10 @@
 		shuffle: shuffle,
 		repeatMode: repeatMode,
 		ended: ended,
-		isPlaying: isPlaying,
+		// Waiting out a dead connection still counts as "on", so the button offers pause (which cancels it)
+		isPlaying: isPlaying || status === "waiting for connection…",
 		fullscreen: isFullscreen,
+		status: status,
 	};
 </script>
 

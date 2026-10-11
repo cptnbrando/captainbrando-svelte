@@ -9,7 +9,18 @@ export const saved = writable<Set<string>>(new Set());
 /** The URL a song is saved under (dev srcs are relative) */
 export const songKey = (src: string): string => new URL(src, location.href).href;
 
-const canSave = typeof navigator !== "undefined" && "serviceWorker" in navigator && "caches" in window;
+// Live site only. On the dev server it would serve stale files (and linger on localhost for
+// other projects); set localStorage "cb-sw" = "1" to try it in dev anyway
+const enabled = (() => {
+	try {
+		return import.meta.env.PROD || localStorage.getItem("cb-sw") === "1";
+	} catch {
+		return import.meta.env.PROD;
+	}
+})();
+
+const canSave =
+	enabled && typeof navigator !== "undefined" && "serviceWorker" in navigator && "caches" in window;
 
 /**
  * Start the service worker, load the list of saved songs, and hand it everything

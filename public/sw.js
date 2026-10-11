@@ -1,19 +1,26 @@
 // Captain Brando's treasure chest: keeps the site and every song you've heard, forever.
 //
-// - Songs: saved whole the first time you hear one (the page asks via a "keep" message),
-//   then always played from here, seeking included (Range requests answered from the copy).
-//   Never expires. If the .mp3 on R2 is swapped out, a tiny HEAD check (at most every
-//   CHECK_EVERY per song, only while online) spots the new Last-Modified / size and quietly
-//   downloads the new version. The old copy is only replaced once the new one is fully saved
+// - Songs: saved whole the first time you hear one (the page sends "keep" once it plays). The
+//   download the player streams from is split so the same bytes are held to the side, and
+//   "keep" moves that copy in (no second download). After that, always played from here, seeking
+//   included (Range requests answered from the copy). Never expires.
+//   If the .mp3 on R2 is swapped out, a tiny HEAD check (at most every CHECK_EVERY per song,
+//   only while online) spots the new Last-Modified / size and downloads the new version on the
+//   side. It replaces the old copy the next time that song starts, never mid-song
 // - Site: index.html is network-first (new deploys land) with the saved copy as the fallback;
 //   hashed /assets/* and album art are saved on first sight and never refetched
 
 // Same name the old in-page cache used, so songs saved before this worker carry over
 const TREASURE = "captainbrando-treasure";
+// New versions of saved songs wait here until the next time that song starts
+const STAGED = "captainbrando-treasure-next";
+// Songs downloaded for the player but not heard yet (a preload on page load, say)
+const PENDING = "captainbrando-treasure-pending";
 const SHELL = "captainbrando-shell";
 const SHELL_KEY = "/index.html";
 const NAV_TIMEOUT_MS = 3000;
 const CHECK_EVERY = 6 * 60 * 60 * 1000;
+const DOWNLOAD_WAIT_MS = 60000;
 const ART_HOST = "raw.githubusercontent.com";
 // Vite dev server internals, never cache these
 const DEV_PATHS = /^\/(src|@|node_modules)\b/;
@@ -57,22 +64,97 @@ self.addEventListener("fetch", (e) => {
 // ---- Songs ----
 
 async function song(e, req) {
-	const hit = await caches.match(req.url, { cacheName: TREASURE });
-	if (!hit) return fetch(req);
-	e.waitUntil(checkForNewVersion(req.url, hit));
-	return slice(hit, req.headers.get("range"));
+	const url = req.url;
+	const range = req.headers.get("range");
+	// A play starts at byte 0. Seeks mid-song ask for later bytes
+	const fromStart = !range || /^bytes=0-/.test(range.trim());
+
+	// A new version of this song finished downloading earlier: swap it in now, at the start of a
+	// play, never in the middle of one (two different files mixed together = garbled audio)
+	if (fromStart) await promoteStaged(url);
+
+	const saved = await caches.match(url, { cacheName: TREASURE });
+	if (saved) {
+		if (fromStart) e.waitUntil(checkForNewVersion(url, saved));
+		return slice(saved, range);
+	}
+	const held = await caches.match(url, { cacheName: PENDING });
+	if (held) return slice(held, range);
+
+	// Not on the device yet. When the player asks for the whole file from the top, download it
+	// once and split it: one copy plays, the other is kept to the side. No second download
+	if ((!range || /^bytes=0-$/.test(range.trim())) && !downloading.has(url) && !saving.has(url)) {
+		try {
+			return await playAndKeep(e, url, range);
+		} catch {
+			// fall through to a plain network request
+		}
+	}
+	return fetch(req);
+}
+
+// Downloads split off the player's stream. They land in PENDING, not TREASURE: the page also
+// preloads songs nobody has pressed play on, and only songs actually heard count as saved
+const downloading = new Map();
+
+async function playAndKeep(e, url, range) {
+	const res = await fetch(url, { mode: "cors", credentials: "omit" });
+	const size = Number(res.headers.get("content-length"));
+	if (res.status !== 200 || !res.body || !size) return res;
+	const [toPlayer, toCache] = res.body.tee();
+	const keep = (async () => {
+		try {
+			// put() only commits once every byte has arrived, so a cut-off download keeps nothing
+			const pending = await caches.open(PENDING);
+			await pending.put(url, new Response(toCache, { headers: res.headers }));
+			// Only the last few unplayed preloads are worth holding on to
+			const keys = await pending.keys();
+			for (const old of keys.slice(0, Math.max(0, keys.length - 3))) await pending.delete(old);
+		} catch {
+			// cut off mid-download
+		} finally {
+			if (downloading.get(url) === keep) downloading.delete(url);
+		}
+	})();
+	downloading.set(url, keep);
+	e.waitUntil(keep);
+	const headers = {
+		"Content-Type": res.headers.get("content-type") || "audio/mpeg",
+		"Content-Length": String(size),
+		"Accept-Ranges": "bytes",
+	};
+	if (!range) return new Response(toPlayer, { status: 200, headers });
+	return new Response(toPlayer, {
+		status: 206,
+		headers: { ...headers, "Content-Range": `bytes 0-${size - 1}/${size}` },
+	});
 }
 
 const saving = new Map();
 
-/** Download the whole file and keep it. A broken download never replaces a good copy */
+/**
+ * Keep a song for good once it's been heard: use the copy already downloaded for the player
+ * if there is one, otherwise download it. With revalidate, download a new version of a saved
+ * song into STAGED instead. A broken download never replaces a good copy
+ */
 function saveSong(url, revalidate = false) {
-	if (!saving.has(url)) {
+	// Separate slots: a "keep" for a song must never swallow a new-version download of it
+	const slot = (revalidate ? "next " : "") + url;
+	if (!saving.has(slot)) {
 		saving.set(
-			url,
+			slot,
 			(async () => {
 				try {
-					if (!revalidate && (await caches.match(url, { cacheName: TREASURE }))) return tell(url);
+					if (!revalidate) {
+						if (await caches.match(url, { cacheName: TREASURE })) return tell(url);
+						if (downloading.has(url)) {
+							// A connection that just hangs must not hold the save up forever
+							const dl = downloading.get(url);
+							const gaveUp = await Promise.race([dl.then(() => false), new Promise((r) => setTimeout(() => r(true), DOWNLOAD_WAIT_MS))]);
+							if (gaveUp && downloading.get(url) === dl) downloading.delete(url);
+						}
+						if (await moveFromPending(url)) return tell(url);
+					}
 					const res = await fetch(url, {
 						mode: "cors",
 						credentials: "omit",
@@ -80,17 +162,35 @@ function saveSong(url, revalidate = false) {
 					});
 					if (res.status !== 200) return;
 					// put() only commits once the whole body has arrived
-					await (await caches.open(TREASURE)).put(url, res);
-					tell(url);
+					await (await caches.open(revalidate ? STAGED : TREASURE)).put(url, res);
+					if (!revalidate) tell(url);
 				} catch {
 					// offline / cut off mid-download: try again next listen
 				} finally {
-					saving.delete(url);
+					saving.delete(slot);
 				}
 			})()
 		);
 	}
-	return saving.get(url);
+	return saving.get(slot);
+}
+
+async function moveFromPending(url) {
+	const pending = await caches.open(PENDING);
+	const copy = await pending.match(url);
+	if (!copy) return false;
+	await (await caches.open(TREASURE)).put(url, copy);
+	await pending.delete(url);
+	return true;
+}
+
+async function promoteStaged(url) {
+	const staged = await caches.open(STAGED);
+	const next = await staged.match(url);
+	if (!next) return;
+	await (await caches.open(TREASURE)).put(url, next);
+	await staged.delete(url);
+	tell(url);
 }
 
 const lastChecked = new Map();
@@ -157,8 +257,13 @@ async function tell(url) {
 async function page(e, req) {
 	const shell = await caches.open(SHELL);
 	const net = fetch(req);
-	// Registered first, so it clones before the browser starts reading the body
-	e.waitUntil(net.then((res) => res.ok && shell.put(SHELL_KEY, res.clone())).catch(() => {}));
+	// Registered first, so it clones before the browser starts reading the body.
+	// Only the site's own page counts: opening a PDF or image directly must not replace it
+	e.waitUntil(
+		net
+			.then((res) => res.ok && (res.headers.get("content-type") || "").includes("text/html") && shell.put(SHELL_KEY, res.clone()))
+			.catch(() => {})
+	);
 	const saved = await shell.match(SHELL_KEY);
 	if (!saved) return net;
 	return Promise.race([
