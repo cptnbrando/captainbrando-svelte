@@ -15,6 +15,7 @@
 	import { fly, slide } from "svelte/transition";
 	import { type Track, type Album, tracks, isMixtape, MIXTAPE_SUFFIX } from "./tracks";
 	import { albums, albumYears } from "./tracks";
+	import { saved, songKey } from "./offline";
 	import RangeSlider from "svelte-range-slider-pips";
 
 	const COPY_MSG = "copied to clip🛹!";
@@ -448,7 +449,12 @@
 						</div>
 						<ol class="m-0 flex list-decimal flex-col gap-1 pl-6 pr-1">
 							{#each selectedTracks as listTrack (listTrack.src)}
-								<li class={track === listTrack ? "font-bold text-brand" : ""}>
+								<!-- Greyed number = saved on this device, plays with no network -->
+								<li
+									class="{track === listTrack ? 'font-bold text-brand' : ''} {$saved.has(songKey(listTrack.src))
+										? 'marker:text-neutral-400'
+										: ''}"
+								>
 									<div class="flex flex-wrap items-center justify-between gap-x-2.5 gap-y-1">
 										<!-- svelte-ignore a11y-click-events-have-key-events -->
 										<span

@@ -3,8 +3,7 @@
 	import Controls from "./Controls.svelte";
 	import { Track, defaultTracks, tracks, isMixtape, MIXTAPE_SUFFIX } from "./tracks";
 	import Visualizer from "./Visualizer.svelte";
-
-	const TREASURE = "captainbrando-treasure";
+	import { keepForever, saved, songKey } from "./offline";
 
 	const songs: Track[] = tracks;
 	let track: Track = songs[0];
@@ -42,28 +41,6 @@
 
 	export let isMobile: boolean = false;
 
-	$: if (track) {
-		useCache(track);
-	}
-
-	const useCache = async (track) => {
-		try {
-			const myTreasure = await caches.open(TREASURE);
-			const foundTrack = await myTreasure.match(track.src);
-			if (foundTrack) {
-				return foundTrack;
-			}
-
-			const networkRes = await fetch(track.src);
-			if (networkRes.ok) {
-				await myTreasure.put(track.src, networkRes.clone());
-			}
-
-			return networkRes;
-		} catch {
-			// offline or blocked; the player handles its own recovery
-		}
-	};
 
 	/**
 	 * Random track on launch
@@ -99,6 +76,8 @@
 			clearStall();
 			failStreak = 0;
 			retriedHere = false;
+			// Heard it, so keep it forever
+			keepForever(track.src);
 		});
 		audioPlayer.addEventListener("timeupdate", clearStall);
 		audioPlayer.addEventListener("waiting", armStall);
@@ -270,10 +249,9 @@
 	function recover(): void {
 		clearStall();
 		if (!wantPlay) return;
-		if (!navigator.onLine) return waitForNetwork();
 
 		const at = audioPlayer.currentTime;
-		if (at > 0 && !retriedHere) {
+		if (navigator.onLine && at > 0 && !retriedHere) {
 			retriedHere = true;
 			audioPlayer.src = track.src;
 			audioPlayer.currentTime = at;
@@ -281,9 +259,31 @@
 			return;
 		}
 
-		if (++failStreak > MAX_SKIPS) return waitForNetwork();
+		// Saved songs play with no network at all, so fall back to those first
+		failStreak++;
+		const savedNext = nextSaved();
+		if (savedNext !== -1 && failStreak <= songs.length) return chooseTrack(savedNext);
+
+		if (!navigator.onLine || failStreak > MAX_SKIPS) return waitForNetwork();
 		if (repeatMode === 1) chooseTrack(nextInAlbum());
 		else changeTrack(1, true);
+	}
+
+	/**
+	 * The next saved song after this one (within the album on repeat album, random on shuffle), -1 if none
+	 */
+	function nextSaved(): number {
+		const ok = songs
+			.map((t, i) => i)
+			.filter(
+				(i) =>
+					i !== trackNum &&
+					(repeatMode !== 1 || songs[i].album === track.album) &&
+					$saved.has(songKey(songs[i].src))
+			);
+		if (!ok.length) return -1;
+		if (shuffle) return ok[Math.floor(Math.random() * ok.length)];
+		return ok.find((i) => i > trackNum) ?? ok[0];
 	}
 
 	function waitForNetwork(): void {

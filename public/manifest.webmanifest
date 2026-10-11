@@ -1,0 +1,17 @@
+{
+	"name": "Captain Brando!",
+	"short_name": "Captain Brando",
+	"description": "Captain Brando is alive!",
+	"start_url": "/",
+	"scope": "/",
+	"display": "standalone",
+	"background_color": "#ffffff",
+	"theme_color": "#ffffff",
+	"icons": [
+		{
+			"src": "https://raw.githubusercontent.com/dcruzships/dcruz-assets/master/images/bargainbin.png",
+			"sizes": "any",
+			"type": "image/png"
+		}
+	]
+}
