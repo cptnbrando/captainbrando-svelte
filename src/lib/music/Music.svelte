@@ -3,7 +3,7 @@
 	import Controls from "./Controls.svelte";
 	import { Track, defaultTracks, tracks, isMixtape, MIXTAPE_SUFFIX } from "./tracks";
 	import Visualizer from "./Visualizer.svelte";
-	import { keepForever, saved, songKey } from "./offline";
+	import { keepForever, saved, songKey, tellPlayStart } from "./offline";
 
 	const songs: Track[] = tracks;
 	let track: Track = songs[0];
@@ -29,8 +29,13 @@
 	let fails: number = 0; // failures since music last actually played
 	let badFiles: number = 0;
 	let retries: number = 0;
-	let retriedHere: boolean = false;
+	// Where in this song we last retried a dropped stream (-1 = not yet). A second failure at the
+	// same spot means the file itself is broken there, so it gets skipped instead of retried forever
+	let retriedAt: number = -1;
+	// The spot to come back to after waiting out a dead connection
+	let heldAt: number = 0;
 	let recovering: boolean = false;
+	let attempt: number = 0;
 	let stallTimer: ReturnType<typeof setTimeout> = null;
 	let retryTimer: ReturnType<typeof setTimeout> = null;
 	// "" | "waiting for connection…" | "can't load songs right now"
@@ -74,8 +79,9 @@
 			isPlaying = false;
 			// The OS / a headset paused us (our own pauses before a track swap never reach here,
 			// loading the next src drops them). The end of a song isn't the listener stopping, and
-			// neither is the pause Chrome fires right after a song fails to load
-			if (!audioPlayer.ended && !audioPlayer.error && !recovering) wantPlay = false;
+			// neither is the pause Chrome fires right after a song fails to load. Headphones pulled
+			// out mid-recovery do count: the music must not come back on the speaker
+			if (!audioPlayer.ended && !audioPlayer.error) wantPlay = false;
 			updatePlaybackState();
 		});
 		audioPlayer.addEventListener("play", () => {
@@ -89,7 +95,7 @@
 			fails = 0;
 			badFiles = 0;
 			retries = 0;
-			retriedHere = false;
+			heldAt = 0;
 			status = "";
 			// Heard it, so keep it forever
 			keepForever(track.src);
@@ -216,12 +222,16 @@
 	function loadTrack(): void {
 		clearStall();
 		cancelRetry();
-		retriedHere = false;
+		retriedAt = -1;
+		heldAt = 0;
 		status = "";
+		tellPlayStart(track.src);
 		audioPlayer.src = track.src;
 	}
 
 	function play(): void {
+		// Anything the listener does supersedes a recovery check still waiting on the server
+		attempt++;
 		wantPlay = true;
 		isPlaying = true;
 		if (status === "can't load songs right now") {
@@ -230,8 +240,12 @@
 			fails = 0;
 			badFiles = 0;
 		}
-		// A failed load needs a fresh one before it can play
-		if (audioPlayer.error) audioPlayer.src = track.src;
+		// A failed load needs a fresh one before it can play, picking up where it stopped
+		if (audioPlayer.error) {
+			const at = heldAt || audioPlayer.currentTime;
+			audioPlayer.src = track.src;
+			if (at > 0) audioPlayer.currentTime = at;
+		}
 		updatePlaybackState();
 		audioPlayer.play()?.catch((e) => {
 			// Cut off by a quick skip (AbortError) is fine. Blocked (NotAllowedError, e.g. the phone
@@ -252,11 +266,11 @@
 	}
 
 	/**
-	 * Toggles between play() and pause(). Goes by what the listener asked for, so pressing pause
-	 * while waiting out a dead connection stops the waiting too
+	 * Toggles between play() and pause(), going by what the button shows: pause while playing or
+	 * while waiting out a dead connection (which stops the waiting too), play otherwise
 	 */
 	function playPause(): void {
-		wantPlay ? pause() : play();
+		isPlaying || status === "waiting for connection…" ? pause() : play();
 	}
 
 	function armStall(): void {
@@ -283,33 +297,38 @@
 		recovering = true;
 		const src = track.src;
 		const at = audioPlayer.currentTime;
+		const mine = attempt;
 		try {
 			fails++;
-			const verdict = await probe(src);			// The listener moved on (or paused) while we were asking
-			if (!wantPlay || track.src !== src) return;
+			const verdict = await probe(src);
+			// The listener moved on, paused or pressed play while we were asking
+			if (!wantPlay || track.src !== src || attempt !== mine) return;
 
 			if (verdict === "connection") {
 				// Saved songs need no network, so keep the music going with those
 				const savedNext = canPlaySaved() && fails <= MAX_SAVED_HOPS ? nextSaved() : -1;
 				if (savedNext !== -1) return chooseTrack(savedNext);
 				// Nothing saved to fall back on: hold this song (and its spot) until the connection is back
+				if (at > 0) heldAt = at;
 				status = "waiting for connection…";
 				isPlaying = false;
 				updatePlaybackState();
 				return waitForNetwork();
 			}
 
-			// The server has the file. A mid-song drop gets one more go from the same spot
-			if (verdict === "ok" && at > 0 && !retriedHere) {
-				retriedHere = true;
+			// The server has the file. A mid-song drop gets one more go from the same spot, but
+			// failing again right there means the file is broken at that point: skip it
+			if (verdict === "ok" && at > 0 && (retriedAt < 0 || Math.abs(at - retriedAt) > 5)) {
+				retriedAt = at;
 				audioPlayer.src = src;
 				audioPlayer.currentTime = at;
 				play();
 				return;
 			}
 
-			// This file is missing or broken: skip just this one, but never run through the list
-			if (++badFiles > MAX_BAD_FILES) {
+			// This file is missing or broken: skip just this one, and stop at MAX_BAD_FILES in a row
+			// instead of running through the list
+			if (++badFiles >= MAX_BAD_FILES) {
 				status = "can't load songs right now";
 				wantPlay = false;
 				isPlaying = false;
@@ -383,7 +402,7 @@
 		cancelRetry();
 		if (!wantPlay) return;
 		// Same song, same spot
-		const at = audioPlayer.currentTime;
+		const at = heldAt || audioPlayer.currentTime;
 		audioPlayer.src = track.src;
 		if (at > 0) audioPlayer.currentTime = at;
 		play();
@@ -423,7 +442,7 @@
 			title: track.name,
 			artist: track.artist,
 			album: track.album,
-			artwork: [{ src: track.img, sizes: "512x512", type: "image/webp" }],
+			artwork: [{ src: track.img, type: "image/webp" }],
 		});
 	}
 

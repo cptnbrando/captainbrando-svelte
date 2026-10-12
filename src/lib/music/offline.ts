@@ -50,13 +50,26 @@ export async function setupOffline(warmUrls: string[] = []): Promise<void> {
 	}
 }
 
+/**
+ * A song is starting from the top (picked, next/prev, auto-advance). The service worker only
+ * swaps in a new version of a saved song at a real start like this, never when a playing song
+ * re-asks for its beginning (say, dragged back to 0:00)
+ */
+export function tellPlayStart(src: string): void {
+	if (!canSave) return;
+	navigator.serviceWorker.controller?.postMessage({ type: "start", url: songKey(src) });
+}
+
 /** You heard it, so it's yours: save the whole song for good */
 export async function keepForever(src: string): Promise<void> {
 	if (!canSave) return;
 	const url = songKey(src);
 	if (get(saved).has(url)) return;
-	// Ask the browser to never evict us under storage pressure
-	navigator.storage?.persisted?.().then((yes) => yes || navigator.storage.persist()).catch(() => {});
+	// Ask the browser to never evict us under storage pressure. Firefox turns this into a
+	// permission popup, so skip it there (it still keeps the songs, just without the promise)
+	if (!/Firefox\//.test(navigator.userAgent)) {
+		navigator.storage?.persisted?.().then((yes) => yes || navigator.storage.persist()).catch(() => {});
+	}
 	const reg = await navigator.serviceWorker.ready;
 	reg.active?.postMessage({ type: "keep", url });
 }

@@ -24,8 +24,9 @@ const NAV_TIMEOUT_MS = 3000;
 const CHECK_EVERY = 20 * 1000;
 // How long a song start waits for that check before playing the saved copy anyway
 const QUICK_CHECK_MS = 800;
-const DOWNLOAD_WAIT_MS = 60000;
-const SEEK_WAIT_MS = 20000;
+// Under the page's 15s stall timer, so a seek waiting on the new version's download never
+// trips the page's recovery
+const SEEK_WAIT_MS = 12000;
 const IDLE_ABORT_MS = 20000;
 const ART_HOST = "raw.githubusercontent.com";
 // Vite dev server internals, never cache these
@@ -47,6 +48,8 @@ self.addEventListener("message", (e) => {
 	if (msg.type === "keep" && typeof msg.url === "string") {
 		const url = new URL(msg.url, self.location.href);
 		if (isAudio(url)) e.waitUntil(saveSong(url.href));
+	} else if (msg.type === "start" && typeof msg.url === "string") {
+		starts.set(new URL(msg.url, self.location.href).href, Date.now());
 	} else if (msg.type === "warm" && Array.isArray(msg.urls)) {
 		e.waitUntil(warm(msg.urls));
 	}
@@ -58,7 +61,12 @@ self.addEventListener("fetch", (e) => {
 	const url = new URL(req.url);
 
 	if (isAudio(url)) return e.respondWith(song(e, req));
-	if (req.mode === "navigate" && url.origin === self.location.origin) return e.respondWith(page(e, req));
+	if (req.mode === "navigate" && url.origin === self.location.origin) {
+		// The site itself ("/", "/?song=…"); a file opened directly (a story PDF) is not the site,
+		// so it falls back to its own saved copy, never to the homepage
+		const isSite = url.pathname === "/" || url.pathname === "/index.html" || !/\.[a-z0-9]+$/i.test(url.pathname);
+		return e.respondWith(isSite ? page(e, req) : refreshInBackground(e, req));
+	}
 	if (url.hostname === ART_HOST) return e.respondWith(keepFirst(req.url, true));
 	if (url.origin === self.location.origin && !DEV_PATHS.test(url.pathname) && !req.headers.has("range")) {
 		// Hashed build files never change; everything else in /public refreshes in the background
@@ -71,45 +79,36 @@ self.addEventListener("fetch", (e) => {
 
 async function song(e, req) {
 	const url = req.url;
-	const range = req.headers.get("range");
-	// A play starts at byte 0. Seeks mid-song ask for later bytes
-	const fromStart = !range || /^bytes=0-/.test(range.trim());
-	const wholeFromStart = !range || /^bytes=0-$/.test(range.trim());
+	const range = (req.headers.get("range") || "").trim();
+	// The player asks from byte 0 when a song starts: the whole file ("bytes=0-"), an explicit
+	// stretch from the top ("bytes=0-N"), or Safari's 2-byte probe first ("bytes=0-1")
+	const fromTop = !range || /^bytes=0-\d*$/.test(range);
+	// Only a real start of a play may swap in a new version: never a playing song re-asking for
+	// its beginning (dragged back to 0:00, repeat one) — old and new mixed = garbled audio
+	const newPlay = fromTop && isPlayStart(url);
+	lastServed.set(url, Date.now());
 
 	// The new version of this song is playing right now, straight off its download: the rest of
-	// this play (seeks, re-requests) comes from that same download so old and new never mix
-	if (replacing.has(url)) {
-		await Promise.race([replacing.get(url), sleep(SEEK_WAIT_MS)]);
-		const now = await caches.match(url, { cacheName: TREASURE });
-		return now ? slice(now, range) : fetch(fresh(url));
-	}
+	// this play comes from that same download, or from R2 itself, never from the old copy
+	if (replacing.has(url)) return newVersionPart(url, range);
 
-	// A new version finished downloading during an earlier play: swap it in now, at the start of
-	// a play, never in the middle of one (two different files mixed together = garbled audio)
-	if (fromStart) await promoteStaged(url);
+	if (newPlay) await promoteStaged(url);
 
 	const saved = await caches.match(url, { cacheName: TREASURE });
 	if (saved) {
-		if (fromStart && self.navigator.onLine) {
+		if (newPlay && self.navigator.onLine && !storageFull) {
 			// Replaced on R2? Ask R2 itself. A quick answer means this very play is the new file;
 			// a slow one means play what we have now and have the new file ready next time
-			let outdated = knownOutdated.has(url);
-			if (!outdated) {
-				const check = isOutdated(url, saved);
-				const quick = await Promise.race([check, sleep(QUICK_CHECK_MS).then(() => "slow")]);
-				if (quick === true) outdated = true;
-				else if (quick === "slow") e.waitUntil(check.then((yes) => yes && saveSong(url, true)));
-			}
-			if (outdated && wholeFromStart) {
-				knownOutdated.delete(url);
+			const check = isOutdated(url, saved);
+			const quick = await Promise.race([check, sleep(QUICK_CHECK_MS).then(() => "slow")]);
+			if (quick === true) {
 				try {
 					return await playAndKeep(e, url, range, true);
 				} catch {
 					// couldn't start the new download: the saved copy still plays
 				}
-			} else if (outdated) {
-				// e.g. Safari's tiny first probe: the full request right behind it gets the new file
-				knownOutdated.add(url);
+			} else if (quick === "slow") {
+				e.waitUntil(check.then((yes) => yes && saveSong(url, true)));
 			}
 		}
 		return slice(saved, range);
@@ -117,9 +116,10 @@ async function song(e, req) {
 	const held = await caches.match(url, { cacheName: PENDING });
 	if (held) return slice(held, range);
 
-	// Not on the device yet. When the player asks for the whole file from the top, download it
-	// once and split it: one copy plays, the other is kept to the side. No second download
-	if (wholeFromStart && !downloading.has(url) && !saving.has(url)) {
+	// Not on the device yet. When the player asks for the song from the top, download it once
+	// and split it: one copy plays, the other is kept to the side. No second download. Safari's
+	// 2-byte probe just goes to the network (same Cloudflare copy as the rest of the play)
+	if (fromTop && range !== "bytes=0-1" && !downloading.has(url) && !saving.has(url)) {
 		try {
 			return await playAndKeep(e, url, range, false);
 		} catch {
@@ -134,8 +134,46 @@ async function song(e, req) {
 // saved. A new version of a saved song replaces the old copy as soon as it's fully downloaded,
 // since that new version is what's playing
 const downloading = new Map();
-const replacing = new Map();
-const knownOutdated = new Set();
+const replacing = new Map(); // url -> { done, size }
+
+// Play starts the page announced ("start" message) and when each song was last asked for
+const starts = new Map();
+const lastServed = new Map();
+const START_MSG_MS = 30 * 1000;
+const SAME_PLAY_MS = 10 * 60 * 1000;
+
+function isPlayStart(url) {
+	const announced = starts.get(url);
+	if (announced && Date.now() - announced < START_MSG_MS) {
+		starts.delete(url);
+		return true;
+	}
+	// No announcement (page not controlled yet, message lost): only call it a new play if this
+	// song hasn't been asked for in a while, so a playing song re-asking for 0:00 never counts
+	const last = lastServed.get(url);
+	return !last || Date.now() - last > SAME_PLAY_MS;
+}
+
+/** The rest of a play of the new version: from its download once that's saved, else from R2 */
+async function newVersionPart(url, range) {
+	const job = replacing.get(url);
+	await Promise.race([job.done, sleep(SEEK_WAIT_MS)]);
+	const now = await caches.match(url, { cacheName: TREASURE });
+	if (now && Number(now.headers.get("content-length")) === job.size) return slice(now, range);
+	try {
+		return await fetchIdle(fresh(url), {
+			mode: "cors",
+			credentials: "omit",
+			cache: "no-store",
+			headers: range ? { Range: range } : {},
+		});
+	} catch {
+		return Response.error();
+	}
+}
+
+let storageFull = false;
+const isQuota = (err) => err && (err.name === "QuotaExceededError" || err.code === 22);
 
 async function playAndKeep(e, url, range, isNewVersion) {
 	// A new version comes straight from R2; a first listen can use Cloudflare's copy, and its
@@ -151,7 +189,6 @@ async function playAndKeep(e, url, range, isNewVersion) {
 		return res;
 	}
 	const [toPlayer, toCache] = res.body.tee();
-	const jobs = isNewVersion ? replacing : downloading;
 	const keep = (async () => {
 		try {
 			// put() only commits once every byte has arrived, so a cut-off download keeps nothing
@@ -167,23 +204,58 @@ async function playAndKeep(e, url, range, isNewVersion) {
 			// Only the last few unplayed preloads are worth holding on to
 			const keys = await pending.keys();
 			for (const old of keys.slice(0, Math.max(0, keys.length - 3))) await pending.delete(old);
-		} catch {
+		} catch (err) {
 			// cut off mid-download: the old copy (if any) stays
+			if (isQuota(err)) storageFull = true;
 		} finally {
-			if (jobs.get(url) === keep) jobs.delete(url);
+			if (isNewVersion) {
+				if (replacing.get(url)?.done === keep) replacing.delete(url);
+			} else if (downloading.get(url) === keep) downloading.delete(url);
 		}
 	})();
-	jobs.set(url, keep);
+	if (isNewVersion) replacing.set(url, { done: keep, size });
+	else downloading.set(url, keep);
 	e.waitUntil(keep);
+
+	// Answer exactly what was asked for: the whole file, or a stretch from the top (Safari asks
+	// for 2 bytes first, then the rest). The download itself always runs to the end
 	const headers = {
 		"Content-Type": res.headers.get("content-type") || "audio/mpeg",
-		"Content-Length": String(size),
 		"Accept-Ranges": "bytes",
 	};
-	if (!range) return new Response(toPlayer, { status: 200, headers });
-	return new Response(toPlayer, {
+	if (!range) return new Response(toPlayer, { status: 200, headers: { ...headers, "Content-Length": String(size) } });
+	const asked = /^bytes=0-(\d*)$/.exec(range);
+	const end = asked && asked[1] ? Math.min(Number(asked[1]), size - 1) : size - 1;
+	const body = end === size - 1 ? toPlayer : firstBytes(toPlayer, end + 1);
+	return new Response(body, {
 		status: 206,
-		headers: { ...headers, "Content-Range": `bytes 0-${size - 1}/${size}` },
+		headers: { ...headers, "Content-Length": String(end + 1), "Content-Range": `bytes 0-${end}/${size}` },
+	});
+}
+
+/** The first n bytes of a stream; the rest is left to the other side of the split download */
+function firstBytes(stream, n) {
+	const reader = stream.getReader();
+	let left = n;
+	const stop = () => reader.cancel().catch(() => {});
+	return new ReadableStream({
+		async pull(out) {
+			if (left <= 0) {
+				out.close();
+				return stop();
+			}
+			const { done, value } = await reader.read();
+			if (done) return out.close();
+			if (value.byteLength >= left) {
+				out.enqueue(value.subarray(0, left));
+				left = 0;
+				out.close();
+				return stop();
+			}
+			left -= value.byteLength;
+			out.enqueue(value);
+		},
+		cancel: stop,
 	});
 }
 
@@ -204,14 +276,12 @@ function saveSong(url, revalidate = false) {
 				try {
 					if (!revalidate) {
 						if (await caches.match(url, { cacheName: TREASURE })) return tell(url);
-						if (downloading.has(url)) {
-							// A connection that just hangs must not hold the save up forever
-							const dl = downloading.get(url);
-							const gaveUp = await Promise.race([dl.then(() => false), new Promise((r) => setTimeout(() => r(true), DOWNLOAD_WAIT_MS))]);
-							if (gaveUp && downloading.get(url) === dl) downloading.delete(url);
-						}
+						// The player's own download of it is still running (however slow): wait for
+						// that instead of downloading a second copy. A hung one is cut off by fetchIdle
+						if (downloading.has(url)) await downloading.get(url);
 						if (await moveFromPending(url)) return tell(url);
 					}
+					if (storageFull) return;
 					const res = await fetchIdle(revalidate ? fresh(url) : url, {
 						mode: "cors",
 						credentials: "omit",
@@ -221,8 +291,10 @@ function saveSong(url, revalidate = false) {
 					// put() only commits once the whole body has arrived
 					await (await caches.open(revalidate ? STAGED : TREASURE)).put(url, res);
 					if (!revalidate) tell(url);
-				} catch {
-					// offline / cut off mid-download: try again next listen
+				} catch (err) {
+					// offline / cut off mid-download: try again next listen. Out of space: stop
+					// downloading things that can't be kept (saved songs still play)
+					if (isQuota(err)) storageFull = true;
 				} finally {
 					saving.delete(slot);
 				}
@@ -236,7 +308,12 @@ async function moveFromPending(url) {
 	const pending = await caches.open(PENDING);
 	const copy = await pending.match(url);
 	if (!copy) return false;
-	await (await caches.open(TREASURE)).put(url, copy);
+	try {
+		await (await caches.open(TREASURE)).put(url, copy);
+	} catch (err) {
+		if (isQuota(err)) storageFull = true;
+		return false;
+	}
 	await pending.delete(url);
 	return true;
 }
