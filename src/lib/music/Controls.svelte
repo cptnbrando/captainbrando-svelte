@@ -15,6 +15,7 @@
 	import { fly, slide } from "svelte/transition";
 	import { type Track, type Album, tracks, isMixtape, MIXTAPE_SUFFIX } from "./tracks";
 	import { albums, albumYears } from "./tracks";
+	import { saved, songKey } from "./offline";
 	import RangeSlider from "svelte-range-slider-pips";
 
 	const COPY_MSG = "copied to clip🛹!";
@@ -24,6 +25,8 @@
 	export let track: Track;
 	export let isPlaying: boolean;
 	export let fullscreen: boolean = false;
+	// Network trouble, shown under the song name ("waiting for connection…" etc.)
+	export let status: string = "";
 
 	export let shuffle: boolean;
 	// 0 = off, 1 = repeat album, 2 = repeat one, 3 = ◆ show performance mode (stop when the song ends)
@@ -448,7 +451,12 @@
 						</div>
 						<ol class="m-0 flex list-decimal flex-col gap-1 pl-6 pr-1">
 							{#each selectedTracks as listTrack (listTrack.src)}
-								<li class={track === listTrack ? "font-bold text-brand" : ""}>
+								<!-- Greyed number = saved on this device, plays with no network -->
+								<li
+									class="{track === listTrack ? 'font-bold text-brand' : ''} {$saved.has(songKey(listTrack.src))
+										? 'marker:text-neutral-400'
+										: ''}"
+								>
 									<div class="flex flex-wrap items-center justify-between gap-x-2.5 gap-y-1">
 										<!-- svelte-ignore a11y-click-events-have-key-events -->
 										<span
@@ -646,6 +654,9 @@
 					{/if}
 					{track.name}
 				</span>
+			{/if}
+			{#if status}
+				<span id="playerStatus" class="text-xs italic text-neutral-500">{status}</span>
 			{/if}
 			<div class="flex w-full items-center gap-2 px-2 {fullscreen ? 'hidden' : ''}">
 				<span class="text-sm tabular-nums">{_time}</span>
