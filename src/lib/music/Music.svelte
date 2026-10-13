@@ -90,6 +90,7 @@
 			updatePlaybackState();
 		});
 		audioPlayer.addEventListener("playing", () => {
+			setMetadata();
 			clearStall();
 			cancelRetry();
 			fails = 0;
@@ -437,7 +438,14 @@
 		}
 	}
 
-	$: if (track && typeof navigator !== "undefined" && "mediaSession" in navigator) {
+	$: track, setMetadata();
+
+	/**
+	 * Song, artist and album for the lock screen, bluetooth (AVRCP) and car displays.
+	 * Also set on every "playing": Safari, and some Android head units, drop it when the src changes
+	 */
+	function setMetadata(): void {
+		if (!track || typeof navigator === "undefined" || !("mediaSession" in navigator)) return;
 		navigator.mediaSession.metadata = new MediaMetadata({
 			title: track.name,
 			artist: track.artist,
