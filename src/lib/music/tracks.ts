@@ -57,7 +57,7 @@ export class Album {
 
 // Curated from the captainBrandoMixtape / dogsMixtape flags in music-catalog.dog (dcruz-assets root)
 export const MIXTAPE_ALBUM = "Captain Brando! Mixtape";
-export const DOGS_MIXTAPE_ALBUM = "DOGS Mixtape";
+export const DOGS_MIXTAPE_ALBUM = "ALL YOU CAN EAT";
 
 // Mixtape tracks are reissues of songs that also live on their original albums, so a
 // plain ?song=file.mp3 link would land on the original. Share links for mixtape tracks
@@ -151,7 +151,7 @@ export const tracks: Track[] = [
 		"dallas, mom's place",
 		"fuck COPES"
 	),
-	// --- DOGS Mixtape ---
+	// --- ALL YOU CAN EAT (DOGS mixtape) ---
 	// Reissues of tracks flagged dogsMixtape in music-catalog.dog, dealt into random order
 	// (whack a mole opens by decree; alone + how ride along by special request; jump got cut)
 	new Track(
