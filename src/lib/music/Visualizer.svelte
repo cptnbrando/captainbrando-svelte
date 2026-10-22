@@ -67,6 +67,12 @@
 
 		const AudioContext = window.AudioContext;
 		audioCtx = new AudioContext();
+		// Once the <audio> is wired in below, every sound goes through this context.
+		// Phones suspend/interrupt it on screen lock or a call, and then the song
+		// keeps "playing" in silence, so pick it back up whenever that happens.
+		audioCtx.addEventListener("statechange", () => {
+			if (isPlaying && audioCtx.state !== "running") audioCtx.resume().catch(() => {});
+		});
 
 		// 3 - create an a source node that points at the <audio> element
 		sourceNode = audioCtx.createMediaElementSource(audioElement);
@@ -108,6 +114,7 @@
 			setupWebaudio();
 			setup = true;
 		}
+		if (audioCtx && audioCtx.state !== "running") audioCtx.resume().catch(() => {});
 		if (audioElement && canvasElement && !isAnimating) {
 			drawCtx.clearRect(0, 0, drawCtx.canvas.clientWidth, drawCtx.canvas.clientHeight);
 			isAnimating = true;

@@ -3,8 +3,18 @@
 	import Controls from "./Controls.svelte";
 	import { Track, defaultTracks, tracks, isMixtape, MIXTAPE_SUFFIX } from "./tracks";
 	import Visualizer from "./Visualizer.svelte";
-
-	const TREASURE = "captainbrando-treasure";
+	import { StreamGuard } from "./streamGuard";
+	import { setupOffline, saveAfterPlay } from "./offline";
+	// With the screen off there's nobody to press play on a dead track, so the
+	// player skips past it and never gives up. The first few skips are instant;
+	// past that the network is probably gone (tunnel, dead zone), so it waits a
+	// little longer before each try instead of racing through the library.
+	const FREE_HIDDEN_SKIPS = 3;
+	const SKIP_WAIT_MS = 5000;
+	const MAX_SKIP_WAIT_MS = 30000;
+	let guard: StreamGuard;
+	let hiddenSkips = 0;
+	let skipTimer: ReturnType<typeof setTimeout>;
 
 	const songs: Track[] = tracks;
 	let track: Track = songs[0];
@@ -28,24 +38,17 @@
 
 	export let isMobile: boolean = false;
 
-	$: if (track) {
-		useCache(track);
+	// The song that has actually made sound since it was loaded
+	let playedSrc: string = null;
+
+	/**
+	 * Leaving a song that played: make sure it ends up saved for offline.
+	 * (Usually the service worker already saved it while it streamed.)
+	 */
+	function donePlaying(): void {
+		if (playedSrc) saveAfterPlay(playedSrc);
+		playedSrc = null;
 	}
-
-	const useCache = async (track) => {
-		const myTreasure = await caches.open(TREASURE);
-		const foundTrack = await myTreasure.match(track.src);
-		if (foundTrack) {
-			return foundTrack;
-		}
-
-		const networkRes = await fetch(track.src);
-		if (networkRes.ok) {
-			await myTreasure.put(track.src, networkRes.clone());
-		}
-
-		return networkRes;
-	};
 
 	/**
 	 * Random track on launch
@@ -63,10 +66,25 @@
 			track = songs[trackNum];
 		}
 
-		audioPlayer.load();
+		guard = new StreamGuard(audioPlayer, () => isPlaying, onDeadTrack);
+		loadTrack();
 
 		audioPlayer.addEventListener("pause", () => {
 			isPlaying = false;
+		});
+		// Sound is coming out again, so the skip streak is over
+		audioPlayer.addEventListener("playing", () => {
+			hiddenSkips = 0;
+			playedSrc = track.src;
+		});
+		setupMediaSession();
+		setupOffline();
+
+		// Headphones / car / bluetooth speaker plugged in or pulled out: stop, so a
+		// dropped connection doesn't blast the song out of the phone speaker and a
+		// new one doesn't start mid-song without asking
+		navigator.mediaDevices?.addEventListener("devicechange", () => {
+			if (isPlaying) playPause();
 		});
 
 		// Keep fullscreen state synced even when the user exits with Esc
@@ -152,7 +170,7 @@
 		// Pause the track if it's playing, then push the track num to the array
 		if (isPlaying) playPause();
 		if (loop) {
-			audioPlayer.load();
+			loadTrack();
 			playPause();
 			return;
 		}
@@ -171,17 +189,89 @@
 		// Set the new trackNum, load and play if not playing
 		trackNum = nextNum;
 		track = songs[trackNum];
-		audioPlayer.load();
+		loadTrack();
 		if (!isPlaying) playPause();
+	}
+
+	/**
+	 * (Re)load the current track into the player, with a fresh retry budget
+	 */
+	function loadTrack(): void {
+		donePlaying();
+		clearTimeout(skipTimer);
+		guard?.reset();
+		audioPlayer.load();
 	}
 
 	/**
 	 * Toggles isPlaying after calling pause() or play() on audioPlayer
 	 */
 	function playPause(): void {
-		isPlaying ? audioPlayer.pause() : audioPlayer.play();
-		isPlaying = !isPlaying;
+		if (isPlaying) {
+			audioPlayer.pause();
+			isPlaying = false;
+			return;
+		}
+		// A stream that died stays dead until it's loaded again
+		if (audioPlayer.error || audioPlayer.networkState === HTMLMediaElement.NETWORK_NO_SOURCE) loadTrack();
+		audioPlayer.play().catch((e) => {
+			// The browser refused to start sound (autoplay rules): don't show a
+			// playing UI over silence. AbortError is just a newer load() winning.
+			if (e?.name === "NotAllowedError") isPlaying = false;
+		});
+		isPlaying = true;
 	}
+
+	/**
+	 * The stream is gone for good (StreamGuard ran out of retries). On screen,
+	 * stop so the listener sees it. With the screen off nobody can press play,
+	 * so keep moving on to the next song, forever, instead of going silent.
+	 */
+	function onDeadTrack(): void {
+		if (!isPlaying) return;
+		if (document.visibilityState !== "hidden") {
+			playPause();
+			return;
+		}
+		hiddenSkips++;
+		const next = repeatMode === 1 ? nextInAlbum() : shuffle ? randomTrack() : (trackNum + 1) % songs.length;
+		if (hiddenSkips <= FREE_HIDDEN_SKIPS) {
+			chooseTrack(next);
+			return;
+		}
+		const wait = Math.min(MAX_SKIP_WAIT_MS, SKIP_WAIT_MS * Math.pow(2, hiddenSkips - FREE_HIDDEN_SKIPS - 1));
+		clearTimeout(skipTimer);
+		// Pausing in the meantime (lock screen, headphones) cancels the skip
+		skipTimer = setTimeout(() => isPlaying && chooseTrack(next), wait);
+	}
+
+	/**
+	 * Lock screen / headphone / car controls, and the now-playing card. Also tells
+	 * the OS this page is a real media session, not a background tab making noise
+	 */
+	function setupMediaSession(): void {
+		if (!("mediaSession" in navigator)) return;
+		const ms = navigator.mediaSession;
+		ms.setActionHandler("play", () => !isPlaying && playPause());
+		ms.setActionHandler("pause", () => isPlaying && playPause());
+		ms.setActionHandler("nexttrack", () => changeTrack(1));
+		ms.setActionHandler("previoustrack", () => changeTrack(-1));
+		try {
+			ms.setActionHandler("seekto", (details) => seek(details.seekTime));
+		} catch (e) {
+			// older browsers don't know seekto
+		}
+	}
+
+	$: if ("mediaSession" in navigator && track) {
+		navigator.mediaSession.metadata = new MediaMetadata({
+			title: track.name,
+			artist: track.artist,
+			album: track.album,
+			artwork: [{ src: track.img, type: "image/webp" }],
+		});
+	}
+	$: if ("mediaSession" in navigator) navigator.mediaSession.playbackState = isPlaying ? "playing" : "paused";
 
 	/**
 	 * Change time of track
@@ -207,7 +297,7 @@
 
 		trackNum = idx;
 		track = songs[trackNum];
-		audioPlayer.load();
+		loadTrack();
 		if (!isPlaying) playPause();
 	}
 
@@ -236,6 +326,7 @@
 	 * play restarts it from the top, prev/next/picking a track behave as usual
 	 */
 	function onEnded(): void {
+		donePlaying();
 		if (repeatMode === 3) {
 			isPlaying = false;
 			audioPlayer.currentTime = 0;
@@ -363,5 +454,6 @@
 	bind:currentTime={time}
 	on:ended={onEnded}
 >
-	<source src={track.src} type="audio/mp3" />
+	<!-- A track that fails to load errors on the <source>, not the <audio> -->
+	<source src={track.src} type="audio/mp3" on:error={() => guard?.handleError()} />
 </audio>
