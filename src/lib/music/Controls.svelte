@@ -15,6 +15,8 @@
 	import { fly, slide } from "svelte/transition";
 	import { type Track, type Album, tracks, isMixtape, MIXTAPE_SUFFIX } from "./tracks";
 	import { albums, albumYears } from "./tracks";
+	import TrackEditor from "./TrackEditor.svelte";
+	import { EDITABLE } from "./tracklist-edit";
 	import RangeSlider from "svelte-range-slider-pips";
 
 	const COPY_MSG = "copied to clip🛹!";
@@ -40,6 +42,17 @@
 	$: selected, onSelect();
 
 	let stats: boolean = false;
+
+	// Edit mode (dev server only): reorder, add and delete the open album's tracks, saved into tracks.ts
+	let editing: boolean = false;
+	let editDirty: boolean = false;
+
+	/** Leaves edit mode before switching panels; false if there are unsaved edits the user keeps */
+	function leaveEdit(): boolean {
+		if (editing && editDirty && !confirm("Leave edit mode and throw away these changes?")) return false;
+		editing = false;
+		return true;
+	}
 
 	function onSelect() {
 		selectedTracks = tracks.filter((track) => {
@@ -335,6 +348,7 @@
 							<!-- svelte-ignore a11y-click-events-have-key-events -->
 							<li
 								on:click={() => {
+									if (!leaveEdit()) return;
 									selected = album;
 									stats = false;
 								}}
@@ -350,6 +364,7 @@
 						<!-- svelte-ignore a11y-click-events-have-key-events -->
 						<li
 							on:click={() => {
+								if (!leaveEdit()) return;
 								stats = !stats;
 							}}
 							class="-mt-px flex cursor-pointer items-center gap-2 border border-brand p-1.5 transition-colors hover:text-brand hover:underline {stats
@@ -444,8 +459,19 @@
 										>{albumYears(selected.name)}</span
 									>
 								{/if}
+								{#if EDITABLE && !editing}
+									<button
+										type="button"
+										class="border-[3px] border-black px-2 font-mono text-xs font-bold leading-5 transition-colors hover:bg-black hover:text-parchment"
+										title="reorder, add and delete tracks (saves into tracks.ts; only on the dev server)"
+										on:click={() => (editing = true)}>edit tracks</button
+									>
+								{/if}
 							</div>
 						</div>
+						{#if editing}
+							<TrackEditor album={selected.name} bind:dirty={editDirty} on:done={() => (editing = false)} />
+						{:else}
 						<ol class="m-0 flex list-decimal flex-col gap-1 pl-6 pr-1">
 							{#each selectedTracks as listTrack (listTrack.src)}
 								<li class={track === listTrack ? "font-bold text-brand" : ""}>
@@ -496,6 +522,7 @@
 								</li>
 							{/each}
 						</ol>
+						{/if}
 					{/if}
 				</div>
 			</div>
