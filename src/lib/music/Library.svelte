@@ -21,7 +21,7 @@
 	} from "./trackMeta";
 	import TrackEditor from "./TrackEditor.svelte";
 	import { EDITABLE } from "./tracklist-edit";
-	import { saved, songKey } from "./offline";
+	import { saved, pending, songKey, keepAll } from "./offline";
 
 	// Album page for the two mixtapes (stats, playback, credits, feedback): linked from their tracklist headers
 	const AYCE_URL = "https://ayce.dogs.red";
@@ -282,6 +282,27 @@
 								class="flex items-center gap-1 border-[3px] border-black bg-black px-2 font-mono text-xs font-bold leading-6 text-white transition-colors hover:bg-brand"
 								on:click={() => chooseTrack(selectedTracks[0])}><PlayIcon size="12" /> play it</button
 							>
+						{/if}
+						{#if selectedTracks.length && !editing}
+							{@const keys = selectedTracks.map((t) => songKey(t.src))}
+							{@const have = keys.filter((k) => $saved.has(k)).length}
+							{@const queued = keys.filter((k) => $pending.has(k)).length}
+							<!-- Saves the whole album on this device, so it plays with no signal -->
+							<button
+								type="button"
+								class="border-[3px] border-black px-2 font-mono text-xs font-bold leading-6 transition-colors enabled:hover:bg-black enabled:hover:text-parchment disabled:border-neutral-400 disabled:text-neutral-500"
+								title="keep every song on this album on this device, for no signal"
+								disabled={have === keys.length || queued > 0}
+								on:click={() => keepAll(selectedTracks.map((t) => t.src))}
+							>
+								{#if have === keys.length}
+									saved for offline
+								{:else if queued > 0}
+									saving {have}/{keys.length}…
+								{:else}
+									save for offline{have ? ` (${have}/${keys.length})` : ""}
+								{/if}
+							</button>
 						{/if}
 						{#if EDITABLE && !editing}
 							<button

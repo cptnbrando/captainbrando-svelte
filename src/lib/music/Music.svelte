@@ -11,7 +11,7 @@
 	import { graph, ensureGraph } from "./viz/audioGraph";
 	import { milkdropSupported, prefetchMilkdrop } from "./viz/MilkdropEngine";
 	import * as deck from "./viz/presetDeck";
-	import { keepForever, saved, songKey, tellPlayStart } from "./offline";
+	import { keepForever, saved, savedCopy, songKey } from "./offline";
 
 	const songs: Track[] = tracks;
 	let track: Track = songs[0];
@@ -293,7 +293,7 @@
 		retriedAt = -1;
 		heldAt = 0;
 		status = "";
-		tellPlayStart(track.src);
+		// Always the server's copy: a saved one only plays when the server can't be reached
 		audioPlayer.src = track.src;
 	}
 
@@ -378,9 +378,17 @@
 			if (!wantPlay || track.src !== src || attempt !== mine) return;
 
 			if (verdict === "connection") {
-				// Saved songs need no network, so keep the music going with those
-				const savedNext = canPlaySaved() && fails <= MAX_SAVED_HOPS ? nextSaved() : -1;
-				if (savedNext !== -1) return chooseTrack(savedNext);
+				// This very song is saved on the device: carry on from the same spot, no network needed
+				if (await playSavedCopy(src, at, mine)) return;
+				if (!wantPlay || track.src !== src || attempt !== mine) return;
+				// Other saved songs need no network either, so keep the music going with those
+				const savedNext = fails <= MAX_SAVED_HOPS ? nextSaved() : -1;
+				if (savedNext !== -1) {
+					chooseTrack(savedNext);
+					// Straight to its saved copy, no going through the dead network first
+					await playSavedCopy(track.src, 0, attempt);
+					return;
+				}
 				// Nothing saved to fall back on: hold this song (and its spot) until the connection is back
 				if (at > 0) heldAt = at;
 				status = "waiting for connection…";
@@ -417,6 +425,19 @@
 	}
 
 	/**
+	 * Play the saved copy of the current song from a spot. False if it isn't saved, or the listener
+	 * did something else in the meantime
+	 */
+	async function playSavedCopy(src: string, at: number, mine: number): Promise<boolean> {
+		const copy = await savedCopy(src);
+		if (!copy || !wantPlay || track.src !== src || attempt !== mine) return false;
+		audioPlayer.src = copy;
+		if (at > 0) audioPlayer.currentTime = at;
+		play();
+		return true;
+	}
+
+	/**
 	 * Ask the server about one song: "connection" (no answer / server down / offline),
 	 * "missing" (the server says it's not there) or "ok" (it's there, the stream just broke)
 	 */
@@ -433,11 +454,6 @@
 		} finally {
 			clearTimeout(timer);
 		}
-	}
-
-	// Only lean on saved songs when the service worker is actually there to serve them
-	function canPlaySaved(): boolean {
-		return "serviceWorker" in navigator && !!navigator.serviceWorker.controller;
 	}
 
 	/**
