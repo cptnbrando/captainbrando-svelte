@@ -25,6 +25,8 @@
 
 	export let track: Track;
 	export let isPlaying: boolean;
+	// Network trouble, shown under the song name ("waiting for connection…" etc.)
+	export let status: string = "";
 	export let time: number = 0;
 	export let duration: number = 0;
 	export let shuffle: boolean;
@@ -123,7 +125,11 @@
 			</button>
 			<button type="button" class="min-w-0 flex-1 text-left leading-tight" on:click={() => command("library")}>
 				<span class="block truncate font-bold hover:text-brand hover:underline">{track.name}</span>
-				<span class="block truncate text-xs text-neutral-600">{track.artist} · {track.album}</span>
+				{#if status}
+					<span id="playerStatus" class="block truncate text-xs italic text-brand">{status}</span>
+				{:else}
+					<span class="block truncate text-xs text-neutral-600">{track.artist} · {track.album}</span>
+				{/if}
 			</button>
 			{#if isMobile}
 				<VizToggle {vizMode} {canMilkdud} on:message />

@@ -3,6 +3,7 @@
 	// It reads the shared audio graph (viz/audioGraph.ts) instead of building its own.
 	import { afterUpdate, onDestroy, onMount } from "svelte";
 	import { graph } from "./viz/audioGraph";
+	import { standInFrequency } from "./viz/standIn";
 
 	// Typed array to hold the audio frequency data
 	const NUM_SAMPLES = 256;
@@ -22,6 +23,7 @@
 	let canvasElement!: HTMLCanvasElement;
 	let drawCtx!: CanvasRenderingContext2D;
 
+	// null with a graph = no real levels (iPhone / iPad): draw the stand-in beat
 	let analyserNode: AnalyserNode | null = null;
 	$: analyserNode = $graph ? $graph.analyser : null;
 
@@ -52,7 +54,7 @@
 	});
 
 	afterUpdate(() => {
-		isPlaying === true && analyserNode ? beginVisualizer() : "";
+		isPlaying === true && $graph ? beginVisualizer() : "";
 	});
 
 	function beginInactive(): void {
@@ -78,7 +80,7 @@
 		// Stop any animations currently going on
 		stopVisualizer();
 
-		if (analyserNode && canvasElement && !isAnimating) {
+		if ($graph && canvasElement && !isAnimating) {
 			drawCtx.clearRect(0, 0, drawCtx.canvas.clientWidth, drawCtx.canvas.clientHeight);
 			isAnimating = true;
 			render();
@@ -96,7 +98,7 @@
 	}
 
 	function update(): void {
-		if (!onMusic || !analyserNode) return;
+		if (!onMusic || !$graph) return;
 		/*
         Nyquist Theorem
         http://whatis.techtarget.com/definition/Nyquist-Theorem
@@ -104,7 +106,8 @@
         */
 
 		// populate the audioData with the frequency data
-		analyserNode.getByteFrequencyData(audioData);
+		if (analyserNode) analyserNode.getByteFrequencyData(audioData);
+		else standInFrequency(audioData, isPlaying);
 
 		const height = canvasElement.height;
 		const halfH = height / 2;

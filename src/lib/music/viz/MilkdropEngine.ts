@@ -11,6 +11,7 @@
  * It needs its own canvas: a canvas that has handed out a 2d or WebGL 1
  * context can never hand out a WebGL 2 one.
  */
+import { standInWave } from "./standIn";
 
 /** Seconds one preset takes to melt into the next */
 const BLEND_SECONDS = 2.7;
@@ -20,6 +21,8 @@ export const AUTO_ADVANCE_MS = 30000;
 const MAX_PIXEL_RATIO = 2;
 /** How many presets "previous" can walk back through */
 const MAX_HISTORY = 50;
+/** Samples per frame butterchurn reads (its fftSize) */
+const STAND_IN_SAMPLES = 1024;
 
 /** The preset packs, smallest wait first. Each is its own chunk */
 const PACKS = [
@@ -67,8 +70,12 @@ export type EngineListeners = {
 
 export class MilkdropEngine {
 	canvas: HTMLCanvasElement;
-	analyser: AnalyserNode;
-	audioCtx: AudioContext;
+	/** null = no real levels (iPhone / iPad): it dances to the stand-in beat instead */
+	analyser: AnalyserNode | null;
+	audioCtx: AudioContext | null;
+	/** Whether the music is on, for the stand-in beat */
+	playing: () => boolean = () => false;
+	wave: Uint8Array | null = null;
 	visualizer: any = null;
 	animationFrameId: number | null = null;
 	autoTimer: ReturnType<typeof setTimeout> | null = null;
@@ -90,7 +97,12 @@ export class MilkdropEngine {
 	onPreset: (name: string) => void;
 	onNames: (names: string[]) => void;
 
-	constructor(canvas: HTMLCanvasElement, analyser: AnalyserNode, audioCtx: AudioContext, listeners: EngineListeners = {}) {
+	constructor(
+		canvas: HTMLCanvasElement,
+		analyser: AnalyserNode | null,
+		audioCtx: AudioContext | null,
+		listeners: EngineListeners = {}
+	) {
 		this.canvas = canvas;
 		this.analyser = analyser;
 		this.audioCtx = audioCtx;
@@ -109,7 +121,9 @@ export class MilkdropEngine {
 				height: this.height,
 				pixelRatio: 1,
 			});
-			this.visualizer.connectAudio(this.analyser);
+			// No context: butterchurn runs without Web Audio and gets fed the stand-in beat each frame
+			if (this.analyser) this.visualizer.connectAudio(this.analyser);
+			else this.wave = new Uint8Array(STAND_IN_SAMPLES);
 			this.addPack(firstPack);
 			if (!this.resumePreset()) this.random(0);
 			this.draw();
@@ -164,7 +178,12 @@ export class MilkdropEngine {
 	draw(): void {
 		if (this.destroyed) return;
 		this.resize();
-		this.visualizer.render();
+		if (this.wave) {
+			standInWave(this.wave, this.playing());
+			this.visualizer.render({ audioLevels: { timeByteArray: this.wave, timeByteArrayL: this.wave, timeByteArrayR: this.wave } });
+		} else {
+			this.visualizer.render();
+		}
 		this.animationFrameId = requestAnimationFrame(() => this.draw());
 	}
 
@@ -244,7 +263,7 @@ export class MilkdropEngine {
 		this.destroyed = true;
 		if (this.autoTimer) clearTimeout(this.autoTimer);
 		if (this.animationFrameId) cancelAnimationFrame(this.animationFrameId);
-		if (this.visualizer) {
+		if (this.visualizer && this.analyser) {
 			try {
 				this.visualizer.disconnectAudio(this.analyser);
 			} catch (e) {

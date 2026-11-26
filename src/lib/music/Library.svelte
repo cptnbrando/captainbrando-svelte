@@ -21,6 +21,7 @@
 	} from "./trackMeta";
 	import TrackEditor from "./TrackEditor.svelte";
 	import { EDITABLE } from "./tracklist-edit";
+	import { saved, songKey } from "./offline";
 
 	// Album page for the two mixtapes (stats, playback, credits, feedback): linked from their tracklist headers
 	const AYCE_URL = "https://ayce.dogs.red";
@@ -301,7 +302,15 @@
 						{@const playing = track === listTrack}
 						<li class="border-b border-black/20 {playing ? 'bg-white/70' : ''}">
 							<div class="flex items-center gap-2 py-1.5">
-								<span class="w-6 shrink-0 text-right font-mono text-xs {playing ? 'text-brand' : 'text-neutral-500'}">
+								<!-- Grey number = saved on this device, plays with no signal -->
+								<span
+									class="w-6 shrink-0 text-right font-mono text-xs {playing
+										? 'text-brand'
+										: $saved.has(songKey(listTrack.src))
+										? 'text-neutral-400'
+										: 'text-black'}"
+									title={$saved.has(songKey(listTrack.src)) ? "saved on this device" : undefined}
+								>
 									{#if playing && isPlaying}
 										<span class="eq" aria-label="playing"><i /><i /><i /></span>
 									{:else}

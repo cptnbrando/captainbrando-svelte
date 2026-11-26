@@ -7,6 +7,9 @@
 	import { MilkdropEngine } from "./MilkdropEngine";
 	import * as deck from "./presetDeck";
 
+	/** Whether the music is on: the stand-in beat (iPhone / iPad) only moves while it is */
+	export let isPlaying: boolean = false;
+
 	let canvas: HTMLCanvasElement;
 	let engine: MilkdropEngine | null = null;
 
@@ -14,6 +17,7 @@
 
 	function start() {
 		engine = new MilkdropEngine(canvas, $graph.analyser, $graph.ctx, deck.listeners());
+		engine.playing = () => isPlaying;
 		deck.attach(engine);
 		engine.start();
 	}
