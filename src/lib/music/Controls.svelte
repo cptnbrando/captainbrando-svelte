@@ -20,6 +20,8 @@
 	import RangeSlider from "svelte-range-slider-pips";
 
 	const COPY_MSG = "copied to clip🛹!";
+	// Album page for the two mixtapes (stats, playback, credits, feedback): linked from their tracklist headers
+	const AYCE_URL = "https://ayce.dogs.red";
 
 	export let isMobile: boolean;
 
@@ -453,12 +455,23 @@
 							<img src={selected.src} alt="" class="h-20 w-20 shrink-0 border-[3px] border-black" />
 							<div class="flex min-w-0 flex-col items-start gap-1.5">
 								<h3 class="m-0 text-base font-bold md:text-lg">{selected.name} by {selected.artist}</h3>
-								{#if albumYears(selected.name)}
-									<span
-										class="whitespace-nowrap rounded-full border border-brand px-2 font-mono text-[11px] font-normal leading-5 text-brand"
-										>{albumYears(selected.name)}</span
-									>
-								{/if}
+								<div class="flex flex-wrap items-center gap-1.5">
+									{#if albumYears(selected.name)}
+										<span
+											class="whitespace-nowrap rounded-full border border-brand px-2 font-mono text-[11px] font-normal leading-5 text-brand"
+											>{albumYears(selected.name)}</span
+										>
+									{/if}
+									{#if isMixtape(selected.name)}
+										<a
+											href={AYCE_URL}
+											target="_blank"
+											rel="noopener noreferrer"
+											class="whitespace-nowrap rounded-full border border-brand bg-brand px-2 font-mono text-[11px] font-bold leading-5 text-black no-underline transition-opacity hover:opacity-80"
+											>ALL YOU CAN EAT ↗</a
+										>
+									{/if}
+								</div>
 								{#if EDITABLE && !editing}
 									<button
 										type="button"
