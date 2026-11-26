@@ -1,5 +1,8 @@
 <script lang="ts">
-	import { afterUpdate, onMount } from "svelte";
+	// The simple view: the original captainbrando visualizer (blue/orange spikes + the sun circles).
+	// It reads the shared audio graph (viz/audioGraph.ts) instead of building its own.
+	import { afterUpdate, onDestroy, onMount } from "svelte";
+	import { graph } from "./viz/audioGraph";
 
 	// Typed array to hold the audio frequency data
 	const NUM_SAMPLES = 256;
@@ -19,11 +22,8 @@
 	let canvasElement!: HTMLCanvasElement;
 	let drawCtx!: CanvasRenderingContext2D;
 
-	export let audioElement: HTMLMediaElement;
-	let audioCtx!: AudioContext;
-	let sourceNode!: MediaElementAudioSourceNode;
-	let analyserNode!: AnalyserNode;
-	let gainNode!: GainNode;
+	let analyserNode: AnalyserNode | null = null;
+	$: analyserNode = $graph ? $graph.analyser : null;
 
 	let invert: boolean = false;
 	let waveSpace: number = 0;
@@ -35,16 +35,24 @@
 	let width: number = 0;
 	let height: number = 0;
 
-	let setup: boolean = false;
+	let resizeObserver: ResizeObserver;
 
 	onMount(async () => {
 		await setupCanvas();
 		await resizeCanvas();
 		await beginInactive();
+		// Follow the stage's size (drawer, fullscreen, rotation), not just the window's
+		resizeObserver = new ResizeObserver(onResize);
+		resizeObserver.observe(canvasElement.parentElement);
+	});
+
+	onDestroy(() => {
+		stopVisualizer();
+		resizeObserver?.disconnect();
 	});
 
 	afterUpdate(() => {
-		isPlaying === true ? beginVisualizer() : "";
+		isPlaying === true && analyserNode ? beginVisualizer() : "";
 	});
 
 	function beginInactive(): void {
@@ -62,39 +70,6 @@
 		drawCtx.strokeText("inactive", width / 2 - widthAdjust, height / 2 - 80);
 	}
 
-	function setupWebaudio(): void {
-		if (!audioElement) return;
-
-		const AudioContext = window.AudioContext;
-		audioCtx = new AudioContext();
-
-		// 3 - create an a source node that points at the <audio> element
-		sourceNode = audioCtx.createMediaElementSource(audioElement);
-		// 4 - create an analyser node
-		analyserNode = audioCtx.createAnalyser();
-
-		/*
-            We will request NUM_SAMPLES number of samples or "bins" spaced equally
-            across the sound spectrum.
-
-            If NUM_SAMPLES (fftSize) is 256, then the first bin is 0 Hz, the second is 172 Hz,
-            the third is 344Hz. Each bin contains a number between 0-255 representing
-            the amplitude of that frequency.
-        */
-
-		// fft stands for Fast Fourier Transform
-		analyserNode.fftSize = NUM_SAMPLES;
-
-		// 5 - create a gain (volume) node
-		gainNode = audioCtx.createGain();
-		gainNode.gain.value = 1;
-
-		// 6 - connect the nodes - we now have an audio graph
-		sourceNode.connect(analyserNode);
-		analyserNode.connect(gainNode);
-		gainNode.connect(audioCtx.destination);
-	}
-
 	function setupCanvas(): void {
 		drawCtx = <CanvasRenderingContext2D>canvasElement.getContext("2d");
 	}
@@ -103,12 +78,7 @@
 		// Stop any animations currently going on
 		stopVisualizer();
 
-		// Hopefully this will stop chrome from yelling about autoplaying...
-		if (!setup) {
-			setupWebaudio();
-			setup = true;
-		}
-		if (audioElement && canvasElement && !isAnimating) {
+		if (analyserNode && canvasElement && !isAnimating) {
 			drawCtx.clearRect(0, 0, drawCtx.canvas.clientWidth, drawCtx.canvas.clientHeight);
 			isAnimating = true;
 			render();
@@ -126,7 +96,7 @@
 	}
 
 	function update(): void {
-		if (!onMusic) return;
+		if (!onMusic || !analyserNode) return;
 		/*
         Nyquist Theorem
         http://whatis.techtarget.com/definition/Nyquist-Theorem
@@ -231,7 +201,7 @@
 	}
 
 	function resizeCanvas(): void {
-		const viz = document.querySelector("#musicBox");
+		const viz = canvasElement?.parentElement;
 		if (viz) {
 			width = viz.clientWidth;
 			height = viz.clientHeight;
@@ -255,5 +225,4 @@
 	}
 </script>
 
-<svelte:window on:resize={onResize} />
 <canvas bind:this={canvasElement} {width} {height} class="absolute inset-0 block h-full w-full" />

@@ -6,6 +6,8 @@ import { tracklistEditor } from './tracklist-editor'
 export default defineConfig({
   // tracklistEditor: the tracklist's edit mode saves into tracks.ts (dev server only)
   plugins: [svelte(), tracklistEditor()],
+  // The milkdud's preset packs are big on purpose; each loads on its own, only when it's switched on
+  build: { chunkSizeWarningLimit: 1000 },
   server: {
     // data.wearedogs.net is referer-gated to wearedogs.net/captainbrando.com only,
     // so localhost can't hit it directly. In dev the app requests same-origin /music/*

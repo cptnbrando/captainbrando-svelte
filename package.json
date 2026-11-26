@@ -34,6 +34,8 @@
     "vite": "^4.3.9"
   },
   "dependencies": {
+    "butterchurn": "^2.6.7",
+    "butterchurn-presets": "^2.4.7",
     "svelte-feather-icons": "^4.0.1",
     "svelte-range-slider-pips": "^2.1.1"
   }

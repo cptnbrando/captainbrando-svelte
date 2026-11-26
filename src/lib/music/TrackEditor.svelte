@@ -33,7 +33,7 @@
 
 	$: dirty = removed.length > 0 || rows.length !== original.length || rows.some((r, k) => r.key !== original[k].key);
 
-	/** The scrolling box around the list (#tracklist in Controls) */
+	/** The scrolling box around the list (#tracklist in Library.svelte) */
 	function scroller(): HTMLElement | null {
 		return listEl?.closest("#tracklist") as HTMLElement | null;
 	}
