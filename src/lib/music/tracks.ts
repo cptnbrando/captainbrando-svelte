@@ -1,5 +1,3 @@
-export const defaultTracks: number[] = [0, 6, 7, 8, 9, 14, 16, 20, 21, 22, 23, 26, 28, 29, 30, 31, 32, 36];
-
 // To add tracks, first create a new Album in the albums array below
 // Then, copy and paste a track in the tracks array
 // Audio now streams from data.wearedogs.net — the dcruz-assets/music folder is mirrored
@@ -752,3 +750,14 @@ export const tracks: Track[] = [
 		"2022-07-13T12:43:57-05:00"
 	),
 ];
+
+// Launch pool: every DOGS Mixtape + Captain Brando! Mixtape track (indices into tracks)
+export const defaultTracks: number[] = tracks.map((t, i) => i).filter((i) => isMixtape(tracks[i].album));
+
+// Index of the most recently made track, read off the leading timestamp of each `when`
+// ("2025-05-28T11:07:00-05:00 to ..." ranges count from their start)
+export const newestTrack: number = tracks.reduce((best, t, i) => {
+	const at = Date.parse((t.when ?? "").slice(0, 25));
+	const bestAt = Date.parse((tracks[best].when ?? "").slice(0, 25));
+	return !isNaN(at) && (isNaN(bestAt) || at > bestAt) ? i : best;
+}, 0);

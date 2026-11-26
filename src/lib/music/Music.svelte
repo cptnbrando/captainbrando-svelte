@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from "svelte";
 	import Controls from "./Controls.svelte";
-	import { Track, defaultTracks, tracks, isMixtape, MIXTAPE_SUFFIX } from "./tracks";
+	import { Track, defaultTracks, newestTrack, tracks, isMixtape, MIXTAPE_SUFFIX } from "./tracks";
 	import Visualizer from "./Visualizer.svelte";
 
 	const TREASURE = "captainbrando-treasure";
@@ -58,8 +58,9 @@
 		if (song) {
 			handleQueryParam(song);
 		} else {
-			// loadRandomTrack();
-			trackNum = 0;
+			// loadRandomTrack(); // picks from defaultTracks (the two mixtapes)
+			// For now, open on the newest track
+			trackNum = newestTrack;
 			track = songs[trackNum];
 		}
 
@@ -96,8 +97,7 @@
 	}
 
 	function loadRandomTrack() {
-		// trackNum = defaultTracks[Math.floor(Math.random() * defaultTracks.length)];
-		trackNum = Math.floor(Math.random() * songs.length);
+		trackNum = defaultTracks[Math.floor(Math.random() * defaultTracks.length)];
 		track = songs[trackNum];
 	}
 
