@@ -1,10 +1,17 @@
 <script lang="ts">
-	import { onMount } from "svelte";
-	import Controls from "./Controls.svelte";
-	import { Track, defaultTracks, tracks, isMixtape, MIXTAPE_SUFFIX } from "./tracks";
+	import { onMount, onDestroy } from "svelte";
+	import { fade } from "svelte/transition";
+	import { PlayIcon } from "svelte-feather-icons";
+	import PlayerBar from "./PlayerBar.svelte";
+	import Library from "./Library.svelte";
+	import { Track, defaultTracks, newestTrack, tracks, isMixtape, MIXTAPE_SUFFIX } from "./tracks";
 	import Visualizer from "./Visualizer.svelte";
-
-	const TREASURE = "captainbrando-treasure";
+	import Milkdud from "./viz/Milkdud.svelte";
+	import MilkdudDeck from "./viz/MilkdudDeck.svelte";
+	import { graph, ensureGraph } from "./viz/audioGraph";
+	import { milkdropSupported, prefetchMilkdrop } from "./viz/MilkdropEngine";
+	import * as deck from "./viz/presetDeck";
+	import { keepForever, saved, savedCopy, songKey } from "./offline";
 
 	const songs: Track[] = tracks;
 	let track: Track = songs[0];
@@ -12,6 +19,35 @@
 	let lastTrackArray: number[] = [];
 
 	let isPlaying: boolean = false;
+	// What the listener asked for. Survives the gaps between tracks and network hiccups,
+	// so auto-advance and recovery know whether to keep the music going
+	let wantPlay: boolean = false;
+
+	// Network recovery. When a song won't load or its stream stops moving for STALL_MS,
+	// first ask the server about that one file:
+	//  - no answer (offline / server down) → it's the connection, never skip for that.
+	//    Play saved songs meanwhile, otherwise hold this song and retry with backoff
+	//  - the server says the file is missing or broken → skip just that song, and give up
+	//    after MAX_BAD_FILES in a row instead of running through the whole list
+	const STALL_MS = 15000;
+	const PROBE_MS = 8000;
+	const RETRY_MS = [10000, 20000, 40000, 60000];
+	const MAX_BAD_FILES = 3;
+	const MAX_SAVED_HOPS = 3;
+	let fails: number = 0; // failures since music last actually played
+	let badFiles: number = 0;
+	let retries: number = 0;
+	// Where in this song we last retried a dropped stream (-1 = not yet). A second failure at the
+	// same spot means the file itself is broken there, so it gets skipped instead of retried forever
+	let retriedAt: number = -1;
+	// The spot to come back to after waiting out a dead connection
+	let heldAt: number = 0;
+	let recovering: boolean = false;
+	let attempt: number = 0;
+	let stallTimer: ReturnType<typeof setTimeout> = null;
+	let retryTimer: ReturnType<typeof setTimeout> = null;
+	// "" | "waiting for connection…" | "can't load songs right now"
+	let status: string = "";
 
 	let audioPlayer: HTMLAudioElement;
 	let time: number = 0;
@@ -28,24 +64,49 @@
 
 	export let isMobile: boolean = false;
 
-	$: if (track) {
-		useCache(track);
+	// --- Which visualizer: milkdud (MilkDrop presets, the default) or the simple one ---
+	const VIZ_KEY = "captainbrando-viz";
+	const CAN_MILKDUD = milkdropSupported();
+	type VizMode = "milkdud" | "simple";
+
+	function readViz(): VizMode {
+		if (!CAN_MILKDUD) return "simple";
+		try {
+			return localStorage.getItem(VIZ_KEY) === "simple" ? "simple" : "milkdud";
+		} catch {
+			return "milkdud";
+		}
 	}
 
-	const useCache = async (track) => {
-		const myTreasure = await caches.open(TREASURE);
-		const foundTrack = await myTreasure.match(track.src);
-		if (foundTrack) {
-			return foundTrack;
-		}
+	let vizMode: VizMode = readViz();
 
-		const networkRes = await fetch(track.src);
-		if (networkRes.ok) {
-			await myTreasure.put(track.src, networkRes.clone());
+	function toggleViz(): void {
+		if (!CAN_MILKDUD) return;
+		vizMode = vizMode === "milkdud" ? "simple" : "milkdud";
+		deckListOpen = false;
+		try {
+			localStorage.setItem(VIZ_KEY, vizMode);
+		} catch {
+			// Not kept: lasts until the page closes
 		}
+	}
 
-		return networkRes;
-	};
+	// --- The gates (album + track drawer) ---
+	let libraryOpen: boolean = false;
+	let deckListOpen: boolean = false;
+
+	// --- Idle: after a few still seconds the milkdud deck (and the bar, in fullscreen) gets out of the way ---
+	const IDLE_MS = 3000;
+	let idle: boolean = false;
+	let idleTimer: ReturnType<typeof setTimeout>;
+
+	function wake(): void {
+		idle = false;
+		clearTimeout(idleTimer);
+		idleTimer = setTimeout(() => (idle = true), IDLE_MS);
+	}
+
+	$: hideChrome = idle && isPlaying && !libraryOpen && !deckListOpen;
 
 	/**
 	 * Random track on launch
@@ -58,16 +119,52 @@
 		if (song) {
 			handleQueryParam(song);
 		} else {
-			// loadRandomTrack();
-			trackNum = 0;
+			// loadRandomTrack(); // picks from defaultTracks (the two mixtapes)
+			// For now, open on the newest track
+			trackNum = newestTrack;
 			track = songs[trackNum];
 		}
 
-		audioPlayer.load();
+		loadTrack();
+		// Get the milkdud's code downloading now, so the first play doesn't wait on it
+		if (vizMode === "milkdud") prefetchMilkdrop();
+		wake();
 
 		audioPlayer.addEventListener("pause", () => {
 			isPlaying = false;
+			// The OS / a headset paused us (our own pauses before a track swap never reach here,
+			// loading the next src drops them). The end of a song isn't the listener stopping, and
+			// neither is the pause Chrome fires right after a song fails to load. Headphones pulled
+			// out mid-recovery do count: the music must not come back on the speaker
+			if (!audioPlayer.ended && !audioPlayer.error) wantPlay = false;
+			updatePlaybackState();
 		});
+		audioPlayer.addEventListener("play", () => {
+			isPlaying = true;
+			wantPlay = true;
+			updatePlaybackState();
+		});
+		audioPlayer.addEventListener("playing", () => {
+			setMetadata();
+			clearStall();
+			cancelRetry();
+			fails = 0;
+			badFiles = 0;
+			retries = 0;
+			heldAt = 0;
+			status = "";
+			// Heard it, so keep it forever
+			keepForever(track.src);
+		});
+		audioPlayer.addEventListener("timeupdate", clearStall);
+		audioPlayer.addEventListener("waiting", armStall);
+		audioPlayer.addEventListener("stalled", armStall);
+		audioPlayer.addEventListener("error", recover);
+		for (const ev of ["durationchange", "seeked", "ratechange"]) {
+			audioPlayer.addEventListener(ev, updatePositionState);
+		}
+
+		setupMediaSession();
 
 		// Keep fullscreen state synced even when the user exits with Esc
 		const onFsChange = () => {
@@ -77,27 +174,37 @@
 		document.addEventListener("webkitfullscreenchange", onFsChange);
 	});
 
+	onDestroy(() => clearTimeout(idleTimer));
+
 	let isFullscreen: boolean = false;
+	// iPhones can only fullscreen a <video>, so there it's "theater": the player covers the page instead
+	let theater: boolean = false;
+	let musicBox: HTMLElement;
+
+	$: immersive = isFullscreen || theater;
 
 	/**
-	 * Fullscreen the whole page (nav + visualizer) or exit if already in it
+	 * Fullscreen the player (visuals + bar), or exit if already in it
 	 */
 	function toggleFullscreen(): void {
+		if (theater) {
+			theater = false;
+			return;
+		}
 		if (document.fullscreenElement || (document as any).webkitFullscreenElement) {
 			const doc = document as any;
 			if (doc.exitFullscreen) doc.exitFullscreen();
 			else if (doc.webkitExitFullscreen) doc.webkitExitFullscreen();
 			return;
 		}
-		const el = document.querySelector("main") as any;
-		if (!el) return;
-		if (el.requestFullscreen) el.requestFullscreen().catch(() => {});
+		const el = musicBox as any;
+		if (el.requestFullscreen) el.requestFullscreen().catch(() => (theater = true));
 		else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+		else theater = true;
 	}
 
 	function loadRandomTrack() {
-		// trackNum = defaultTracks[Math.floor(Math.random() * defaultTracks.length)];
-		trackNum = Math.floor(Math.random() * songs.length);
+		trackNum = defaultTracks[Math.floor(Math.random() * defaultTracks.length)];
 		track = songs[trackNum];
 	}
 
@@ -123,6 +230,7 @@
 	 */
 	function onMousemove(event: MouseEvent) {
 		mousePos = { x: event.clientX, y: event.clientY };
+		wake();
 	}
 
 	/**
@@ -137,7 +245,7 @@
 	 * New random track, no duplicates
 	 */
 	function randomTrack(): number {
-		let newRand = Math.floor(Math.random() * (songs.length - 1));
+		let newRand = Math.floor(Math.random() * songs.length);
 		if (newRand === trackNum) {
 			return randomTrack();
 		}
@@ -147,13 +255,13 @@
 	/**
 	 * Change the track
 	 * @param num -1 to prev, 1 to next
+	 * @param skipLoop move on even in repeat one (the current track won't load)
+	 * @param fromUser a click or keypress, not the lock screen / auto-advance / recovery
 	 */
-	function changeTrack(num: number) {
-		// Pause the track if it's playing, then push the track num to the array
-		if (isPlaying) playPause();
-		if (loop) {
-			audioPlayer.load();
-			playPause();
+	function changeTrack(num: number, skipLoop: boolean = false, fromUser: boolean = false) {
+		if (loop && !skipLoop) {
+			audioPlayer.currentTime = 0;
+			play(fromUser);
 			return;
 		}
 		if (num > 0) lastTrackArray.push(trackNum);
@@ -168,19 +276,292 @@
 		if (nextNum >= songs.length) nextNum = 0;
 		if (nextNum < 0) nextNum = songs.length - 1;
 
-		// Set the new trackNum, load and play if not playing
+		// Set the new trackNum, load and play
 		trackNum = nextNum;
 		track = songs[trackNum];
-		audioPlayer.load();
-		if (!isPlaying) playPause();
+		loadTrack();
+		play(fromUser);
 	}
 
 	/**
-	 * Toggles isPlaying after calling pause() or play() on audioPlayer
+	 * Point the player at the current track. Set src straight on the element (not through a
+	 * <source> child) so a dead link fires "error" on the player itself
+	 */
+	function loadTrack(): void {
+		clearStall();
+		cancelRetry();
+		retriedAt = -1;
+		heldAt = 0;
+		status = "";
+		// Always the server's copy: a saved one only plays when the server can't be reached
+		audioPlayer.src = track.src;
+	}
+
+	/**
+	 * @param fromUser a click or keypress. The first one builds what the visualizers listen to
+	 * (viz/audioGraph.ts); the lock screen and bluetooth can play before that, the visuals just wait
+	 */
+	function play(fromUser: boolean = false): void {
+		ensureGraph(audioPlayer, fromUser);
+		// Anything the listener does supersedes a recovery check still waiting on the server
+		attempt++;
+		wantPlay = true;
+		isPlaying = true;
+		if (status === "can't load songs right now") {
+			// The listener is asking again: start counting failures from scratch
+			status = "";
+			fails = 0;
+			badFiles = 0;
+		}
+		// A failed load needs a fresh one before it can play, picking up where it stopped
+		if (audioPlayer.error) {
+			const at = heldAt || audioPlayer.currentTime;
+			audioPlayer.src = track.src;
+			if (at > 0) audioPlayer.currentTime = at;
+		}
+		updatePlaybackState();
+		audioPlayer.play()?.catch((e) => {
+			// Cut off by a quick skip (AbortError) is fine. Blocked (NotAllowedError, e.g. the phone
+			// refused to start audio in the background) means stop cleanly so the lock screen's play works
+			if (e?.name === "NotAllowedError") wantPlay = false;
+			isPlaying = !audioPlayer.paused;
+			updatePlaybackState();
+		});
+	}
+
+	function pause(): void {
+		wantPlay = false;
+		isPlaying = false;
+		cancelRetry();
+		if (status === "waiting for connection…") status = "";
+		audioPlayer.pause();
+		updatePlaybackState();
+	}
+
+	/**
+	 * Toggles between play() and pause(), going by what the button shows: pause while playing or
+	 * while waiting out a dead connection (which stops the waiting too), play otherwise
 	 */
 	function playPause(): void {
-		isPlaying ? audioPlayer.pause() : audioPlayer.play();
-		isPlaying = !isPlaying;
+		isPlaying || status === "waiting for connection…" ? pause() : play(true);
+	}
+
+	function armStall(): void {
+		if (!wantPlay || stallTimer) return;
+		stallTimer = setTimeout(() => {
+			stallTimer = null;
+			recover();
+		}, STALL_MS);
+	}
+
+	function clearStall(): void {
+		clearTimeout(stallTimer);
+		stallTimer = null;
+	}
+
+	/**
+	 * The current song won't load or its stream stopped moving. Work out whether it's the
+	 * connection or the file before doing anything, so a dead connection never turns into
+	 * skipping through song after song
+	 */
+	async function recover(): Promise<void> {
+		clearStall();
+		if (!wantPlay || recovering) return;
+		recovering = true;
+		const src = track.src;
+		const at = audioPlayer.currentTime;
+		const mine = attempt;
+		try {
+			fails++;
+			const verdict = await probe(src);
+			// The listener moved on, paused or pressed play while we were asking
+			if (!wantPlay || track.src !== src || attempt !== mine) return;
+
+			if (verdict === "connection") {
+				// This very song is saved on the device: carry on from the same spot, no network needed
+				if (await playSavedCopy(src, at, mine)) return;
+				if (!wantPlay || track.src !== src || attempt !== mine) return;
+				// Other saved songs need no network either, so keep the music going with those
+				const savedNext = fails <= MAX_SAVED_HOPS ? nextSaved() : -1;
+				if (savedNext !== -1) {
+					chooseTrack(savedNext);
+					// Straight to its saved copy, no going through the dead network first
+					await playSavedCopy(track.src, 0, attempt);
+					return;
+				}
+				// Nothing saved to fall back on: hold this song (and its spot) until the connection is back
+				if (at > 0) heldAt = at;
+				status = "waiting for connection…";
+				isPlaying = false;
+				updatePlaybackState();
+				return waitForNetwork();
+			}
+
+			// The server has the file. A mid-song drop gets one more go from the same spot, but
+			// failing again right there means the file is broken at that point: skip it
+			if (verdict === "ok" && at > 0 && (retriedAt < 0 || Math.abs(at - retriedAt) > 5)) {
+				retriedAt = at;
+				audioPlayer.src = src;
+				audioPlayer.currentTime = at;
+				play();
+				return;
+			}
+
+			// This file is missing or broken: skip just this one, and stop at MAX_BAD_FILES in a row
+			// instead of running through the list
+			if (++badFiles >= MAX_BAD_FILES) {
+				status = "can't load songs right now";
+				wantPlay = false;
+				isPlaying = false;
+				audioPlayer.pause();
+				updatePlaybackState();
+				return;
+			}
+			if (repeatMode === 1) chooseTrack(nextInAlbum());
+			else changeTrack(1, true);
+		} finally {
+			recovering = false;
+		}
+	}
+
+	/**
+	 * Play the saved copy of the current song from a spot. False if it isn't saved, or the listener
+	 * did something else in the meantime
+	 */
+	async function playSavedCopy(src: string, at: number, mine: number): Promise<boolean> {
+		const copy = await savedCopy(src);
+		if (!copy || !wantPlay || track.src !== src || attempt !== mine) return false;
+		audioPlayer.src = copy;
+		if (at > 0) audioPlayer.currentTime = at;
+		play();
+		return true;
+	}
+
+	/**
+	 * Ask the server about one song: "connection" (no answer / server down / offline),
+	 * "missing" (the server says it's not there) or "ok" (it's there, the stream just broke)
+	 */
+	async function probe(src: string): Promise<"connection" | "missing" | "ok"> {
+		if (!navigator.onLine) return "connection";
+		const ctrl = new AbortController();
+		const timer = setTimeout(() => ctrl.abort(), PROBE_MS);
+		try {
+			const res = await fetch(src, { method: "HEAD", cache: "no-store", signal: ctrl.signal });
+			if (res.ok) return "ok";
+			return res.status >= 500 || res.status === 408 || res.status === 429 ? "connection" : "missing";
+		} catch {
+			return "connection";
+		} finally {
+			clearTimeout(timer);
+		}
+	}
+
+	/**
+	 * The next saved song after this one (within the album on repeat album, random on shuffle), -1 if none
+	 */
+	function nextSaved(): number {
+		const ok = songs
+			.map((t, i) => i)
+			.filter(
+				(i) =>
+					i !== trackNum &&
+					(repeatMode !== 1 || songs[i].album === track.album) &&
+					$saved.has(songKey(songs[i].src))
+			);
+		if (!ok.length) return -1;
+		if (shuffle) return ok[Math.floor(Math.random() * ok.length)];
+		return ok.find((i) => i > trackNum) ?? ok[0];
+	}
+
+	/** Try again when the phone says it's back online, or on a slowing timer (10s → 1 min) */
+	function waitForNetwork(): void {
+		cancelRetry();
+		window.addEventListener("online", retryAfterOutage);
+		retryTimer = setTimeout(retryAfterOutage, RETRY_MS[Math.min(retries, RETRY_MS.length - 1)]);
+		retries++;
+	}
+
+	function cancelRetry(): void {
+		window.removeEventListener("online", retryAfterOutage);
+		clearTimeout(retryTimer);
+		retryTimer = null;
+	}
+
+	function retryAfterOutage(): void {
+		cancelRetry();
+		if (!wantPlay) return;
+		// Same song, same spot
+		const at = heldAt || audioPlayer.currentTime;
+		audioPlayer.src = track.src;
+		if (at > 0) audioPlayer.currentTime = at;
+		play();
+	}
+
+	/**
+	 * Media Session: lock screen, notification shade, bluetooth headsets and car stereos.
+	 * Only seekto is wired (no seekbackward/seekforward) so iOS shows prev/next instead of ±10s
+	 */
+	function setupMediaSession(): void {
+		if (!("mediaSession" in navigator)) return;
+		// iOS 17+: keep audio going with the screen off
+		const audioSession = (navigator as any).audioSession;
+		if (audioSession) audioSession.type = "playback";
+
+		const handlers: [MediaSessionAction, MediaSessionActionHandler | null][] = [
+			["play", () => play()],
+			["pause", () => pause()],
+			["stop", () => pause()],
+			["previoustrack", () => changeTrack(-1)],
+			["nexttrack", () => changeTrack(1)],
+			["seekto", (d) => d.seekTime !== undefined && seek(d.seekTime)],
+			["seekbackward", null],
+			["seekforward", null],
+		];
+		for (const [action, handler] of handlers) {
+			try {
+				navigator.mediaSession.setActionHandler(action, handler);
+			} catch {
+				// action not supported by this browser
+			}
+		}
+	}
+
+	$: track, setMetadata();
+
+	/**
+	 * Song, artist and album for the lock screen, bluetooth (AVRCP) and car displays.
+	 * Also set on every "playing": Safari, and some Android head units, drop it when the src changes
+	 */
+	function setMetadata(): void {
+		if (!track || typeof navigator === "undefined" || !("mediaSession" in navigator)) return;
+		navigator.mediaSession.metadata = new MediaMetadata({
+			title: track.name,
+			artist: track.artist,
+			album: track.album,
+			artwork: [{ src: track.img, type: "image/webp" }],
+		});
+	}
+
+	function updatePlaybackState(): void {
+		if (!("mediaSession" in navigator)) return;
+		const on = isPlaying || status === "waiting for connection…";
+		navigator.mediaSession.playbackState = on ? "playing" : "paused";
+		updatePositionState();
+	}
+
+	function updatePositionState(): void {
+		if (!("mediaSession" in navigator) || !navigator.mediaSession.setPositionState) return;
+		const dur = audioPlayer.duration;
+		if (!isFinite(dur) || dur <= 0) return;
+		try {
+			navigator.mediaSession.setPositionState({
+				duration: dur,
+				playbackRate: audioPlayer.playbackRate || 1,
+				position: Math.min(audioPlayer.currentTime, dur),
+			});
+		} catch {
+			// out-of-range values while a new track loads
+		}
 	}
 
 	/**
@@ -189,6 +570,7 @@
 	 */
 	function seek(time: number): void {
 		audioPlayer.currentTime = time;
+		updatePositionState();
 	}
 
 	/**
@@ -199,16 +581,18 @@
 		audioPlayer.volume = volume;
 	}
 
-	function chooseTrack(idx: number): void {
-		// Pause the track if it's playing, then push the track num to the array
-		if (isPlaying) playPause();
-
+	/**
+	 * @param fromUser picked by hand (a click), not by auto-advance or recovery
+	 */
+	function chooseTrack(idx: number, fromUser: boolean = false): void {
 		lastTrackArray.push(trackNum);
 
 		trackNum = idx;
 		track = songs[trackNum];
-		audioPlayer.load();
-		if (!isPlaying) playPause();
+		loadTrack();
+		play(fromUser);
+		// On a phone the drawer covers the visuals: get it out of the way once a song is picked
+		if (isMobile) libraryOpen = false;
 	}
 
 	function gimme(): void {
@@ -238,7 +622,9 @@
 	function onEnded(): void {
 		if (repeatMode === 3) {
 			isPlaying = false;
+			wantPlay = false;
 			audioPlayer.currentTime = 0;
+			updatePlaybackState();
 			return;
 		}
 		if (repeatMode === 1) {
@@ -252,13 +638,13 @@
 	 *
 	 * ---- START HERE IF YOU WANNA ADD NEW SHIT -----
 	 *
-	 * Callback for all Controls functions
+	 * Callback for every PlayerBar / Library command
 	 * Name it, make it do a function, keep it snappy!
 	 * @param event the message
 	 */
 	function handleCmd(event): void {
 		if (event.detail.trackIdx !== undefined) {
-			chooseTrack(event.detail.trackIdx);
+			chooseTrack(event.detail.trackIdx, true);
 			return;
 		}
 		switch (event.detail.cmd) {
@@ -266,10 +652,10 @@
 				playPause();
 				break;
 			case "next":
-				changeTrack(1);
+				changeTrack(1, false, true);
 				break;
 			case "prev":
-				changeTrack(-1);
+				changeTrack(-1, false, true);
 				break;
 			case "shuffle":
 				shuffle = !shuffle;
@@ -282,6 +668,12 @@
 				break;
 			case "fullscreen":
 				toggleFullscreen();
+				break;
+			case "library":
+				libraryOpen = !libraryOpen;
+				break;
+			case "viz":
+				toggleViz();
 				break;
 			default:
 				const str = event.detail.cmd;
@@ -299,7 +691,8 @@
 	}
 
 	/**
-	 * Keyboard controls: space = play/pause, arrows = prev/next, s = shuffle, r = repeat
+	 * Keyboard controls: space = play/pause, arrows = prev/next, s = shuffle, r = repeat,
+	 * v = milkdud/simple, l = the gates, f = fullscreen, [ ] = milkdud presets, h = heart the preset
 	 */
 	function onKeydown(e: KeyboardEvent) {
 		// Let focused inputs and the seek slider keep their own key behavior
@@ -313,17 +706,19 @@
 		) {
 			return;
 		}
+		if (e.metaKey || e.ctrlKey || e.altKey) return;
+		wake();
 
 		switch (e.code) {
 			case "Space":
-				e.preventDefault(); // stop the page from scrolling
+				e.preventDefault(); // stop the page from scrolling (and a focused button from clicking too)
 				playPause();
 				break;
 			case "ArrowRight":
-				changeTrack(1);
+				changeTrack(1, false, true);
 				break;
 			case "ArrowLeft":
-				changeTrack(-1);
+				changeTrack(-1, false, true);
 				break;
 			case "KeyS":
 				shuffle = !shuffle;
@@ -331,26 +726,119 @@
 			case "KeyR":
 				repeatMode = (repeatMode + 1) % 4;
 				break;
+			case "KeyV":
+				toggleViz();
+				break;
+			case "KeyL":
+				libraryOpen = !libraryOpen;
+				break;
+			case "KeyF":
+				toggleFullscreen();
+				break;
+			case "BracketLeft":
+				deck.previous();
+				break;
+			case "BracketRight":
+				deck.next();
+				break;
+			case "KeyH":
+				if (vizMode === "milkdud") deck.toggleFavorite();
+				break;
+			case "Escape":
+				if (deckListOpen) deckListOpen = false;
+				else if (libraryOpen) libraryOpen = false;
+				else if (theater) theater = false;
+				break;
 		}
 	}
-
-	$: AudioInfo = {
-		audioPlayer: audioPlayer,
-		track: track,
-		duration: duration,
-		time: time,
-		shuffle: shuffle,
-		repeatMode: repeatMode,
-		ended: ended,
-		isPlaying: isPlaying,
-		fullscreen: isFullscreen,
-	};
 </script>
 
-<svelte:window on:keydown={onKeydown} />
-<div id="musicBox" class="relative h-full w-full" on:mousemove={(e) => onMousemove(e)}>
-	<Visualizer {isPlaying} audioElement={audioPlayer} {mousePos} {isMobile} />
-	<Controls on:message={handleCmd} {...AudioInfo} {isMobile} />
+<svelte:window on:keydown={onKeydown} on:pointerdown={wake} />
+<div
+	id="musicBox"
+	bind:this={musicBox}
+	class="flex flex-col bg-white {theater ? 'fixed inset-0 z-[60]' : 'relative h-full w-full'} {hideChrome && immersive
+		? 'cursor-none'
+		: ''}"
+	on:mousemove={(e) => onMousemove(e)}
+>
+	<!-- The stage. Double-tap the open water to go fullscreen -->
+	<section
+		class="overflow-hidden {immersive ? 'absolute inset-0' : 'relative min-h-0 flex-1'} {vizMode === 'milkdud'
+			? 'bg-black'
+			: 'bg-white'}"
+		on:dblclick={(e) => {
+			if (e.target === e.currentTarget || e.target instanceof HTMLCanvasElement) toggleFullscreen();
+		}}
+	>
+		{#if vizMode === "milkdud"}
+			<Milkdud {isPlaying} />
+			{#if !$graph}
+				<!-- Before the first play there's no sound to draw: show the record instead -->
+				<div
+					class="absolute inset-0 flex items-center justify-center overflow-hidden {libraryOpen && !isMobile ? 'pr-[32rem]' : ''}"
+					out:fade={{ duration: 500 }}
+				>
+					<img src={track.img} alt="" class="absolute inset-0 h-full w-full scale-125 object-cover opacity-60 blur-2xl" />
+					<button type="button" class="group relative flex flex-col items-center gap-4" title="play  space" on:click={() => playPause()}>
+						<span class="relative block">
+							<img
+								src={track.img}
+								alt="album art"
+								class="block h-44 w-44 border-[3px] border-black object-cover shadow-[8px_8px_0_#000] transition-transform group-hover:-translate-y-1 md:h-64 md:w-64"
+							/>
+							<span
+								class="absolute inset-0 flex items-center justify-center text-white opacity-0 transition group-hover:bg-black/40 group-hover:opacity-100"
+							>
+								<PlayIcon size="64" />
+							</span>
+						</span>
+						<span
+							class="border-[3px] border-black bg-white px-3 py-1 font-mono text-xs font-bold uppercase shadow-[4px_4px_0_#000] group-hover:bg-brand group-hover:text-white"
+							>press play, wake the milkdud</span
+						>
+					</button>
+				</div>
+			{:else}
+				<div
+					class="absolute left-3 right-3 top-3 z-20 flex justify-end transition-opacity duration-500 {hideChrome
+						? 'pointer-events-none opacity-0'
+						: ''}"
+				>
+					<MilkdudDeck bind:listOpen={deckListOpen} />
+				</div>
+			{/if}
+		{:else}
+			<Visualizer {isPlaying} {mousePos} {isMobile} />
+		{/if}
+
+		{#if libraryOpen}
+			<Library {track} {isPlaying} {isMobile} on:message={handleCmd} />
+		{/if}
+	</section>
+
+	<div
+		class="transition-transform duration-300 {immersive ? 'absolute inset-x-0 bottom-0 z-40' : ''} {immersive && hideChrome
+			? 'translate-y-full'
+			: ''}"
+	>
+		<!-- Waiting out a dead connection still counts as "on", so the button offers pause (which cancels it) -->
+		<PlayerBar
+			{track}
+			isPlaying={isPlaying || status === "waiting for connection…"}
+			{status}
+			{time}
+			{duration}
+			{shuffle}
+			{repeatMode}
+			{vizMode}
+			canMilkdud={CAN_MILKDUD}
+			{libraryOpen}
+			fullscreen={immersive}
+			{isMobile}
+			on:message={handleCmd}
+		/>
+	</div>
 </div>
 <audio
 	data-playing="no"
@@ -360,8 +848,6 @@
 	bind:this={audioPlayer}
 	bind:duration
 	bind:ended
-	bind:currentTime={time}
+	on:timeupdate={() => (time = audioPlayer.currentTime)}
 	on:ended={onEnded}
->
-	<source src={track.src} type="audio/mp3" />
-</audio>
+/>

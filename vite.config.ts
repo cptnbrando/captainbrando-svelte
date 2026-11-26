@@ -1,9 +1,13 @@
 import { defineConfig } from 'vite'
 import { svelte } from '@sveltejs/vite-plugin-svelte'
+import { tracklistEditor } from './tracklist-editor'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [svelte()],
+  // tracklistEditor: the tracklist's edit mode saves into tracks.ts (dev server only)
+  plugins: [svelte(), tracklistEditor()],
+  // The milkdud's preset packs are big on purpose; each loads on its own, only when it's switched on
+  build: { chunkSizeWarningLimit: 1000 },
   server: {
     // data.wearedogs.net is referer-gated to wearedogs.net/captainbrando.com only,
     // so localhost can't hit it directly. In dev the app requests same-origin /music/*
